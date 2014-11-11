@@ -1,0 +1,36 @@
+﻿<#@ template language="c#" HostSpecific="True" #>
+<#@ output extension= ".cs" #>
+<#
+	TableHost host = (TableHost)(Host);
+	host.Fieldlist.Sort(CodeCommon.CompareByintOrder);
+#>
+using System; 
+using System.Text;
+using System.Collections.Generic; 
+using System.Data;
+using NDolls.Data.Attribute;
+using NDolls.Data.Entity;
+namespace <#= host.NameSpace #>.Model<# if( host.Folder.Length > 0) {#>.<#= host.Folder #><# } #>
+
+{
+	<# if( host.TableDescription.Length > 0) {#>
+//<#= host.TableDescription #>
+	<# } #>
+[Entity("<#=host.TableName#>","<#= CodeCommon.GetInParameter(host.Keys, false) #>")]
+	public class <#= host.GetModelClass(host.TableName) #> : EntityBase
+	{   		     
+      	<# foreach (ColumnInfo c in host.Fieldlist)
+		{ #>
+		
+		/// <summary>
+		/// <#= string.IsNullOrEmpty(c.Description) ? c.ColumnName : c.Description #>
+        /// </summary>		
+        [DataField("<#= c.ColumnName #>", "<#=c.TypeName#>")]
+        <# if (c.IsPrimaryKey) {#>
+        [Validate("<#= c.Description #>")]
+        <#}#>
+    public <#= CodeCommon.DbTypeToCS(c.TypeName) #> <#= c.ColumnName #>{ get; set; }        
+		<# } #>
+   
+	}
+}
