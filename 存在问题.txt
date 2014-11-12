@@ -11,3 +11,8 @@
 
 1.查询排序
 2.exist按条件ConditionItem查询
+
+1.级联查询有问题
+2.list.Add(new ConditionItem("CreateTime", "2011-09-01", SearchType.Greater));
+            list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
+参数重复添加
