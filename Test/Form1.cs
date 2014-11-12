@@ -246,7 +246,7 @@ namespace Test
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
 
             List<ConditionItem> conditions = new List<ConditionItem>();
-            conditions.Add(new ConditionItem("CreateTime", DateTime.Now.ToString(), SearchType.Greater));
+            conditions.Add(new ConditionItem("CreateTime", "1990-1-1", SearchType.Greater));
 
             List<Model.Sys_User> list = r.FindByCondition(conditions);
             dataGridView1.DataSource = list;
@@ -258,6 +258,18 @@ namespace Test
 
             List<ConditionItem> conditions = new List<ConditionItem>();
             conditions.Add(new ConditionItem("CreateTime", DateTime.Now.ToString(), SearchType.Lower));
+            
+            List<Model.Sys_User> list = r.FindByCondition(conditions);
+            dataGridView1.DataSource = list;
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
+
+            List<ConditionItem> conditions = new List<ConditionItem>();
+            conditions.Add(new ConditionItem("CreateTime", DateTime.Now.ToString(), SearchType.Lower));
+            conditions.Add(new ConditionItem("CreateTime", "1990-1-1", SearchType.Greater));
 
             List<Model.Sys_User> list = r.FindByCondition(conditions);
             dataGridView1.DataSource = list;
@@ -273,6 +285,19 @@ namespace Test
         {
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             dataGridView1.DataSource = r.FindAll();
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
+
+            List<ConditionItem> conditions = new List<ConditionItem>();
+            conditions.Add(new ConditionItem("UserName", "abc", SearchType.Unequal));
+            conditions.Add(new ConditionItem("UserName", "bcd", SearchType.Unequal));
+            conditions.Add(new ConditionItem("UserName", "cde", SearchType.Unequal));
+
+            List<Model.Sys_User> list = r.FindByCondition(conditions);
+            dataGridView1.DataSource = list;
         }
     }
 }

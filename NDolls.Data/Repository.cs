@@ -347,21 +347,29 @@ namespace NDolls.Data
             }
             else
             {
+                String fieldName, parameterName;
                 foreach (ConditionItem item in conditions)
                 {
+                    fieldName = item.FieldName;
+                    parameterName = item.FieldName;
+                    if (pars.Exists(p => p.ParameterName == parameterName))
+                    {
+                        parameterName += item.GetHashCode();
+                    }
+
                     switch (item.ConditionType)
                     {
                         case SearchType.Accurate:
-                            sb.Append(item.FieldName + "=@" + item.FieldName + " AND ");
-                            pars.Add(new SqlParameter(item.FieldName, item.FieldValue));
+                            sb.Append(fieldName + "=@" + parameterName + " AND ");
+                            pars.Add(new SqlParameter(parameterName, item.FieldValue));
                             break;
                         case SearchType.Fuzzy:
-                            sb.Append(item.FieldName + " LIKE @" + item.FieldName + " AND ");
-                            pars.Add(new SqlParameter(item.FieldName, "%" + item.FieldValue + "%"));
+                            sb.Append(fieldName + " LIKE @" + parameterName + " AND ");
+                            pars.Add(new SqlParameter(parameterName, "%" + item.FieldValue + "%"));
                             break;
                         case SearchType.Unequal:
-                            sb.Append(item.FieldName + " <> @" + item.FieldName + " AND ");
-                            pars.Add(new SqlParameter(item.FieldName, item.FieldValue));
+                            sb.Append(fieldName + " <> @" + parameterName + " AND ");
+                            pars.Add(new SqlParameter(parameterName, item.FieldValue));
                             break;
                         case SearchType.ValuesIn:
                             sb.Append("(");
@@ -370,23 +378,23 @@ namespace NDolls.Data
                             {
                                 if (i == (fiels.Length - 1))
                                 {
-                                    sb.Append(item.FieldName + " = @" + (item.FieldName + i));
+                                    sb.Append(fieldName + " = @" + (parameterName + i));
                                 }
                                 else
                                 {
-                                    sb.Append(item.FieldName + " = @" + (item.FieldName + i) + " OR ");
+                                    sb.Append(fieldName + " = @" + (parameterName + i) + " OR ");
                                 }
-                                pars.Add(new SqlParameter((item.FieldName + i), fiels[i]));
+                                pars.Add(new SqlParameter((parameterName + i), fiels[i]));
                             }
                             sb.Append(") AND ");
                             break;
                         case SearchType.Greater:
-                            sb.Append(item.FieldName + " > @" + item.FieldName + " AND ");
-                            pars.Add(new SqlParameter(item.FieldName, item.FieldValue));
+                            sb.Append(fieldName + " > @" + parameterName + " AND ");
+                            pars.Add(new SqlParameter(parameterName, item.FieldValue));
                             break;
                         case SearchType.Lower:
-                            sb.Append(item.FieldName + " < @" + item.FieldName + " AND ");
-                            pars.Add(new SqlParameter(item.FieldName, item.FieldValue));
+                            sb.Append(fieldName + " < @" + parameterName + " AND ");
+                            pars.Add(new SqlParameter(parameterName, item.FieldValue));
                             break;
                         default:
                             break;
