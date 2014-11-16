@@ -16,3 +16,5 @@
 2.参数重复添加 --已解决
 list.Add(new ConditionItem("CreateTime", "2011-09-01", SearchType.Greater));
 list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
+
+1.NotValuesIn未支持
