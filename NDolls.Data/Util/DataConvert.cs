@@ -100,5 +100,16 @@ namespace NDolls.Data.Util
             String json = js.Serialize(obj);
             return json;
         }
+
+        /// <summary>
+        /// 将对象集合转化为json字符串
+        /// </summary>
+        /// <param name="objs">对象结合</param>
+        /// <returns>json字符串</returns>
+        public static String EntitiesToJson(List<T> objs)
+        {
+            String json = js.Serialize(objs);
+            return json;
+        }
     }
 }
