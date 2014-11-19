@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using System.Reflection;
 
-namespace NDolls.Core.Util
+namespace NDolls.Data.Util
 {
     /// <summary>
     /// 数据转换类
@@ -66,7 +66,14 @@ namespace NDolls.Core.Util
 
             foreach (DataRow row in dt.Rows)
             {
-                list.Add(ToEntity(row));
+                T model = ToEntity(row);
+
+                #region 级联对象加载
+                //关联对象加载
+                EntityUtil.SetAssociation(model);
+                #endregion
+
+                list.Add(model);
             }
 
             return list;

@@ -4,7 +4,6 @@ using System.Text;
 using NDolls.Core;
 using System.Data.SqlClient;
 using System.Transactions;
-using NDolls.Core.Util;
 using NDolls.Data.Entity;
 using NDolls.Data.Util;
 using NDolls.Data.Attribute;

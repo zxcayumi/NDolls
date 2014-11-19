@@ -87,7 +87,7 @@ namespace Test
             IRepository<Model.Sys_User> r;
             r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             Model.Sys_User m = r.FindByPK("zxcayumi");
-            String json = NDolls.Core.Util.DataConvert<Model.Sys_User>.EntityToJson(m);
+            String json = NDolls.Data.Util.DataConvert<Model.Sys_User>.EntityToJson(m);
             MessageBox.Show(json);
         }
 

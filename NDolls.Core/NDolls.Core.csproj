@@ -48,7 +48,6 @@
       <DependentUpon>Patterns.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\DataConvert.cs" />
     <Compile Include="Util\JsonUtil.cs" />
     <Compile Include="Util\ResourceUtil.cs" />
     <Compile Include="Util\ValidateUtil.cs" />
