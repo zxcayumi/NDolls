@@ -62,6 +62,11 @@ namespace NDolls.Data.Entity
         ValuesIn,
 
         /// <summary>
+        /// 不包含其中值
+        /// </summary>
+        ValuesNotIn,
+
+        /// <summary>
         /// 大于
         /// </summary>
         Greater,

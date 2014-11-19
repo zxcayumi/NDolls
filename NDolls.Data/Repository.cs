@@ -388,6 +388,23 @@ namespace NDolls.Data
                             }
                             sb.Append(") AND ");
                             break;
+                        case SearchType.ValuesNotIn:
+                            sb.Append("(");
+                            fiels = item.FieldValue.ToString().Split(',');
+                            for (int i = 0; i < fiels.Length; i++)
+                            {
+                                if (i == (fiels.Length - 1))
+                                {
+                                    sb.Append(item.FieldName + " <> @" + (item.FieldName + i));
+                                }
+                                else
+                                {
+                                    sb.Append(item.FieldName + " <> @" + (item.FieldName + i) + " AND ");
+                                }
+                                pars.Add(new SqlParameter((item.FieldName + i), fiels[i]));
+                            }
+                            sb.Append(") AND ");
+                            break;
                         case SearchType.Greater:
                             sb.Append(fieldName + " > @" + parameterName + " AND ");
                             pars.Add(new SqlParameter(parameterName, item.FieldValue));
