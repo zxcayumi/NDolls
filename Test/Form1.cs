@@ -299,5 +299,14 @@ namespace Test
             List<Model.Sys_User> list = r.FindByCondition(conditions);
             dataGridView1.DataSource = list;
         }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
+            List<ConditionItem> conditions = new List<ConditionItem>();
+            conditions.Add(new ConditionItem("UserName", "abc,def", SearchType.ValuesNotIn));
+            List<Model.Sys_User> list = r.FindByCondition(conditions);
+            dataGridView1.DataSource = list;
+        }
     }
 }
