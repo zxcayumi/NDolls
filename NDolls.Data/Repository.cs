@@ -235,7 +235,7 @@ namespace NDolls.Data
         }
 
         /// <summary>
-        /// 根据主键查询是否存在该对象
+        /// 根据对象主键查询是否存在该对象
         /// </summary>
         /// <param name="keyValue">主键对应的值</param>
         /// <returns>是否存在</returns>
@@ -246,6 +246,20 @@ namespace NDolls.Data
             pars.Add(new SqlParameter(primaryKey, EntityUtil.GetValueByField(model,primaryKey)));
 
             return "0" != SqlHelper.ExecuteScalar(System.Data.CommandType.Text, sql, pars).ToString(); 
+        }
+
+        /// <summary>
+        /// 根据条件查询是否存在该对象
+        /// </summary>
+        /// <param name="conditions">条件集合</param>
+        /// <returns>是否存在</returns>
+        public bool Exist(List<ConditionItem> conditions)
+        {
+            List<SqlParameter> pars = new List<SqlParameter>();//构造查询条件
+            string conSql = getConditionSQL(conditions, pars);////生成查询语句,sql条件部分
+            string sql = String.Format(selectSQL, "COUNT(*)", tableName, conSql);
+
+            return "0" != SqlHelper.ExecuteScalar(System.Data.CommandType.Text, sql, pars).ToString();
         }
 
         public bool Add(T model)

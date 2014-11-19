@@ -28,5 +28,6 @@ namespace NDolls.Data
         bool DeleteByCondition(ConditionItem item);
         bool DeleteByCondition(List<ConditionItem> items);
         bool Exist(T model);
+        bool Exist(List<ConditionItem> items);
     }
 }

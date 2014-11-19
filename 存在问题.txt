@@ -10,11 +10,11 @@
 5.validate提示参数可以更详细
 
 1.查询排序
-2.exist按条件ConditionItem查询
+2.exist按条件ConditionItem查询--已修改
 
 1.级联查询有问题--仅对按主键查询有效
 2.参数重复添加 --已解决
 list.Add(new ConditionItem("CreateTime", "2011-09-01", SearchType.Greater));
 list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 
-1.NotValuesIn未支持
+1.NotValuesIn未支持--已支持
