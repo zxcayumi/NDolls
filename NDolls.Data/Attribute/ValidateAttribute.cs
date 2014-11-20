@@ -36,6 +36,20 @@ namespace NDolls.Data.Attribute
         /// <summary>
         /// 构造函数
         /// </summary>
+        /// <param name="fieldName">需验证字段的名称（属性变量名）</param>
+        /// <param name="fieldDesc">字段描述</param>
+        /// <param name="expression">正则表达式</param>
+        public ValidateAttribute(string fieldName, string fieldDesc, string expression)
+        {
+            this.FieldName = fieldName;
+            this.FieldDesc = fieldDesc;
+            this.Nullable = false;
+            this.Expression = expression;
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         /// <param name="fieldDesc">字段描述</param>
         /// <param name="nullable">是否允许为空</param>
         /// <param name="expression">正则表达式</param>
