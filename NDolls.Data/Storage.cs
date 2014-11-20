@@ -46,7 +46,7 @@ namespace NDolls.Data
         /// </summary>
         public static String NullableError
         {
-            get { return "不允许为空!"; }
+            get { return "不允许为空"; }
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace NDolls.Data
         /// </summary>
         public static String ExpressionError
         {
-            get { return "内容格式错误!"; }
+            get { return "内容格式错误"; }
         }
     }
 }

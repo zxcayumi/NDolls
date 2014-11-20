@@ -195,7 +195,7 @@ namespace NDolls.Data.Util
                 if (!String.IsNullOrEmpty(item.Expression) && 
                     !ValidateUtil.IsMatch(fieldValue.ToString(), pattern))
                 {
-                    return item.FieldName + "," + item.FieldDesc + Messages.ExpressionError;
+                    return item.FieldName + "," + item.FieldDesc + "," + Messages.ExpressionError;
                 }
             }
 
