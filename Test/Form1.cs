@@ -162,7 +162,7 @@ namespace Test
             m.Status = true;
             m.UpdateTime = DateTime.Now;
             m.UserName = "sdfsd";//验证不允许为空
-            m.UserRole = "zsdk#11.com";//"update" + DateTime.Now.ToLongTimeString();//验证为邮箱格式
+            m.UserRole = "zDdk#11.com";//"update" + DateTime.Now.ToLongTimeString();//验证为邮箱格式
 
             Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
             String error = r.Validate(m);

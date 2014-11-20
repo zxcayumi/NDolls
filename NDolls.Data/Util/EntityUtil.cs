@@ -148,13 +148,14 @@ namespace NDolls.Data.Util
                     }
 
                     //获取验证字段
-                    ValidateAttribute atr2;
                     objs = info.GetCustomAttributes(typeof(ValidateAttribute), false);
                     if (objs != null && objs.Length > 0)
                     {
-                        atr2 = objs[0] as ValidateAttribute;
-                        atr2.FieldName = info.Name;//单独赋值(对应属性的变量名)
-                        fields.ValidateFields.Add(atr2);
+                        foreach (ValidateAttribute obj in objs)
+                        {
+                            obj.FieldName = info.Name;//单独赋值(对应属性的变量名)
+                            fields.ValidateFields.Add(obj);
+                        }
                     }
                 }
 

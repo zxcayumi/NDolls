@@ -42,3 +42,7 @@
 2014.11.18
 1.添加ValuesNotIn（不包含）查询支持
 2.添加exist按ConditionItem条件查询支持
+
+2014.11.20
+1.增加ModelAttribute配置支持多validate检测
+2.支持Model的ValidateAttribute配置用户自定义提示

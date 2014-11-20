@@ -28,6 +28,7 @@ namespace Test.Model
         /// UserRole
         /// </summary>		
         [DataField("UserRole", "nvarchar")]
+        [Validate("用户角色","应都为小写", "LowerCase")]//用户自定义模式匹配
         [Validate("用户角色","用户角色不符合要求", "^\\w+([+-.]\\w+)*@\\w+([-.]\\w+)*$")]//用户自定义模式匹配
         public string UserRole
         { get; set; }

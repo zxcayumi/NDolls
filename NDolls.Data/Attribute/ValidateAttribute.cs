@@ -8,6 +8,7 @@ namespace NDolls.Data.Attribute
     /// <summary>
     /// 实体类特性描述
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = true)]
     public class ValidateAttribute : System.Attribute
     {
         /// <summary>

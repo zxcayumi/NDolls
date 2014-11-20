@@ -6,8 +6,8 @@
 1.查询无法支持时间范围段 --已支持
 2.无法按条件删除 --已支持
 3.无法按大于、小于条件查询 --已支持
-4.无法添加多个validate
-5.validate提示参数可以更详细
+4.无法添加多个validate --已支持
+5.validate提示参数可以更详细 --已支持，通过Model的ValidateAttribute配置
 
 1.查询排序
 2.exist按条件ConditionItem查询--已修改
