@@ -11,10 +11,10 @@ namespace NDolls.Data
         List<T> FindAll();
         List<T> Find(T model);
         List<T> Find(int top, T model);
-        List<T> FindByCondition(List<ConditionItem> items);
-        List<T> FindByCondition(ConditionItem item);
-        List<T> FindByCondition(int top,List<ConditionItem> items);
-        List<T> FindByPage(int pageCount, int index, List<ConditionItem> items);
+        List<T> FindByCondition(List<Item> items);
+        List<T> FindByCondition(Item item);
+        List<T> FindByCondition(int top, List<Item> items);
+        List<T> FindByPage(int pageCount, int index, List<Item> items);
         T FindByPK(string keyValue);
         T FindByPK(string[] keyValues);
         List<T> Find(String customCondition);
@@ -25,9 +25,9 @@ namespace NDolls.Data
         bool Update(T model);
         bool Delete(string keyValue);
         bool Delete(string[] keyValues);
-        bool DeleteByCondition(ConditionItem item);
-        bool DeleteByCondition(List<ConditionItem> items);
+        bool DeleteByCondition(Item item);
+        bool DeleteByCondition(List<Item> items);
         bool Exist(T model);
-        bool Exist(List<ConditionItem> items);
+        bool Exist(List<Item> items);
     }
 }

@@ -43,36 +43,36 @@ namespace NDolls.Data
         /// <summary>
         /// 根据查询条件获取对象集合
         /// </summary>
-        /// <param name="condition">查询条件项</param>
+        /// <param name="condition">查询（排序）项</param>
         /// <returns>查询结果集合</returns>
-        public List<T> FindByCondition(ConditionItem condition)
+        public List<T> FindByCondition(Item item)
         {
-            return FindByCondition(0, new List<ConditionItem> { condition });
+            return FindByCondition(0, new List<Item> { item });
         }
 
         /// <summary>
         /// 根据查询条件获取对象集合
         /// </summary>
-        /// <param name="conditions">查询条件项集合</param>
+        /// <param name="conditions">查询（排序）项集合</param>
         /// <returns>查询结果集合</returns>
-        public List<T> FindByCondition(List<ConditionItem> conditions)
+        public List<T> FindByCondition(List<Item> items)
         {
-            return FindByCondition(0, conditions);
+            return FindByCondition(0, items);
         }
 
         /// <summary>
         /// 根据查询条件获取对象集合
         /// </summary>
         /// <param name="top">查询数量(0:查询所有)</param>
-        /// <param name="conditions">查询条件项集合</param>
+        /// <param name="conditions">查询（排序）项集合</param>
         /// <returns>查询结果集合</returns>
-        public List<T> FindByCondition(int top, List<ConditionItem> conditions)
+        public List<T> FindByCondition(int top, List<Item> items)
         {
             //构造查询条件
             List<SqlParameter> pars = new List<SqlParameter>();
 
             //生成查询语句
-            string conSql = getConditionSQL(conditions,pars);//sql条件部分
+            string conSql = getConditionSQL(items, pars);//sql条件部分
             string sql;
             string fields;
             if (top > 0)
@@ -97,9 +97,9 @@ namespace NDolls.Data
         /// </summary>
         /// <param name="pageCount">每页大小</param>
         /// <param name="index">当前页索引</param>
-        /// <param name="items">查询条件集合</param>
+        /// <param name="items">查询（排序）项集合</param>
         /// <returns>查询结果集合</returns>
-        public List<T> FindByPage(int pageCount, int index, List<ConditionItem> items)
+        public List<T> FindByPage(int pageCount, int index, List<Item> items)
         {
             String sql = "SELECT TOP " + pageCount + " * FROM(SELECT row_number() OVER(ORDER BY " + primaryKey + ") row,* FROM " + tableName + " ) tt WHERE row > " + ((index - 1) * 10); ;
             
@@ -127,7 +127,7 @@ namespace NDolls.Data
         /// <returns>查询结果集合</returns>
         public List<T> Find(int top,T model)
         {
-            List<ConditionItem> conditions = new List<ConditionItem>();
+            List<Item> conditions = new List<Item>();
 
             List<DataField> fields = EntityUtil.GetDataFields(model);
             foreach (DataField field in fields)
@@ -250,17 +250,22 @@ namespace NDolls.Data
         /// <summary>
         /// 根据条件查询是否存在该对象
         /// </summary>
-        /// <param name="conditions">条件集合</param>
+        /// <param name="conditions">条件项集合</param>
         /// <returns>是否存在</returns>
-        public bool Exist(List<ConditionItem> conditions)
+        public bool Exist(List<Item> items)
         {
             List<SqlParameter> pars = new List<SqlParameter>();//构造查询条件
-            string conSql = getConditionSQL(conditions, pars);////生成查询语句,sql条件部分
+            string conSql = getConditionSQL(items, pars);////生成查询语句,sql条件部分
             string sql = String.Format(selectSQL, "COUNT(*)", tableName, conSql);
 
             return "0" != SqlHelper.ExecuteScalar(System.Data.CommandType.Text, sql, pars).ToString();
         }
 
+        /// <summary>
+        /// 添加实体
+        /// </summary>
+        /// <param name="model">实体对象</param>
+        /// <returns>添加是否成功</returns>
         public bool Add(T model)
         {
             Fields fields = EntityUtil.GetFieldsByType(model.GetType());
@@ -320,14 +325,15 @@ namespace NDolls.Data
             }
         }
 
-        public bool DeleteByCondition(ConditionItem condition)
+        public bool DeleteByCondition(Item condition)
         {
-            return DeleteByCondition(new List<ConditionItem> { condition });
+            return DeleteByCondition(new List<Item> { condition });
         }
 
-        public bool DeleteByCondition(List<ConditionItem> conditions)
+        public bool DeleteByCondition(List<Item> conditions)
         {
             if (conditions.Count <= 0) return false;
+            if (!conditions.Exists(p => p.ItemType != ItemType.ConditionItem)) return false;
 
             List<SqlParameter> pars = new List<SqlParameter>();
             string conSql = getConditionSQL(conditions, pars);
@@ -350,13 +356,21 @@ namespace NDolls.Data
             }
         }
 
-        private string getConditionSQL(List<ConditionItem> conditions,List<SqlParameter> pars)
+        /// <summary>
+        /// 获取sql条件字符串
+        /// </summary>
+        /// <param name="items">sql语句项集合</param>
+        /// <param name="pars">添加参数集合</param>
+        /// <returns>sql字符串条件及排序部分</returns>
+        private string getConditionSQL(List<Item> items, List<SqlParameter> pars)
         {
             StringBuilder sb = new StringBuilder();
+            List<Item> conditions = items.FindAll(p => p.ItemType == ItemType.ConditionItem);//条件项集合
+            List<Item> orders = items.FindAll(p => p.ItemType == ItemType.OrderItem);//排序项集合
 
             if (conditions == null || conditions.Count == 0)
             {
-                sb.Append("1=1");
+                sb.Append("1=1 AND ");
             }
             else
             {
@@ -431,8 +445,18 @@ namespace NDolls.Data
                     }
                 }
             }
+            
+            StringBuilder osb = new StringBuilder();
+            if (orders != null && orders.Count > 0)
+            {
+                osb.Append(" ORDER BY ");
+                foreach (OrderItem item in orders)
+                {
+                    osb.Append(item.FieldName + " " + item.OrderType.ToString() + ",");
+                }
+            }
 
-            return sb.ToString().Substring(0, sb.ToString().LastIndexOf("AND "));
+            return sb.ToString().Substring(0, sb.ToString().LastIndexOf("AND ")) + osb.ToString().TrimEnd(',');
         }
 
     }
