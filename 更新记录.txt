@@ -46,3 +46,6 @@
 2014.11.20
 1.增加ModelAttribute配置支持多validate检测
 2.支持Model的ValidateAttribute配置用户自定义提示
+
+2014.11.21
+1.增加查询排序支持
