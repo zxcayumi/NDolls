@@ -18,7 +18,7 @@ namespace NDolls.Data.Entity
         /// <param name="conditionType">字段查询类别</param>
         public ConditionItem(string fieldName, object fieldValue, SearchType conditionType)
         {
-            this.itemType = ItemType.ConditionItem;
+            this.ItemType = ItemType.ConditionItem;
 
             this.FieldName = fieldName;
             this.FieldValue = fieldValue;
