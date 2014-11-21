@@ -13,7 +13,7 @@ namespace NDolls.Data.Entity
         /// <summary>
         /// 项类别
         /// </summary>
-        protected ItemType itemType { get; set; }
+        public ItemType ItemType { get; set; }
 
     }
 
