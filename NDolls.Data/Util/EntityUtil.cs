@@ -246,7 +246,7 @@ namespace NDolls.Data.Util
                     case AssociationType.Aggregation://聚合关系
                     case AssociationType.Composition://组合关系
                         dynamic list =
-                            repository.FindByCondition(new List<ConditionItem> { new ConditionItem(aField.RefField, GetValueByField((EntityBase)model, aField.RefField), SearchType.Accurate) });                        
+                            repository.FindByCondition(new List<Item> { new ConditionItem(aField.RefField, GetValueByField((EntityBase)model, aField.RefField), SearchType.Accurate) });                        
                         info.SetValue(model,list, null);
                         break;
                     default:
