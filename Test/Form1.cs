@@ -95,7 +95,7 @@ namespace Test
         {
             Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
 
-            List<ConditionItem> conditions = new List<ConditionItem>();
+            List<Item> conditions = new List<Item>();
             conditions.Add(new ConditionItem("UserRole","testrol", SearchType.Unequal));
 
             List<Model.Sys_User> list = r.FindByCondition(conditions);
@@ -183,7 +183,7 @@ namespace Test
         private void button12_Click(object sender, EventArgs e)
         {
             Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
-            List<ConditionItem> conditions = new List<ConditionItem>();
+            List<Item> conditions = new List<Item>();
             conditions.Add(new ConditionItem("UserName", "zxcayumi,admin", SearchType.ValuesIn));
             List<Model.Sys_User> list = r.FindByCondition(conditions);
 
@@ -245,7 +245,7 @@ namespace Test
         {
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
 
-            List<ConditionItem> conditions = new List<ConditionItem>();
+            List<Item> conditions = new List<Item>();
             conditions.Add(new ConditionItem("CreateTime", "1990-1-1", SearchType.Greater));
 
             List<Model.Sys_User> list = r.FindByCondition(conditions);
@@ -256,7 +256,7 @@ namespace Test
         {
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
 
-            List<ConditionItem> conditions = new List<ConditionItem>();
+            List<Item> conditions = new List<Item>();
             conditions.Add(new ConditionItem("CreateTime", DateTime.Now.ToString(), SearchType.Lower));
             
             List<Model.Sys_User> list = r.FindByCondition(conditions);
@@ -267,7 +267,7 @@ namespace Test
         {
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
 
-            List<ConditionItem> conditions = new List<ConditionItem>();
+            List<Item> conditions = new List<Item>();
             conditions.Add(new ConditionItem("CreateTime", DateTime.Now.ToString(), SearchType.Lower));
             conditions.Add(new ConditionItem("CreateTime", "1990-1-1", SearchType.Greater));
 
@@ -291,7 +291,7 @@ namespace Test
         {
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
 
-            List<ConditionItem> conditions = new List<ConditionItem>();
+            List<Item> conditions = new List<Item>();
             conditions.Add(new ConditionItem("UserName", "abc", SearchType.Unequal));
             conditions.Add(new ConditionItem("UserName", "bcd", SearchType.Unequal));
             conditions.Add(new ConditionItem("UserName", "cde", SearchType.Unequal));
@@ -303,7 +303,7 @@ namespace Test
         private void button24_Click(object sender, EventArgs e)
         {
             Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
-            List<ConditionItem> conditions = new List<ConditionItem>();
+            List<Item> conditions = new List<Item>();
             conditions.Add(new ConditionItem("UserName", "abc,def", SearchType.ValuesNotIn));
             List<Model.Sys_User> list = r.FindByCondition(conditions);
             dataGridView1.DataSource = list;
@@ -312,10 +312,21 @@ namespace Test
         private void button25_Click(object sender, EventArgs e)
         {
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
-            List<ConditionItem> conditions = new List<ConditionItem>();
+            List<Item> conditions = new List<Item>();
             conditions.Add(new ConditionItem("UserName", "admin", SearchType.Accurate));
 
             MessageBox.Show(r.Exist(conditions).ToString());
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
+            List<Item> conditions = new List<Item>();
+            conditions.Add(new ConditionItem("CreateTime", "2015-01-01", SearchType.Lower));
+            conditions.Add(new OrderItem("UserRole", OrderType.ASC));
+            conditions.Add(new OrderItem("UserName", OrderType.DESC));
+
+            dataGridView1.DataSource = r.FindByCondition(conditions);
         }
     }
 }

@@ -55,7 +55,9 @@
     <Compile Include="Entity\EntityBase.cs" />
     <Compile Include="Entity\Fields.cs" />
     <Compile Include="Entity\ConditionItem.cs" />
+    <Compile Include="Entity\Item.cs" />
     <Compile Include="Entity\OptEntity.cs" />
+    <Compile Include="Entity\OrderItem.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
