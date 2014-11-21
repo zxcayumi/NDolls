@@ -17,7 +17,7 @@ namespace NDolls.Data.Entity
         /// <param name="orderType">字段排序类别</param>
         public OrderItem(string fieldName, OrderType orderType)
         {
-            this.itemType = ItemType.OrderItem;
+            this.ItemType = ItemType.OrderItem;
 
             this.FieldName = fieldName;
             this.OrderType = orderType;
