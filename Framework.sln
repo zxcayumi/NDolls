@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NDolls.Win", "NDolls.Win\ND
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NDolls.NET", "NDolls.NET\NDolls.NET.csproj", "{19B2E2EF-0774-4388-8F7F-FE6F82D849A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilTest", "UtilTest\UtilTest.csproj", "{B8D77F14-D401-4BBB-B662-40B3078F6873}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,16 @@ Global
 		{19B2E2EF-0774-4388-8F7F-FE6F82D849A6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{19B2E2EF-0774-4388-8F7F-FE6F82D849A6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{19B2E2EF-0774-4388-8F7F-FE6F82D849A6}.Release|x86.ActiveCfg = Release|Any CPU
+		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Debug|x86.ActiveCfg = Debug|x86
+		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Debug|x86.Build.0 = Debug|x86
+		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Release|Any CPU.ActiveCfg = Release|x86
+		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Release|Mixed Platforms.Build.0 = Release|x86
+		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Release|x86.ActiveCfg = Release|x86
+		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,5 +97,6 @@ Global
 		{13B022C9-CBAF-4A55-8620-84FFF25626A0} = {69CFD75A-F578-49C6-B0D5-E56BAC8C7B1D}
 		{19B2E2EF-0774-4388-8F7F-FE6F82D849A6} = {69CFD75A-F578-49C6-B0D5-E56BAC8C7B1D}
 		{A5D7F44F-A6D2-4A5B-8E59-635E7BFD7B24} = {65894266-1F94-41C2-A749-1D525BE5D49C}
+		{B8D77F14-D401-4BBB-B662-40B3078F6873} = {65894266-1F94-41C2-A749-1D525BE5D49C}
 	EndGlobalSection
 EndGlobal

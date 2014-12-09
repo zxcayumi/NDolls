@@ -19,4 +19,4 @@ list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 
 1.NotValuesIn未支持--已支持
 
-1.自定义查询字段不支持
+1.事务支持
