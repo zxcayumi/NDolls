@@ -71,7 +71,8 @@ namespace NDolls.Core.Util
             }
         }
 
-        public static string EncodeJsString(string s)
+        //？？？？未测试
+        public static string EncodeJson(string s)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("\"");
