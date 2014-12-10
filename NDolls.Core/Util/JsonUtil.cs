@@ -22,7 +22,7 @@ namespace NDolls.Core.Util
             {
                 if (dic[key].GetType() == typeof(String))
                 {
-                    json.Append("\"" + key + "\":" + "\"" + dic[key] + "\",");
+                    json.Append("\"" + key + "\":" + "\"" + EncodeJData(dic[key].ToString()) + "\",");
                 }
                 else
                 {
@@ -71,11 +71,14 @@ namespace NDolls.Core.Util
             }
         }
 
-        //？？？？未测试
-        public static string EncodeJson(string s)
+        /// <summary>
+        /// 对json数据内容（非完整的json字符串）进行编码，避免非法字符
+        /// </summary>
+        /// <param name="s">json数据内容</param>
+        /// <returns>编码后的json数据内容</returns>
+        public static string EncodeJData(string s)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("\"");
             foreach (char c in s)
             {
                 switch (c)
@@ -114,7 +117,6 @@ namespace NDolls.Core.Util
                         break;
                 }
             }
-            sb.Append("\"");
 
             return sb.ToString();
         }

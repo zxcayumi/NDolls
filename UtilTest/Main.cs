@@ -26,6 +26,11 @@ namespace UtilTest
             dic.Add("CModel", new Course("面试", 99));
             varMsg.Text = NDolls.Core.Util.JsonUtil.DicToJson(dic);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Hello World");
+        }
     }
 
     public class Course
