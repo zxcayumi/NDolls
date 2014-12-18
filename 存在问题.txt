@@ -19,4 +19,5 @@ list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 
 1.NotValuesIn未支持--已支持
 
-1.事务支持
+1.还不支持事务处理；
+2.可以为空，但若填写信息则必须验证格式的属性处理？
