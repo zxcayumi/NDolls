@@ -8,6 +8,8 @@ namespace NDolls.Data
 {
     public interface IRepository<T> where T:EntityBase
     {
+        List<Attribute.CustomAttribute> CustomFields { get; }
+
         List<T> FindAll();
         List<T> Find(T model);
         List<T> Find(int top, T model);
