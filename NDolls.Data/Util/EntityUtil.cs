@@ -157,6 +157,17 @@ namespace NDolls.Data.Util
                             fields.ValidateFields.Add(obj);
                         }
                     }
+
+                    //获取用户自定义字段
+                    objs = info.GetCustomAttributes(typeof(CustomAttribute), false);
+                    if (objs != null && objs.Length > 0)
+                    {
+                        foreach (CustomAttribute obj in objs)
+                        {
+                            obj.FieldName = info.Name;//单独赋值(对应属性的变量名)
+                            fields.CustomFields.Add(obj);
+                        }
+                    }
                 }
 
                 Storage.ClassFieldsDic.Add(type, fields);

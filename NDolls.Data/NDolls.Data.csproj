@@ -47,6 +47,7 @@
     <Compile Include="Attribute\AssociationAttribute.cs" />
     <Compile Include="Attribute\AssociationType.cs" />
     <Compile Include="Attribute\CascadeType.cs" />
+    <Compile Include="Attribute\CustomAttribute.cs" />
     <Compile Include="Attribute\DataFieldAttribute.cs" />
     <Compile Include="Attribute\EntityAttribute.cs" />
     <Compile Include="Attribute\ValidateAttribute.cs" />
@@ -63,7 +64,7 @@
     <Compile Include="Repository.cs" />
     <Compile Include="RepositoryBase.cs" />
     <Compile Include="RepositoryFactory.cs" />
-    <Compile Include="SQLHelper.cs" />
+    <Compile Include="DBHelper\SQLHelper.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="Util\DataConvert.cs" />
     <Compile Include="Util\EntityUtil.cs" />

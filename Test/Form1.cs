@@ -328,5 +328,11 @@ namespace Test
 
             dataGridView1.DataSource = r.FindByCondition(conditions);
         }
+
+        private void btnCustom_Click(object sender, EventArgs e)
+        {
+            Repository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User") as Repository<Model.Sys_User>;
+            List<NDolls.Data.Attribute.CustomAttribute> list = r.CustomFields;
+        }
     }
 }

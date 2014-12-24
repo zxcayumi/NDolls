@@ -67,6 +67,5 @@ namespace NDolls.Data.Attribute
         /// </summary>
         public CascadeType CasType { get; set; }
 
-
     }
 }

@@ -55,6 +55,7 @@
             this.button24 = new System.Windows.Forms.Button();
             this.button25 = new System.Windows.Forms.Button();
             this.button26 = new System.Windows.Forms.Button();
+            this.btnCustom = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -199,7 +200,7 @@
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(12, 422);
+            this.button14.Location = new System.Drawing.Point(12, 399);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(90, 23);
             this.button14.TabIndex = 14;
@@ -209,7 +210,7 @@
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(120, 422);
+            this.button15.Location = new System.Drawing.Point(120, 399);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(105, 23);
             this.button15.TabIndex = 15;
@@ -219,7 +220,7 @@
             // 
             // button16
             // 
-            this.button16.Location = new System.Drawing.Point(243, 422);
+            this.button16.Location = new System.Drawing.Point(243, 399);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(105, 23);
             this.button16.TabIndex = 16;
@@ -229,7 +230,7 @@
             // 
             // button17
             // 
-            this.button17.Location = new System.Drawing.Point(363, 422);
+            this.button17.Location = new System.Drawing.Point(363, 399);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(118, 23);
             this.button17.TabIndex = 17;
@@ -327,11 +328,22 @@
             this.button26.UseVisualStyleBackColor = true;
             this.button26.Click += new System.EventHandler(this.button26_Click);
             // 
+            // btnCustom
+            // 
+            this.btnCustom.Location = new System.Drawing.Point(12, 455);
+            this.btnCustom.Name = "btnCustom";
+            this.btnCustom.Size = new System.Drawing.Size(75, 23);
+            this.btnCustom.TabIndex = 27;
+            this.btnCustom.Text = "自定义特性";
+            this.btnCustom.UseVisualStyleBackColor = true;
+            this.btnCustom.Click += new System.EventHandler(this.btnCustom_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 526);
+            this.Controls.Add(this.btnCustom);
             this.Controls.Add(this.button26);
             this.Controls.Add(this.button25);
             this.Controls.Add(this.button24);
@@ -395,6 +407,7 @@
         private System.Windows.Forms.Button button24;
         private System.Windows.Forms.Button button25;
         private System.Windows.Forms.Button button26;
+        private System.Windows.Forms.Button btnCustom;
     }
 }
 

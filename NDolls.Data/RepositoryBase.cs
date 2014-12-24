@@ -39,6 +39,17 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 用户自定义特性信息
+        /// </summary>
+        public List<Attribute.CustomAttribute> CustomFields
+        {
+            get
+            {
+                return EntityUtil.GetFieldsByType(typeof(T)).CustomFields;
+            }
+        }
+
+        /// <summary>
         /// 验证实体对象，并返回错误信息
         /// </summary>
         public String Validate(T entity)

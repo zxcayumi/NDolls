@@ -6,7 +6,7 @@ using System.Text;
 namespace NDolls.Data.Attribute
 {
     /// <summary>
-    /// 实体类特性描述
+    /// 字段验证特性类
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = true)]
     public class ValidateAttribute : System.Attribute
@@ -77,7 +77,7 @@ namespace NDolls.Data.Attribute
         }
 
         /// <summary>
-        /// 关联对象字段名
+        /// 属性对应字段名
         /// </summary>
         public string FieldName { get; set; }
 
