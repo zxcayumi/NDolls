@@ -22,7 +22,7 @@ namespace NDolls.Core.Util
             {
                 if (dic[key].GetType() == typeof(String))
                 {
-                    json.Append("\"" + key + "\":" + "\"" + EncodeJData(dic[key].ToString()) + "\",");
+                    json.Append("\"" + key + "\":" + "\"" + EncodeData(dic[key].ToString()) + "\",");
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace NDolls.Core.Util
         /// </summary>
         /// <param name="s">json数据内容</param>
         /// <returns>编码后的json数据内容</returns>
-        public static string EncodeJData(string s)
+        public static string EncodeData(string s)
         {
             StringBuilder sb = new StringBuilder();
             foreach (char c in s)
