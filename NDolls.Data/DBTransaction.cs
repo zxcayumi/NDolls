@@ -119,8 +119,8 @@ namespace NDolls.Data
 
             foreach (DataField field in EntityUtil.GetDataFields(entity))//构造SQL参数集合
             {
-                if (field.FieldValue != null)
-                {
+                //if (field.FieldValue != null)
+                //{
                     pars.Add(new SqlParameter(field.FieldName, field.FieldValue));
 
                     if (EntityUtil.GetPrimaryKey(tableName).Contains(field.FieldName))
@@ -134,7 +134,7 @@ namespace NDolls.Data
                             fs.Append(field.FieldName + "=@" + field.FieldName + ",");
                         }
                     }
-                }
+                //}
             }
 
             return String.Format(updateSQL, tableName, fs.ToString().Trim(','), condition.Substring(0, condition.LastIndexOf("AND")));//生成UPDATE语句

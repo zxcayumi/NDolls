@@ -107,7 +107,7 @@ namespace Test
             Model.Sys_User m = new Model.Sys_User();
             m.CreateTime = DateTime.Now;
             m.Password = "123123";
-            m.Status = true;
+            m.Status = null;
             m.UpdateTime = DateTime.Now;
             m.UserName = "admin";
             m.UserRole = "update"+DateTime.Now.ToLongTimeString();
