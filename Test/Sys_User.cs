@@ -38,7 +38,7 @@ namespace Test.Model
         /// Status
         /// </summary>		
         [DataField("Status", "bit")]
-        public bool Status
+        public bool? Status
         { get; set; }
 
         /// <summary>
