@@ -119,22 +119,19 @@ namespace NDolls.Data
 
             foreach (DataField field in EntityUtil.GetDataFields(entity))//构造SQL参数集合
             {
-                //if (field.FieldValue != null)
-                //{
-                    pars.Add(new SqlParameter(field.FieldName, field.FieldValue));
+                pars.Add(new SqlParameter(field.FieldName, field.FieldValue));
 
-                    if (EntityUtil.GetPrimaryKey(tableName).Contains(field.FieldName))
+                if (EntityUtil.GetPrimaryKey(tableName).Contains(field.FieldName))
+                {
+                    condition += field.FieldName + "=@" + field.FieldName + " AND ";
+                }
+                else
+                {
+                    if (!field.IsIdentity)
                     {
-                        condition += field.FieldName + "=@" + field.FieldName + " AND ";
+                        fs.Append(field.FieldName + "=@" + field.FieldName + ",");
                     }
-                    else
-                    {
-                        if (!field.IsIdentity)
-                        {
-                            fs.Append(field.FieldName + "=@" + field.FieldName + ",");
-                        }
-                    }
-                //}
+                }
             }
 
             return String.Format(updateSQL, tableName, fs.ToString().Trim(','), condition.Substring(0, condition.LastIndexOf("AND")));//生成UPDATE语句
