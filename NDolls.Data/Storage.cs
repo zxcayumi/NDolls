@@ -37,6 +37,16 @@ namespace NDolls.Data
             get { return Storage.classFieldsDic; }
             set { Storage.classFieldsDic = value; }
         }
+
+        private static Dictionary<String, IDBHelper> dbHelperDic = new Dictionary<string, IDBHelper>();
+        /// <summary>
+        /// 数据库帮助类字典
+        /// </summary>
+        internal static Dictionary<String, IDBHelper> DBHelperDic
+        {
+            get { return Storage.dbHelperDic; }
+            set { Storage.dbHelperDic = value; }
+        }
     }
 
     class Messages

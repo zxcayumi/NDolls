@@ -334,5 +334,12 @@ namespace Test
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             List<NDolls.Data.Attribute.CustomAttribute> list = r.CustomFields;
         }
+
+        private void btnConn_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(NDolls.Data.DataConfig.ConnectionString);
+            NDolls.Data.DataConfig.ConnectionString = "zhaoceshi";
+            MessageBox.Show(NDolls.Data.DataConfig.ConnectionString);
+        }
     }
 }

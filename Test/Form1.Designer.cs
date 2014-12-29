@@ -56,6 +56,7 @@
             this.button25 = new System.Windows.Forms.Button();
             this.button26 = new System.Windows.Forms.Button();
             this.btnCustom = new System.Windows.Forms.Button();
+            this.btnConn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -338,11 +339,22 @@
             this.btnCustom.UseVisualStyleBackColor = true;
             this.btnCustom.Click += new System.EventHandler(this.btnCustom_Click);
             // 
+            // btnConn
+            // 
+            this.btnConn.Location = new System.Drawing.Point(279, 12);
+            this.btnConn.Name = "btnConn";
+            this.btnConn.Size = new System.Drawing.Size(75, 23);
+            this.btnConn.TabIndex = 28;
+            this.btnConn.Text = "连接测试";
+            this.btnConn.UseVisualStyleBackColor = true;
+            this.btnConn.Click += new System.EventHandler(this.btnConn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 526);
+            this.Controls.Add(this.btnConn);
             this.Controls.Add(this.btnCustom);
             this.Controls.Add(this.button26);
             this.Controls.Add(this.button25);
@@ -408,6 +420,7 @@
         private System.Windows.Forms.Button button25;
         private System.Windows.Forms.Button button26;
         private System.Windows.Forms.Button btnCustom;
+        private System.Windows.Forms.Button btnConn;
     }
 }
 

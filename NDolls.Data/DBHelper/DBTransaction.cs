@@ -5,6 +5,7 @@ using System.Text;
 using NDolls.Data.Entity;
 using System.Data.SqlClient;
 using NDolls.Data.Util;
+using System.Data.Common;
 
 namespace NDolls.Data
 {
@@ -17,21 +18,23 @@ namespace NDolls.Data
         private static readonly string updateSQL = "UPDATE {0} SET {1} WHERE {2}";
         private static readonly string deleteSQL = "DELETE FROM {0} WHERE {1}";
 
-        private List<SqlParameter> pars = null;//sql命令参数集合
+        private List<DbParameter> pars = null;//sql命令参数集合
         private StringBuilder fs = null;//字段sql
         private StringBuilder vs = null;//值sql
         private string sql = null;
         private string condition = null;
         private string tableName = null;
 
+        private IDBHelper dbHelper;
         private List<OptEntity> entities = new List<OptEntity>();
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="entities">操作对象集合</param>
-        public DBTransaction(List<OptEntity> entities)
+        public DBTransaction(IDBHelper dbHelper,List<OptEntity> entities)
         {
+            this.dbHelper = dbHelper;
             this.entities = entities;
         }
 
@@ -41,10 +44,10 @@ namespace NDolls.Data
         /// <returns>事务执行结果</returns>
         public bool Excute()
         {
-            using (SqlHelper.Connection)
+            using (SqlConnection conn = new SqlConnection(DataConfig.ConnectionString))
             {
-                SqlHelper.Connection.Open();
-                SqlTransaction tran = SqlHelper.Connection.BeginTransaction();
+                conn.Open();
+                SqlTransaction tran = conn.BeginTransaction();
 
                 try
                 {
@@ -69,7 +72,7 @@ namespace NDolls.Data
                         }
 
                         if (!String.IsNullOrEmpty(sql))
-                            SqlHelper.ExecuteNonQuery(tran, System.Data.CommandType.Text, sql, pars);
+                            dbHelper.ExecuteNonQuery(tran, System.Data.CommandType.Text, sql, pars);
                     }
 
                     tran.Commit();
@@ -88,7 +91,7 @@ namespace NDolls.Data
         private void resetVars()
         {
             sql = "";
-            pars = new List<SqlParameter>();
+            pars = new List<DbParameter>();
             fs = new StringBuilder();//字段sql
             vs = new StringBuilder();//值sql
         }
@@ -100,7 +103,8 @@ namespace NDolls.Data
             {
                 if (field.FieldValue != null && !field.IsIdentity)//字段值不为空 且 不是标识
                 {
-                    pars.Add(new SqlParameter(field.FieldName, field.FieldValue));
+                    pars.Add(SQLFactory.CreateParameter(field.FieldName, field.FieldValue));
+                    //pars.Add(new SqlParameter(field.FieldName, field.FieldValue));
                     fs.Append(field.FieldName + ",");
                     vs.Append("@" + field.FieldName + ",");
                 }
@@ -119,7 +123,8 @@ namespace NDolls.Data
 
             foreach (DataField field in EntityUtil.GetDataFields(entity))//构造SQL参数集合
             {
-                pars.Add(new SqlParameter(field.FieldName, field.FieldValue));
+                pars.Add(SQLFactory.CreateParameter(field.FieldName, field.FieldValue));
+                //pars.Add(new SqlParameter(field.FieldName, field.FieldValue));
 
                 if (EntityUtil.GetPrimaryKey(tableName).Contains(field.FieldName))
                 {
@@ -141,13 +146,14 @@ namespace NDolls.Data
         {
             string pk = EntityUtil.GetPrimaryKey(tableName);
             string[] pks = pk.Split(',');
-            pars = new List<SqlParameter>();
+            pars = new List<DbParameter>();
             condition = "";
 
             for (int i = 0; i < pks.Length; i++)
             {
                 condition += pks[i] + "=@" + pks[i] + " AND ";
-                pars.Add(new SqlParameter(pks[i], EntityUtil.GetValueByField(entity, pks[i])));
+                pars.Add(SQLFactory.CreateParameter(pks[i], EntityUtil.GetValueByField(entity, pks[i])));
+                //pars.Add(new SqlParameter(pks[i], EntityUtil.GetValueByField(entity, pks[i])));
             }
 
             return String.Format(deleteSQL, tableName, condition.Substring(0, condition.LastIndexOf(',')));

@@ -8,5 +8,6 @@ namespace NDolls.Data.Entity
 {
     public class EntityBase
     {
+
     }
 }

@@ -6,53 +6,22 @@ using System.Data.SqlClient;
 using System.Collections;
 using System.Net;
 using System.Collections.Generic;
+using System.Data.Common;
 
 namespace NDolls.Data
 {
-    class SqlHelper 
+    class SqlClientHelper : HelperBase, IDBHelper
     {
-        /// <summary>
-        /// 获取Assembly的运行路径
-        /// </summary>
-        private static string GetAssemblyPath()
-        {
-            string _CodeBase = System.Reflection.Assembly.GetExecutingAssembly().CodeBase;
+        // Hashtable to store cached parameters
+        private static Hashtable parmCache = Hashtable.Synchronized(new Hashtable());
 
-            _CodeBase = _CodeBase.Substring(8, _CodeBase.Length - 8);    // 8是 file:// 的长度
-
-            string[] arrSection = _CodeBase.Split(new char[] { '/' });
-
-            string _FolderPath = "";
-            for (int i = 0; i < arrSection.Length - 1; i++)
-            {
-                _FolderPath += arrSection[i] + "/";
-            }
-
-            return _FolderPath;
-        }
-
-        //Database connection strings
-        private static string connectionString = System.Configuration.ConfigurationSettings.AppSettings["ConnectionString"];
-
-        private static SqlConnection connection;
-        public static SqlConnection Connection
+        public DbConnection Connection
         {
             get
             {
-                if (connection == null || connection.ConnectionString == "")
-                {
-                    connection = new SqlConnection(connectionString);
-                }
-                return SqlHelper.connection;
+                return new SqlConnection(DataConfig.ConnectionString);
             }
-            set
-            {
-                SqlHelper.connection = value;
-            }
-        }	
-		
-        // Hashtable to store cached parameters
-        private static Hashtable parmCache = Hashtable.Synchronized(new Hashtable());
+        }
 
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset) against the database specified in the connection string 
@@ -62,11 +31,17 @@ namespace NDolls.Data
         /// <param name="commandText">the stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">an array of SqlParamters used to execute the command</param>
         /// <returns>an int representing the number of rows affected by the command</returns>
-        public static int ExecuteNonQuery(CommandType cmdType, string cmdText, List<SqlParameter> commandParameters) {
+        public int ExecuteNonQuery(CommandType cmdType, string cmdText, List<DbParameter> commandParameters)
+        {
+
+            if (ConnectionString == null || ConnectionString.Length == 0)
+                throw new ArgumentNullException("connectionString");
+            if (cmdText == null || cmdText.Length == 0)
+                throw new ArgumentNullException("commandText");
 
             SqlCommand cmd = new SqlCommand();
 
-            using (SqlConnection conn = new SqlConnection(connectionString)) 
+            using (SqlConnection conn = new SqlConnection(ConnectionString)) 
             {
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
                 int val = cmd.ExecuteNonQuery();
@@ -84,7 +59,8 @@ namespace NDolls.Data
         /// <param name="commandText">the stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">an array of SqlParamters used to execute the command</param>
         /// <returns>an int representing the number of rows affected by the command</returns>
-        public static int ExecuteNonQuery(SqlTransaction trans, CommandType cmdType, string cmdText, List<SqlParameter> commandParameters) {
+        public int ExecuteNonQuery(DbTransaction trans, CommandType cmdType, string cmdText, List<DbParameter> commandParameters)
+        {
             SqlCommand cmd = new SqlCommand();
             PrepareCommand(cmd, trans.Connection, trans, cmdType, cmdText, commandParameters);
             int val = cmd.ExecuteNonQuery();
@@ -100,9 +76,10 @@ namespace NDolls.Data
         /// <param name="commandText">the stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">an array of SqlParamters used to execute the command</param>
         /// <returns>A SqlDataReader containing the results</returns>
-        public static SqlDataReader ExecuteReader(CommandType cmdType, string cmdText, List<SqlParameter> commandParameters) {
+        public DbDataReader ExecuteReader(CommandType cmdType, string cmdText, List<DbParameter> commandParameters)
+        {
             SqlCommand cmd = new SqlCommand();
-            SqlConnection conn = new SqlConnection(connectionString);
+            SqlConnection conn = new SqlConnection(ConnectionString);
 
             // we use a try/catch here because if the method throws an exception we want to 
             // close the connection throw code, because no datareader will exist, hence the 
@@ -128,10 +105,11 @@ namespace NDolls.Data
         /// <param name="commandText">the stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">an array of SqlParamters used to execute the command</param>
         /// <returns>An object that should be converted to the expected type using Convert.To{Type}</returns>
-        public static object ExecuteScalar(CommandType cmdType, string cmdText, List<SqlParameter> commandParameters) {
+        public object ExecuteScalar(CommandType cmdType, string cmdText, List<DbParameter> commandParameters)
+        {
             SqlCommand cmd = new SqlCommand();
 
-            using (SqlConnection connection = new SqlConnection(connectionString)) {
+            using (SqlConnection connection = new SqlConnection(ConnectionString)) {
                 PrepareCommand(cmd, connection, null, cmdType, cmdText, commandParameters);
                 object val = cmd.ExecuteScalar();
                 cmd.Parameters.Clear();
@@ -145,7 +123,8 @@ namespace NDolls.Data
         /// </summary>
         /// <param name="cacheKey">Key to the parameter cache</param>
         /// <param name="cmdParms">an array of SqlParamters to be cached</param>
-        public static void CacheParameters(string cacheKey, List<SqlParameter> commandParameters) {
+        public static void CacheParameters(string cacheKey, List<DbParameter> commandParameters)
+        {
             parmCache[cacheKey] = commandParameters;
         }
 
@@ -178,7 +157,7 @@ namespace NDolls.Data
         /// <param name="cmdType">Cmd type e.g. stored procedure or text</param>
         /// <param name="cmdText">Command text, e.g. Select * from Products</param>
         /// <param name="cmdParms">SqlParameters to use in the command</param>
-        private static void PrepareCommand(SqlCommand cmd, SqlConnection conn, SqlTransaction trans, CommandType cmdType, string cmdText, List<SqlParameter> cmdParms)
+        private static void PrepareCommand(DbCommand cmd, DbConnection conn, DbTransaction trans, CommandType cmdType, string cmdText, List<DbParameter> cmdParms)
         {
 
             if (conn.State != ConnectionState.Open)
@@ -188,7 +167,7 @@ namespace NDolls.Data
             cmd.CommandText = cmdText;
 
             if (trans != null)
-                cmd.Transaction = trans;
+                cmd.Transaction = trans as SqlTransaction;
 
             cmd.CommandType = cmdType;
 
@@ -196,7 +175,7 @@ namespace NDolls.Data
             {
                 foreach (SqlParameter parm in cmdParms)
                 {
-                    if (parm.Value == null || parm.Value.ToString().Contains("0001-") || parm.Value.ToString().Contains("0001/"))
+                    if (parm.Value == null || ((parm.DbType == DbType.DateTime || parm.DbType == DbType.Date) && (parm.Value.ToString().Contains("0001"))))
                         parm.Value = DBNull.Value;
                     cmd.Parameters.Add(parm);
                 }
@@ -209,13 +188,13 @@ namespace NDolls.Data
         /// <param name="thisDataset">要加入数据库的Dataset信息</param>
         /// <param name="sql">查询语句</param>
         /// <param name="TableName">表名称,只能对单个表进行操作,多表相联系的无法实现</param>
-        public static void DataSetUpdate(DataSet thisDataset, String sql,String TableName,DataColumn[] primaryKeys) {
-            SqlDataAdapter thisAdapter = new SqlDataAdapter(sql, connectionString);
-            thisDataset.Tables[0].PrimaryKey = primaryKeys;
-            SqlCommandBuilder thisBuilder = new SqlCommandBuilder(thisAdapter);
-            thisAdapter.Update(thisDataset, TableName);
-            thisDataset.AcceptChanges();
-        }
+        //public void DataSetUpdate(DataSet thisDataset, String sql,String TableName,DataColumn[] primaryKeys) {
+        //    SqlDataAdapter thisAdapter = new SqlDataAdapter(sql, connectionString);
+        //    thisDataset.Tables[0].PrimaryKey = primaryKeys;
+        //    SqlCommandBuilder thisBuilder = new SqlCommandBuilder(thisAdapter);
+        //    thisAdapter.Update(thisDataset, TableName);
+        //    thisDataset.AcceptChanges();
+        //}
 
         /// <summary>
         /// 查询返回数据集
@@ -223,9 +202,9 @@ namespace NDolls.Data
         /// <param name="sqlString">查询语句</param>
         /// <param name="parameters">数据参数</param>
         /// <returns>符合条件的数据集</returns>
-        public static DataTable Query(string sqlString, List<SqlParameter> parameters)
+        public DataTable Query(string sqlString, List<DbParameter> parameters)
         {
-            SqlConnection thisconnection = new SqlConnection(connectionString);
+            SqlConnection thisconnection = new SqlConnection(ConnectionString);
             thisconnection.Open();
             SqlDataAdapter adapter = new SqlDataAdapter();
             SqlCommand cmd = new SqlCommand(sqlString, thisconnection);

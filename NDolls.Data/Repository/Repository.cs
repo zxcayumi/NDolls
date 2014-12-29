@@ -7,6 +7,7 @@ using System.Transactions;
 using NDolls.Data.Entity;
 using NDolls.Data.Util;
 using NDolls.Data.Attribute;
+using System.Data.Common;
 
 namespace NDolls.Data
 {
@@ -14,7 +15,7 @@ namespace NDolls.Data
     /// ORM容器处理类（SQLServer）
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Repository<T> :RepositoryBase<T>, IRepository<T> where T:EntityBase
+    public class Repository<T> : RepositoryBase<T>, IRepository<T> where T : EntityBase
     {
         public Repository()
             : base()
@@ -37,7 +38,7 @@ namespace NDolls.Data
         /// <returns>查询结果集合</returns>
         public List<T> FindAll()
         {
-            return FindByCondition(new ConditionItem("1","1", SearchType.Accurate));
+            return FindByCondition(new ConditionItem("1", "1", SearchType.Accurate));
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace NDolls.Data
         public List<T> FindByCondition(int top, List<Item> items)
         {
             //构造查询条件
-            List<SqlParameter> pars = new List<SqlParameter>();
+            List<DbParameter> pars = new List<DbParameter>();
 
             //生成查询语句
             string conSql = getConditionSQL(items, pars);//sql条件部分
@@ -87,7 +88,7 @@ namespace NDolls.Data
             sql = String.Format(selectSQL, fields, tableName, conSql);
 
             List<T> list = new List<T>();
-            list = DataConvert<T>.ToEntities(SqlHelper.Query(sql, pars));
+            list = DataConvert<T>.ToEntities(DBHelper.Query(sql, pars));
 
             return list;
         }
@@ -102,9 +103,9 @@ namespace NDolls.Data
         public List<T> FindByPage(int pageCount, int index, List<Item> items)
         {
             String sql = "SELECT TOP " + pageCount + " * FROM(SELECT row_number() OVER(ORDER BY " + primaryKey + ") row,* FROM " + tableName + " ) tt WHERE row > " + ((index - 1) * 10); ;
-            
+
             List<T> list = new List<T>();
-            list = DataConvert<T>.ToEntities(SqlHelper.Query(sql, null));
+            list = DataConvert<T>.ToEntities(DBHelper.Query(sql, null));
 
             return list;
         }
@@ -125,7 +126,7 @@ namespace NDolls.Data
         /// <param name="top">查询数量</param>
         /// <param name="model">实体对象</param>
         /// <returns>查询结果集合</returns>
-        public List<T> Find(int top,T model)
+        public List<T> Find(int top, T model)
         {
             List<Item> conditions = new List<Item>();
 
@@ -137,7 +138,7 @@ namespace NDolls.Data
 
                 if (field.FieldType.ToLower().Contains("varchar"))
                 {
-                    conditions.Add(new ConditionItem(field.FieldName,field.FieldValue, SearchType.Fuzzy));
+                    conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Fuzzy));
                 }
                 else
                 {
@@ -145,7 +146,7 @@ namespace NDolls.Data
                 }
             }
 
-            if (top == null || top < 1)
+            if (top < 1)
                 return FindByCondition(conditions);
             else
                 return FindByCondition(top, conditions);
@@ -159,20 +160,20 @@ namespace NDolls.Data
         public T FindByPK(string keyValue)
         {
             string sql = String.Format(selectSQL, "*", tableName, primaryKey + "=@" + primaryKey);
-            List<SqlParameter> pars = new List<SqlParameter>();
-            pars.Add(new SqlParameter(primaryKey,keyValue));
+            List<DbParameter> pars = new List<DbParameter>();
+            pars.Add(new SqlParameter(primaryKey, keyValue));
 
             T model = default(T);
             try
             {
-                model = DataConvert<T>.ToEntity(SqlHelper.Query(sql, pars).Rows[0]);
+                model = DataConvert<T>.ToEntity(DBHelper.Query(sql, pars).Rows[0]);
 
                 #region 级联对象加载
                 //关联对象加载
                 EntityUtil.SetAssociation(model);
                 #endregion
             }
-            catch{ }
+            catch { }
 
             return model;
         }
@@ -188,7 +189,7 @@ namespace NDolls.Data
                 return null;
 
             string condition = "";
-            List<SqlParameter> pars = new List<SqlParameter>();
+            List<DbParameter> pars = new List<DbParameter>();
             for (int i = 0; i < primaryKeys.Length; i++)
             {
                 condition += primaryKeys[i] + "=@" + primaryKeys[i] + " AND ";
@@ -200,7 +201,7 @@ namespace NDolls.Data
             T model = default(T);
             try
             {
-                model = DataConvert<T>.ToEntity(SqlHelper.Query(sql, pars).Rows[0]);
+                model = DataConvert<T>.ToEntity(DBHelper.Query(sql, pars).Rows[0]);
 
                 #region 级联对象加载
                 //关联对象加载
@@ -220,7 +221,7 @@ namespace NDolls.Data
         public List<T> Find(String customCondition)
         {
             string sql = String.Format(selectSQL, "*", tableName, customCondition);
-            return DataConvert<T>.ToEntities(SqlHelper.Query(sql, null));
+            return DataConvert<T>.ToEntities(DBHelper.Query(sql, null));
         }
 
         /// <summary>
@@ -230,7 +231,7 @@ namespace NDolls.Data
         /// <returns>执行成功的数据行数</returns>
         public int Excute(String sql)
         {
-            return SqlHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, null);
+            return DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, null);
         }
 
         /// <summary>
@@ -241,10 +242,10 @@ namespace NDolls.Data
         public bool Exist(T model)
         {
             string sql = String.Format(selectSQL, "COUNT(*)", tableName, primaryKey + "=@" + primaryKey);
-            List<SqlParameter> pars = new List<SqlParameter>();
-            pars.Add(new SqlParameter(primaryKey, EntityUtil.GetValueByField(model,primaryKey)));
+            List<DbParameter> pars = new List<DbParameter>();
+            pars.Add(new SqlParameter(primaryKey, EntityUtil.GetValueByField(model, primaryKey)));
 
-            return "0" != SqlHelper.ExecuteScalar(System.Data.CommandType.Text, sql, pars).ToString(); 
+            return "0" != DBHelper.ExecuteScalar(System.Data.CommandType.Text, sql, pars).ToString();
         }
 
         /// <summary>
@@ -254,11 +255,11 @@ namespace NDolls.Data
         /// <returns>是否存在</returns>
         public bool Exist(List<Item> items)
         {
-            List<SqlParameter> pars = new List<SqlParameter>();//构造查询条件
+            List<DbParameter> pars = new List<DbParameter>();//构造查询条件
             string conSql = getConditionSQL(items, pars);////生成查询语句,sql条件部分
             string sql = String.Format(selectSQL, "COUNT(*)", tableName, conSql);
 
-            return "0" != SqlHelper.ExecuteScalar(System.Data.CommandType.Text, sql, pars).ToString();
+            return "0" != DBHelper.ExecuteScalar(System.Data.CommandType.Text, sql, pars).ToString();
         }
 
         /// <summary>
@@ -271,7 +272,7 @@ namespace NDolls.Data
             Fields fields = EntityUtil.GetFieldsByType(model.GetType());
             List<AssociationAttribute> assocations = fields.AssociationFields;
 
-            return EntityUtil.Persist(new OptEntity(model, OptType.Create), assocations);
+            return Persist(new OptEntity(model, OptType.Create), assocations);
         }
 
         public bool Update(T model)
@@ -279,24 +280,24 @@ namespace NDolls.Data
             Fields fields = EntityUtil.GetFieldsByType(model.GetType());
             List<AssociationAttribute> assocations = fields.AssociationFields;
 
-            return EntityUtil.Persist(new OptEntity(model, OptType.Update), assocations);
+            return Persist(new OptEntity(model, OptType.Update), assocations);
         }
 
         public bool Delete(string keyValue)
         {
             string sql = String.Format(deleteSQL, tableName, primaryKey + "=@" + primaryKey);
-            List<SqlParameter> pars = new List<SqlParameter>();
+            List<DbParameter> pars = new List<DbParameter>();
             pars.Add(new SqlParameter(primaryKey, keyValue));
 
             try
             {
-                SqlHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars);
+                DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars);
                 return true;
             }
             catch
             {
                 return false;
-            }            
+            }
         }
 
         public bool Delete(string[] keyValues)
@@ -305,7 +306,7 @@ namespace NDolls.Data
                 return false;
 
             string condition = "";
-            List<SqlParameter> pars = new List<SqlParameter>();
+            List<DbParameter> pars = new List<DbParameter>();
             for (int i = 0; i < keyValues.Length; i++)
             {
                 condition += primaryKeys[i] + "=@" + primaryKeys[i] + " AND ";
@@ -313,10 +314,10 @@ namespace NDolls.Data
             }
 
             string sql = String.Format(deleteSQL, tableName, condition.Substring(0, condition.LastIndexOf("AND")));
-            
+
             try
             {
-                SqlHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars);
+                DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars);
                 return true;
             }
             catch
@@ -335,7 +336,7 @@ namespace NDolls.Data
             if (conditions.Count <= 0) return false;
             if (!conditions.Exists(p => p.ItemType != ItemType.ConditionItem)) return false;
 
-            List<SqlParameter> pars = new List<SqlParameter>();
+            List<DbParameter> pars = new List<DbParameter>();
             string conSql = getConditionSQL(conditions, pars);
 
             if (conSql == "1=1")//若无条件项，不允许删除
@@ -347,7 +348,7 @@ namespace NDolls.Data
 
             try
             {
-                SqlHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars);
+                DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars);
                 return true;
             }
             catch
@@ -362,7 +363,7 @@ namespace NDolls.Data
         /// <param name="items">sql语句项集合</param>
         /// <param name="pars">添加参数集合</param>
         /// <returns>sql字符串条件及排序部分</returns>
-        private string getConditionSQL(List<Item> items, List<SqlParameter> pars)
+        private string getConditionSQL(List<Item> items, List<DbParameter> pars)
         {
             StringBuilder sb = new StringBuilder();
             List<Item> conditions = items.FindAll(p => p.ItemType == ItemType.ConditionItem);//条件项集合
@@ -445,7 +446,7 @@ namespace NDolls.Data
                     }
                 }
             }
-            
+
             StringBuilder osb = new StringBuilder();
             if (orders != null && orders.Count > 0)
             {
