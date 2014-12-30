@@ -75,7 +75,7 @@ namespace Test
             work1.WorkType = "放活";
             m.Works = new List<Model.ECom_Work>() { work,work1};
 
-            Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             if (r.Add(m))
             {
                 MessageBox.Show("添加成功");
@@ -93,7 +93,7 @@ namespace Test
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
 
             List<Item> conditions = new List<Item>();
             conditions.Add(new ConditionItem("UserRole","testrol", SearchType.Unequal));
@@ -130,8 +130,6 @@ namespace Test
 
         private void button7_Click(object sender, EventArgs e)
         {
-            //Fields fs = NDolls.Data.Util.EntityUtil.GetFieldsByType(typeof(Test.Model.Sys_User));
-
             Model.Sys_User m = new Model.Sys_User();
             m.CreateTime = DateTime.Now;
             m.Password = "123123";
@@ -149,8 +147,8 @@ namespace Test
             m.UserRole = "role";
             m.Status = true;
 
-            Repository<Model.Sys_User> user = new Repository<Model.Sys_User>();
-            List<Model.Sys_User> list = user.Find(m);
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
+            List<Model.Sys_User> list = r.Find(m);
             dataGridView1.DataSource = list;
         }
 
@@ -164,7 +162,7 @@ namespace Test
             m.UserName = "sdfsd";//验证不允许为空
             m.UserRole = "zDdk#11.com";//"update" + DateTime.Now.ToLongTimeString();//验证为邮箱格式
 
-            Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             String error = r.Validate(m);
             MessageBox.Show(error);
         }
@@ -176,13 +174,13 @@ namespace Test
 
         private void button11_Click(object sender, EventArgs e)
         {
-            Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             dataGridView1.DataSource = r.FindByPage(10, 1, null);
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
-            Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             List<Item> conditions = new List<Item>();
             conditions.Add(new ConditionItem("UserName", "zxcayumi,admin", SearchType.ValuesIn));
             List<Model.Sys_User> list = r.FindByCondition(conditions);
@@ -192,7 +190,7 @@ namespace Test
 
         private void button13_Click(object sender, EventArgs e)
         {
-            Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             List<Model.Sys_User> list = r.Find("UserName <> 'admin'");
 
             dataGridView1.DataSource = list;
@@ -205,7 +203,7 @@ namespace Test
             m.key2 = "k22";
             m.memo = "测试下";
 
-            Repository<Model.Test_Table> r = new Repository<Model.Test_Table>();
+            IRepository<Model.Test_Table> r = RepositoryFactory<Model.Test_Table>.CreateRepository("Model.Test_Table");
             if (r.Add(m))
             {
                 MessageBox.Show("添加成功");
@@ -219,7 +217,7 @@ namespace Test
             m.key2 = "k2";
             m.memo = "测试下"+ new Random().Next(100);
 
-            Repository<Model.Test_Table> r = new Repository<Model.Test_Table>();
+            IRepository<Model.Test_Table> r = RepositoryFactory<Model.Test_Table>.CreateRepository("Model.Test_Table");
             if (r.Update(m))
             {
                 MessageBox.Show("修改成功");
@@ -228,7 +226,7 @@ namespace Test
 
         private void button16_Click(object sender, EventArgs e)
         {
-            Repository<Model.Test_Table> r = new Repository<Model.Test_Table>();
+            IRepository<Model.Test_Table> r = RepositoryFactory<Model.Test_Table>.CreateRepository("Model.Test_Table");
             if (r.Delete(new string[] { "k1", "k2" }))
             {
                 MessageBox.Show("删除成功");
@@ -237,7 +235,7 @@ namespace Test
 
         private void button17_Click(object sender, EventArgs e)
         {
-            Repository<Model.Test_Table> r = new Repository<Model.Test_Table>();
+            IRepository<Model.Test_Table> r = RepositoryFactory<Model.Test_Table>.CreateRepository("Model.Test_Table");
             Model.Test_Table m = r.FindByPK(new string[] { "k1", "k2" });
         }
 
@@ -302,7 +300,7 @@ namespace Test
 
         private void button24_Click(object sender, EventArgs e)
         {
-            Repository<Model.Sys_User> r = new Repository<Model.Sys_User>();
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             List<Item> conditions = new List<Item>();
             conditions.Add(new ConditionItem("UserName", "abc,def", SearchType.ValuesNotIn));
             List<Model.Sys_User> list = r.FindByCondition(conditions);
@@ -340,6 +338,51 @@ namespace Test
             MessageBox.Show(NDolls.Data.DataConfig.ConnectionString);
             NDolls.Data.DataConfig.ConnectionString = "zhaoceshi";
             MessageBox.Show(NDolls.Data.DataConfig.ConnectionString);
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            IRepository<Model.ECom_Work> r = RepositoryFactory<Model.ECom_Work>.CreateRepository("Model.ECom_Work");
+            dataGridView1.DataSource = r.FindAll();
+        }
+
+        private void btnTransaction_Click(object sender, EventArgs e)
+        {
+            Model.Test_Table m1 = new Model.Test_Table();
+            m1.key1 = "k001";
+            m1.key2 = "k002";
+            m1.memo = "测试下";
+
+            Model.Test_Table m2 = new Model.Test_Table();
+            m2.key1 = "k0011";
+            m2.key2 = "k0022";
+            m2.memo = "测试下2";
+
+            Model.Sys_User m3 = new Model.Sys_User();
+            m3.CreateTime = DateTime.Now;
+            m3.Password = "123123";
+            m3.Status = true;
+            m3.UpdateTime = DateTime.Now;
+            m3.UserName = "test" + DateTime.Now.Ticks.ToString();
+            m3.UserRole = "testrole";
+
+            DBTransaction tran = new DBTransaction();
+            tran.TransactionOpen();
+            IRepository<Model.Test_Table> r = RepositoryFactory<Model.Test_Table>.CreateRepository("Model.Test_Table",tran);
+            IRepository<Model.Sys_User> r1 = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User", tran);
+            try
+            {
+                r.Add(m1);
+                r.Add(m2);
+                //r1.Add(m3);
+                tran.TransactionCommit();
+                MessageBox.Show("添加成功");
+            }
+            catch
+            {
+                tran.TransactionRollback();
+                MessageBox.Show("添加失败");
+            }
         }
     }
 }

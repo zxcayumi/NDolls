@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NDolls.NET", "NDolls.NET\ND
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilTest", "UtilTest\UtilTest.csproj", "{B8D77F14-D401-4BBB-B662-40B3078F6873}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Model", "Test.Model\Test.Model.csproj", "{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,16 @@ Global
 		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Release|Mixed Platforms.Build.0 = Release|x86
 		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Release|x86.ActiveCfg = Release|x86
 		{B8D77F14-D401-4BBB-B662-40B3078F6873}.Release|x86.Build.0 = Release|x86
+		{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,5 +112,6 @@ Global
 		{19B2E2EF-0774-4388-8F7F-FE6F82D849A6} = {69CFD75A-F578-49C6-B0D5-E56BAC8C7B1D}
 		{A5D7F44F-A6D2-4A5B-8E59-635E7BFD7B24} = {65894266-1F94-41C2-A749-1D525BE5D49C}
 		{B8D77F14-D401-4BBB-B662-40B3078F6873} = {65894266-1F94-41C2-A749-1D525BE5D49C}
+		{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E} = {65894266-1F94-41C2-A749-1D525BE5D49C}
 	EndGlobalSection
 EndGlobal

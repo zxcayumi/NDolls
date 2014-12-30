@@ -8,7 +8,7 @@ namespace NDolls.Data
 {
     public static class RepositoryFactory<T> where T:EntityBase
     {
-        private static Dictionary<string, IRepository<T>> repositories = new Dictionary<string, IRepository<T>>();
+        private static Dictionary<string, object> repositories = new Dictionary<string, object>();
 
         /// <summary>
         /// 获取Repository容器
@@ -19,11 +19,34 @@ namespace NDolls.Data
         {
             if (repositories.ContainsKey(key))
             {
-                return repositories[key];
+                return (IRepository<T>)repositories[key];
             }
             else
             {
-                IRepository<T> r = new Repository<T>();
+                Type sd = typeof(T);
+                Type type = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(typeof(T));
+                IRepository<T> r = Activator.CreateInstance(type) as IRepository<T>;
+                repositories.Add(key, r);
+                return r;
+            }
+        }
+
+        /// <summary>
+        /// 获取Repository容器
+        /// </summary>
+        /// <param name="key">容器key</param>
+        /// <returns>对应的Repository容器</returns>
+        public static IRepository<T> CreateRepository(string key,DBTransaction tran)
+        {
+            if (repositories.ContainsKey(key))
+            {
+                return (IRepository<T>)repositories[key];
+            }
+            else
+            {
+                Type sd = typeof(T);
+                Type type = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(typeof(T));
+                IRepository<T> r = Activator.CreateInstance(type, tran) as IRepository<T>;
                 repositories.Add(key, r);
                 return r;
             }
@@ -36,15 +59,36 @@ namespace NDolls.Data
         /// <returns>指定类型的容器动态类</returns>
         public static object CreateRepository(Type type)
         {
-            if (repositories.ContainsKey(type.Name))
+            if (repositories.ContainsKey(type.FullName))
             {
-                return repositories[type.Name];
+                return repositories[type.FullName];
             }
             else
             {
-                //此处需改进，动态适应多数据库(Repository对应的是SQLServer数据库)？？？？
-                Type dyType = typeof(Repository<>).MakeGenericType(type);
-                return Activator.CreateInstance(dyType);
+                Type dtyp = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(type);
+                object obj = Activator.CreateInstance(dtyp);
+                repositories.Add(type.FullName, obj);
+                return obj;
+            }
+        }
+
+        /// <summary>
+        /// 获取指定类型的容器Repository容器
+        /// </summary>
+        /// <param name="type">指定的类型</param>
+        /// <returns>指定类型的容器动态类</returns>
+        public static object CreateRepository(Type type,DBTransaction tran)
+        {
+            if (repositories.ContainsKey(type.FullName))
+            {
+                return repositories[type.FullName];
+            }
+            else
+            {
+                Type dtyp = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(type);
+                object obj = Activator.CreateInstance(dtyp, tran);
+                repositories.Add(type.FullName, obj);
+                return obj;
             }
         }
 

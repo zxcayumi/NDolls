@@ -61,6 +61,7 @@
     <Compile Include="DBHelper\IDBHelper.cs" />
     <Compile Include="DBHelper\SQLFactory.cs" />
     <Compile Include="DBHelper\SQLiteHelper.cs" />
+    <Compile Include="DBHelper\TranSession.cs" />
     <Compile Include="Entity\DataField.cs" />
     <Compile Include="Entity\EntityBase.cs" />
     <Compile Include="Entity\Fields.cs" />
@@ -70,10 +71,11 @@
     <Compile Include="Entity\OrderItem.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\SqlClientRepository.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Repository\RepositoryFactory.cs" />
     <Compile Include="DBHelper\SqlClientHelper.cs" />
+    <Compile Include="Repository\SQLiteRepository.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="Util\DataConvert.cs" />
     <Compile Include="Util\EntityUtil.cs" />

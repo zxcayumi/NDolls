@@ -12,7 +12,7 @@ namespace NDolls.Data
     /// <summary>
     /// 数据库事务处理
     /// </summary>
-    class DBTransaction
+    public class DBTransaction
     {
         private static readonly string insertSQL = "INSERT INTO {0}({1}) VALUES({2})";
         private static readonly string updateSQL = "UPDATE {0} SET {1} WHERE {2}";
@@ -27,6 +27,76 @@ namespace NDolls.Data
 
         private IDBHelper dbHelper;
         private List<OptEntity> entities = new List<OptEntity>();
+
+        #region 事务处理相关
+        private static Dictionary<Guid, TranSession> tranConnectionDic = new Dictionary<Guid, TranSession>();//事务连接存储字典
+        private TranSession ts = new TranSession();
+
+        /// <summary>
+        /// 开启事务处理
+        /// </summary>
+        public void TransactionOpen()
+        {
+            Guid sid = Guid.NewGuid();
+            ts.SID = sid;
+
+            if (ts.SConnection == null)
+            {
+                ts.SConnection = SQLFactory.CreateDBConnection();
+            }
+
+            if (ts.SConnection.State != System.Data.ConnectionState.Open)
+            {
+                ts.SConnection.Open();
+            }
+
+            ts.STransaction = ts.SConnection.BeginTransaction();
+
+            
+            tranConnectionDic.Add(sid, ts);
+        }
+
+        /// <summary>
+        /// 提交事务
+        /// </summary>
+        public void TransactionCommit()
+        {
+            if (ts.STransaction != null)
+                ts.STransaction.Commit();
+            TranConnClose();
+        }
+
+        /// <summary>
+        /// 回滚事务
+        /// </summary>
+        public void TransactionRollback()
+        {
+            if (ts.STransaction != null)
+                ts.STransaction.Rollback();
+            TranConnClose();
+        }
+
+        /// <summary>
+        /// 关闭事务连接
+        /// </summary>
+        private void TranConnClose()
+        {
+            if (ts.SConnection.State == System.Data.ConnectionState.Open)
+            {
+                ts.SConnection.Close();
+                ts.SConnection = null;
+                tranConnectionDic.Remove(ts.SID);
+            }
+        }
+
+        #endregion
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public DBTransaction()
+        {
+            this.dbHelper = SQLFactory.CreateDBHelper();
+        }
 
         /// <summary>
         /// 构造函数
@@ -44,46 +114,64 @@ namespace NDolls.Data
         /// <returns>事务执行结果</returns>
         public bool Excute()
         {
-            using (SqlConnection conn = new SqlConnection(DataConfig.ConnectionString))
+            DbConnection conn = null;
+            DbTransaction tran = null;
+            if (!tranConnectionDic.ContainsKey(ts.SID))//若未开启全局事务处理
             {
+                conn = SQLFactory.CreateDBConnection();
                 conn.Open();
-                SqlTransaction tran = conn.BeginTransaction();
+                tran = conn.BeginTransaction();
+            }
+            else//若开启全局事务处理
+            {
+                conn = ts.SConnection;
+                tran = ts.STransaction;
+            }
 
-                try
+            //数据处理
+            try
+            {
+                foreach (OptEntity item in entities)
                 {
-                    foreach (OptEntity item in entities)
+                    tableName = EntityUtil.GetTableName(item.Entity.GetType());
+                    resetVars();//重置参数(新对象重新赋值)
+
+                    switch (item.Type)
                     {
-                        tableName = EntityUtil.GetTableName(item.Entity.GetType());
-                        resetVars();//重置参数(新对象重新赋值)
-
-                        switch (item.Type)
-                        {
-                            case OptType.Create://新增                            
-                                sql = getCreateSQL(item.Entity);
-                                break;
-                            case OptType.Update://修改
-                                sql = getUpdateSQL(item.Entity);
-                                break;
-                            case OptType.Save:
-                                break;
-                            case OptType.Delete://删除
-                                sql = getDeleteSQL(item.Entity);
-                                break;
-                        }
-
-                        if (!String.IsNullOrEmpty(sql))
-                            dbHelper.ExecuteNonQuery(tran, System.Data.CommandType.Text, sql, pars);
+                        case OptType.Create://新增                            
+                            sql = getCreateSQL(item.Entity);
+                            break;
+                        case OptType.Update://修改
+                            sql = getUpdateSQL(item.Entity);
+                            break;
+                        case OptType.Save:
+                            break;
+                        case OptType.Delete://删除
+                            sql = getDeleteSQL(item.Entity);
+                            break;
                     }
 
-                    tran.Commit();
-                    return true;
+                    if (!String.IsNullOrEmpty(sql))
+                        dbHelper.ExecuteNonQuery(tran, System.Data.CommandType.Text, sql, pars);
                 }
-                catch(Exception ex)
+
+                if (!tranConnectionDic.ContainsKey(ts.SID))//若未开启全局事务处理
+                {
+                    tran.Commit();
+                    conn.Close();
+                }
+                return true;
+            }
+            catch(Exception ex)
+            {
+                if (!tranConnectionDic.ContainsKey(ts.SID))//若未开启全局事务处理
                 {
                     tran.Rollback();
-                    throw (ex);
+                    conn.Close();
                 }
+                throw (ex);
             }
+            
         }
 
         #region 辅助方法

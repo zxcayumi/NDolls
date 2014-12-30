@@ -57,6 +57,7 @@
             this.button26 = new System.Windows.Forms.Button();
             this.btnCustom = new System.Windows.Forms.Button();
             this.btnConn = new System.Windows.Forms.Button();
+            this.btnTransaction = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -349,11 +350,22 @@
             this.btnConn.UseVisualStyleBackColor = true;
             this.btnConn.Click += new System.EventHandler(this.btnConn_Click);
             // 
+            // btnTransaction
+            // 
+            this.btnTransaction.Location = new System.Drawing.Point(390, 342);
+            this.btnTransaction.Name = "btnTransaction";
+            this.btnTransaction.Size = new System.Drawing.Size(75, 23);
+            this.btnTransaction.TabIndex = 29;
+            this.btnTransaction.Text = "事务处理";
+            this.btnTransaction.UseVisualStyleBackColor = true;
+            this.btnTransaction.Click += new System.EventHandler(this.btnTransaction_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 526);
+            this.Controls.Add(this.btnTransaction);
             this.Controls.Add(this.btnConn);
             this.Controls.Add(this.btnCustom);
             this.Controls.Add(this.button26);
@@ -421,6 +433,7 @@
         private System.Windows.Forms.Button button26;
         private System.Windows.Forms.Button btnCustom;
         private System.Windows.Forms.Button btnConn;
+        private System.Windows.Forms.Button btnTransaction;
     }
 }
 

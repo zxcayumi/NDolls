@@ -62,17 +62,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ECom_Work.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sys_User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test_Table.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -105,6 +102,10 @@
     <ProjectReference Include="..\NDolls.Data\NDolls.Data.csproj">
       <Project>{B0ABF5EC-7218-40B0-9550-6235C373A0A5}</Project>
       <Name>NDolls.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Test.Model\Test.Model.csproj">
+      <Project>{A50531B6-4F75-4EB1-AE82-98E2D40B6D3E}</Project>
+      <Name>Test.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
