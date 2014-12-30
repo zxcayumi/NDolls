@@ -366,6 +366,44 @@ namespace Test
             m3.UserName = "test" + DateTime.Now.Ticks.ToString();
             m3.UserRole = "testrole";
 
+            Model.ECom_Work work = new Model.ECom_Work();
+            work.Address = "zxc";
+            work.City = "zxc";
+            work.Province = "zxc";
+            work.Classification = "sdfds";
+            work.Contents = "zxc";
+            work.CreateTime = DateTime.Now;
+            work.District = "zxc";
+            work.ExpirationDate = DateTime.Now;
+            work.HTMLUrl = "zxc";
+            work.Status = true;
+            work.Title = "zxc";
+            work.TitleColor = "zxc";
+            work.UpdateTime = DateTime.Now;
+            work.Province = "sdf";
+            work.UserName = "zxcayumi";
+            work.WorkID = Guid.NewGuid().ToString();
+            work.WorkType = "放活";
+
+            Model.ECom_Work work1 = new Model.ECom_Work();
+            work1.Address = "zxc";
+            work1.City = "zxc";
+            work1.Classification = "sdfds";
+            work1.Contents = "zxc";
+            work1.CreateTime = DateTime.Now;
+            work1.District = "zxc";
+            work1.ExpirationDate = DateTime.Now;
+            work1.HTMLUrl = "zxc";
+            work1.Status = true;
+            work1.Title = "zxc";
+            work1.TitleColor = "zxc";
+            work1.UpdateTime = DateTime.Now;
+            work1.UserName = "zxcayumi";
+            work1.Province = "sdf";
+            work1.WorkID = Guid.NewGuid().ToString();
+            work1.WorkType = "放活";
+            m3.Works = new List<Model.ECom_Work>() { work, work1 };
+
             DBTransaction tran = new DBTransaction();
             tran.TransactionOpen();
             IRepository<Model.Test_Table> r = RepositoryFactory<Model.Test_Table>.CreateRepository("Model.Test_Table",tran);
@@ -374,7 +412,7 @@ namespace Test
             {
                 r.Add(m1);
                 r.Add(m2);
-                //r1.Add(m3);
+                r1.Add(m3);
                 tran.TransactionCommit();
                 MessageBox.Show("添加成功");
             }

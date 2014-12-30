@@ -472,24 +472,6 @@ namespace NDolls.Data
         #endregion
 
         #region 事务处理
-        private DbTransaction tran = null;
-
-        public void TransactionBegin()
-        {
-            tran = DBHelper.Connection.BeginTransaction();
-        }
-
-        public void TransactionCommit()
-        {
-            if (tran != null)
-                tran.Commit();
-        }
-
-        public void TransactionRollback()
-        {
-            if (tran != null)
-                tran.Rollback();
-        }
 
         /// <summary>
         /// 持久化主对象及其的关联对象信息
@@ -564,7 +546,10 @@ namespace NDolls.Data
             if (DBTran == null)
                 tran = new DBTransaction(DBHelper, entities);
             else
+            {
                 tran = DBTran;
+                tran.entities = entities;
+            }
             return tran.Excute();
         }
 

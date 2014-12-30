@@ -26,7 +26,7 @@ namespace NDolls.Data
         private string tableName = null;
 
         private IDBHelper dbHelper;
-        private List<OptEntity> entities = new List<OptEntity>();
+        public List<OptEntity> entities = new List<OptEntity>();
 
         #region 事务处理相关
         private static Dictionary<Guid, TranSession> tranConnectionDic = new Dictionary<Guid, TranSession>();//事务连接存储字典
