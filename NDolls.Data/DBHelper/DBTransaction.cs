@@ -198,7 +198,8 @@ namespace NDolls.Data
                 }
                 else if (field.FieldValue != null && !field.IsIdentity)//如果有标识字段，返回最新标识值
                 {
-                    identitySql = ";SELECT @@IDENTITY";
+                    identitySql = ";";
+                    identitySql += SQL.ResourceManager.GetString(DataConfig.DatabaseType+"Identity").Replace("{0}",EntityUtil.GetTableName(entity.GetType()));
                 }
             }
 

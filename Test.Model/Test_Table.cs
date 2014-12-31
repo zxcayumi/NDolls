@@ -13,7 +13,7 @@ namespace Test.Model
         /// <summary>
         /// id
         /// </summary>		
-        [DataField("id", "int",true)]
+        [DataField("id", "int", true)]
         public int id { get; set; }
 
         /// <summary>

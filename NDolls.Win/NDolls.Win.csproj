@@ -44,12 +44,6 @@
     <Compile Include="ControlUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NDolls.Data\NDolls.Data.csproj">
-      <Project>{B0ABF5EC-7218-40B0-9550-6235C373A0A5}</Project>
-      <Name>NDolls.Data</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

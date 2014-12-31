@@ -12,13 +12,18 @@ namespace NDolls.Data
     {
         static DataConfig()
         {
+            if (!String.IsNullOrEmpty(System.Configuration.ConfigurationManager.AppSettings["DBType"]))
+            {
+                databaseType = (DBType)Enum.Parse(typeof(DBType),System.Configuration.ConfigurationManager.AppSettings["DBType"].ToString());
+            }
+
             if (!String.IsNullOrEmpty(System.Configuration.ConfigurationManager.AppSettings["ConnectionString"]))
             {
                 connctionString = System.Configuration.ConfigurationManager.AppSettings["ConnectionString"];
             }
         }
 
-        private static DBType databaseType;
+        private static DBType databaseType = DBType.SqlClient;
         /// <summary>
         /// 数据库类别
         /// </summary>
