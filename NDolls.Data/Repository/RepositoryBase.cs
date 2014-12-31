@@ -65,7 +65,7 @@ namespace NDolls.Data
         /// <returns>查询结果集合</returns>
         public List<T> FindAll()
         {
-            return FindByCondition(new ConditionItem("1", "1", SearchType.Accurate));
+            return Find("1=1");
         }
 
         /// <summary>
@@ -367,8 +367,8 @@ namespace NDolls.Data
         protected string getConditionSQL(List<Item> items, List<DbParameter> pars)
         {
             StringBuilder sb = new StringBuilder();
-            List<Item> conditions = items.FindAll(p => p.ItemType == ItemType.ConditionItem);//条件项集合
-            List<Item> orders = items.FindAll(p => p.ItemType == ItemType.OrderItem);//排序项集合
+            List<Item> conditions = items != null ? items.FindAll(p => p.ItemType == ItemType.ConditionItem) : null;//条件项集合
+            List<Item> orders = items != null ? items.FindAll(p => p.ItemType == ItemType.OrderItem) : null;//排序项集合
 
             if (conditions == null || conditions.Count == 0)
             {
