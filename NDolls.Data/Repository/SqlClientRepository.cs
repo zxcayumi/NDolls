@@ -15,7 +15,7 @@ namespace NDolls.Data
     /// ORM容器处理类（SQLServer）
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SqlClientRepository<T> : RepositoryBase<T>, IRepository<T> where T : EntityBase
+    class SqlClientRepository<T> : RepositoryBase<T>, IRepository<T> where T : EntityBase
     {
         public SqlClientRepository()
             : base()
