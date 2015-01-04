@@ -16,6 +16,27 @@ namespace NDolls.NET
         /// <typeparam name="T">数据对象类型</typeparam>
         /// <param name="getUrl">WebAPI地址</param>
         /// <returns>获取的数据对象</returns>
+        public static string Invoke(String APIUrl)
+        {
+            System.Net.WebClient c = new System.Net.WebClient();
+            c.Encoding = Encoding.UTF8;
+            try
+            {
+                string json = c.DownloadString(APIUrl);
+                return json;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 获取数据对象
+        /// </summary>
+        /// <typeparam name="T">数据对象类型</typeparam>
+        /// <param name="getUrl">WebAPI地址</param>
+        /// <returns>获取的数据对象</returns>
         public static T GetModel<T>(String APIUrl)
         {
             System.Net.WebClient c = new System.Net.WebClient();
@@ -96,9 +117,15 @@ namespace NDolls.NET
             return Receive(req);
         }
 
-        public static bool Delete(String id, String APIUrl)
+        /// <summary>
+        /// 按主键删除
+        /// </summary>
+        /// <param name="pk">主键信息</param>
+        /// <param name="APIUrl">WebAPI地址</param>
+        /// <returns></returns>
+        public static bool Delete(String pk, String APIUrl)
         {
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(APIUrl + "?id=" + id);
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create(APIUrl + "?id=" + pk);
             req.Method = "DELETE";
 
             return Receive(req);
@@ -120,7 +147,6 @@ namespace NDolls.NET
             using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
             {
                 string responseData = reader.ReadToEnd();
-                //MessageBox.Show(responseData.Replace("\"", ""), "状态:" + response.StatusCode);
             }
 
             switch (response.StatusCode)
