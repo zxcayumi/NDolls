@@ -36,9 +36,6 @@ namespace NDolls.Core.Util
         /// <summary>
         /// 特定Model对象转为json字符串
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="model"></param>
-        /// <returns></returns>
         public static String ModelToJson<T>(T model)
         {
             if (model != null)
@@ -48,8 +45,22 @@ namespace NDolls.Core.Util
             else
             {
                 return null;
+            }            
+        }
+
+        /// <summary>
+        /// List对象集合转为json字符串
+        /// </summary>
+        public static String ListToJson<T>(List<T> list)
+        {
+            if (list != null)
+            {
+                return js.Serialize(list);
             }
-            
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
