@@ -38,16 +38,16 @@ namespace NDolls.Data
         /// <returns>对应的Repository容器</returns>
         public static IRepository<T> CreateRepository(string key,DBTransaction tran)
         {
-            if (repositories.ContainsKey(key))
+            if (repositories.ContainsKey(key + "tran"))
             {
-                return (IRepository<T>)repositories[key];
+                return (IRepository<T>)repositories[key + "tran"];
             }
             else
             {
                 Type sd = typeof(T);
                 Type type = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(typeof(T));
                 IRepository<T> r = Activator.CreateInstance(type, tran) as IRepository<T>;
-                repositories.Add(key, r);
+                repositories.Add(key + "tran", r);
                 return r;
             }
         }
@@ -79,15 +79,15 @@ namespace NDolls.Data
         /// <returns>指定类型的容器动态类</returns>
         public static object CreateRepository(Type type,DBTransaction tran)
         {
-            if (repositories.ContainsKey(type.FullName))
+            if (repositories.ContainsKey(type.FullName + "tran"))
             {
-                return repositories[type.FullName];
+                return repositories[type.FullName + "tran"];
             }
             else
             {
                 Type dtyp = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(type);
                 object obj = Activator.CreateInstance(dtyp, tran);
-                repositories.Add(type.FullName, obj);
+                repositories.Add(type.FullName + "tran", obj);
                 return obj;
             }
         }

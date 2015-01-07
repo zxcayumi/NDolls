@@ -7,27 +7,41 @@ namespace NDolls.Data.Attribute
 {
     public class AssociationAttribute : System.Attribute
     {
-        /// <summary>
-        /// 关联特性构造函数
-        /// </summary>
-        /// <param name="refField">与关联对象关联的字段名</param>
-        /// <param name="associationType">关联对象类别</param>
-        /// <param name="cascadeType">关联对象级联操作方式</param>
-        public AssociationAttribute(string refField, AssociationType associationType, CascadeType cascadeType)
-        {
-            this.RefField = refField;
-            this.AssType = associationType;
-            this.CasType = cascadeType;
-        }
+        ///// <summary>
+        ///// 关联特性构造函数
+        ///// </summary>
+        ///// <param name="refField">与关联对象关联的字段名</param>
+        ///// <param name="associationType">关联对象类别</param>
+        ///// <param name="cascadeType">关联对象级联操作方式</param>
+        //public AssociationAttribute(string refField, AssociationType associationType, CascadeType cascadeType)
+        //{
+        //    this.RefField = refField;
+        //    this.AssType = associationType;
+        //    this.CasType = cascadeType;
+        //}
+
+        ///// <summary>
+        ///// 关联特性构造函数(默认只查询关联对象)
+        ///// </summary>
+        ///// <param name="fieldName">与关联对象关联的字段名</param>
+        ///// <param name="associationType">关联对象类别</param>
+        //public AssociationAttribute(string refField, AssociationType associationType)
+        //{
+        //    this.RefField = refField;
+        //    this.AssType = associationType;
+        //    this.CasType = CascadeType.SELECT;
+        //}
 
         /// <summary>
-        /// 关联特性构造函数(默认只查询关联对象)
+        /// 关联特性构造函数(默认为级联查询)
         /// </summary>
-        /// <param name="fieldName">与关联对象关联的字段名</param>
+        /// <param name="refField">与关联对象关联的主对象字段名</param>
+        /// <param name="fieldName">关联对象字段名</param>
         /// <param name="associationType">关联对象类别</param>
-        public AssociationAttribute(string refField, AssociationType associationType)
+        public AssociationAttribute(string refField, string fieldName, AssociationType associationType)
         {
             this.RefField = refField;
+            this.ObjField = fieldName;
             this.AssType = associationType;
             this.CasType = CascadeType.SELECT;
         }
@@ -42,20 +56,25 @@ namespace NDolls.Data.Attribute
         public AssociationAttribute(string refField, string fieldName, AssociationType associationType, CascadeType cascadeType)
         {
             this.RefField = refField;
-            this.FieldName = fieldName;
+            this.ObjField = fieldName;
             this.AssType = associationType;
             this.CasType = cascadeType;
         }
 
         /// <summary>
-        /// 与关联对象关联的字段名
+        /// 配置关联特性属性的变量名
+        /// </summary>
+        public string FieldName { get; set; }
+
+        /// <summary>
+        /// 当前对象引用字段名【主键】
         /// </summary>
         public string RefField { get; set; }
 
         /// <summary>
-        /// 关联对象字段名
+        /// 关联目标对象字段名【外键】
         /// </summary>
-        public string FieldName { get; set; }
+        public string ObjField { get; set; }
 
         /// <summary>
         /// 关联关系类别

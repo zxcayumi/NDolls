@@ -544,7 +544,9 @@ namespace NDolls.Data
 
             DBTransaction tran = null;
             if (DBTran == null)
+            {
                 tran = new DBTransaction(DBHelper, entities);
+            }
             else
             {
                 tran = DBTran;
