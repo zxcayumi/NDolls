@@ -7,6 +7,7 @@ using NDolls.Data.Entity;
 using NDolls.Data.Attribute;
 using System.Reflection;
 using System.Data.Common;
+using System.Data;
 
 namespace NDolls.Data
 {
@@ -201,13 +202,23 @@ namespace NDolls.Data
         }
 
         /// <summary>
-        /// 执行非查询sql语句
+        /// 用户自定义sql语句执行（非查询语句）
         /// </summary>
         /// <param name="sql">非查询sql语句</param>
         /// <returns>执行成功的数据行数</returns>
-        public int Excute(String sql)
+        public static int Excute(String sql)
         {
-            return DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, null);
+            return SQLFactory.CreateDBHelper().ExecuteNonQuery(System.Data.CommandType.Text, sql, null);
+        }
+
+        /// <summary>
+        /// 用户自定义sql语句查询
+        /// </summary>
+        /// <param name="sql">查询语句</param>
+        /// <returns>查询结果集</returns>
+        public static DataTable Query(String sql)
+        {
+            return SQLFactory.CreateDBHelper().Query(sql, null);
         }
 
         /// <summary>
@@ -350,12 +361,21 @@ namespace NDolls.Data
         /// <summary>
         /// 用户自定义特性信息
         /// </summary>
-        public List<Attribute.CustomAttribute> CustomFields
+        protected List<Attribute.CustomAttribute> CustomFields
         {
             get
             {
                 return EntityUtil.GetFieldsByType(typeof(T)).CustomFields;
             }
+        }
+
+        /// <summary>
+        /// 按用户自定义分类查询自定义特性集合
+        /// </summary>
+        /// <param name="type">用户自定义分类</param>
+        public List<Attribute.CustomAttribute> GetCustomFieldsByType(String type)
+        {
+            return CustomFields.FindAll(f => f.CusType == type);
         }
 
         /// <summary>

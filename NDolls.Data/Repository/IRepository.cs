@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NDolls.Data.Entity;
+using System.Data;
 
 namespace NDolls.Data
 {
     public interface IRepository<T> where T:EntityBase
     {
-        List<Attribute.CustomAttribute> CustomFields { get; }
+        //List<Attribute.CustomAttribute> CustomFields { get; }
+        List<Attribute.CustomAttribute> GetCustomFieldsByType(String type);
 
         List<T> FindAll();
         List<T> Find(T model);
