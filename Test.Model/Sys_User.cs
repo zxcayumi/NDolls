@@ -55,7 +55,7 @@ namespace Test.Model
         public DateTime UpdateTime
         { get; set; }
 
-        [Association("UserName", AssociationType.Aggregation, CascadeType.ALL)]
+        [Association("UserName","UserName", AssociationType.Aggregation, CascadeType.ALL)]
         public List<ECom_Work> Works
         { get; set; }
     }
