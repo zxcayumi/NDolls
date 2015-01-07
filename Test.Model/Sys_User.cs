@@ -14,7 +14,7 @@ namespace Test.Model
         /// </summary>
         [DataField("UserName", "nvarchar")]
         [Validate("用户名", "Account")]//使用内置预制模式匹配
-        [Custom("editItem","用户名","text")]
+        [Custom("gridCol","用户名","text")]
         public string UserName
         { get; set; }
 

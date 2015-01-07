@@ -10,6 +10,8 @@ using NDolls.Core;
 using NDolls.Data;
 using NDolls.Data.Util;
 using NDolls.Data.Entity;
+using NDolls.Core.Util;
+using NDolls.Data.Attribute;
 
 namespace Test
 {
@@ -100,6 +102,7 @@ namespace Test
 
             List<Model.Sys_User> list = r.FindByCondition(conditions);
             dataGridView1.DataSource = list;
+            //MessageBox.Show(JsonUtil.ListToJson<Model.Sys_User>(list));
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -330,7 +333,7 @@ namespace Test
         private void btnCustom_Click(object sender, EventArgs e)
         {
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
-            List<NDolls.Data.Attribute.CustomAttribute> list = r.CustomFields;
+            IEnumerable<NDolls.Data.Attribute.CustomAttribute> list = r.GetCustomFieldsByType("gridCol");
         }
 
         private void btnConn_Click(object sender, EventArgs e)

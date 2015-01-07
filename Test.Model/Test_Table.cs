@@ -28,6 +28,7 @@ namespace Test.Model
         /// </summary>		
         [DataField("key2", "nvarchar")]
         [Validate("")]
+
         public string key2 { get; set; }
 
         /// <summary>
