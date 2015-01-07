@@ -52,8 +52,7 @@ namespace NDolls.Data
 
             ts.STransaction = ts.SConnection.BeginTransaction();
 
-            
-            tranConnectionDic.Add(sid, ts);
+            tranConnectionDic.Add(sid, ts);//开启批量事务操作，将TranSession存入字典
         }
 
         /// <summary>
@@ -85,11 +84,12 @@ namespace NDolls.Data
             {
                 ts.SConnection.Close();
                 ts.SConnection = null;
-                tranConnectionDic.Remove(ts.SID);
+                tranConnectionDic.Remove(ts.SID);//关闭批量事务操作，将TranSession从字典移除
             }
         }
 
         #endregion
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -155,7 +155,8 @@ namespace NDolls.Data
                         dbHelper.ExecuteNonQuery(tran, System.Data.CommandType.Text, sql, pars);
                 }
 
-                if (!tranConnectionDic.ContainsKey(ts.SID))//若未开启全局事务处理
+                //字典中存在SID：事务操作（多个对象批量操作）；字典中不存在SID：非事务操作（单个对象操作）
+                if (!tranConnectionDic.ContainsKey(ts.SID))
                 {
                     tran.Commit();
                     conn.Close();
@@ -192,7 +193,6 @@ namespace NDolls.Data
                 if (field.FieldValue != null && !field.IsIdentity)//字段值不为空 且 不是标识
                 {
                     pars.Add(SQLFactory.CreateParameter(field.FieldName, field.FieldValue));
-                    //pars.Add(new SqlParameter(field.FieldName, field.FieldValue));
                     fs.Append(field.FieldName + ",");
                     vs.Append("@" + field.FieldName + ",");
                 }

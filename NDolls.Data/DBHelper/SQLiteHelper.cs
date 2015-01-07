@@ -84,8 +84,7 @@ namespace NDolls.Data
             SQLiteCommand cmd = new SQLiteCommand();
             using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
             {
-                SQLiteTransaction trans = null;
-                PrepareCommand(cmd, trans.Connection, trans, cmdType, cmdText, cmdParms);
+                PrepareCommand(cmd, con, null, cmdType, cmdText, cmdParms);
                 object result = cmd.ExecuteScalar();
                 cmdParms.Clear();
                 return result;
