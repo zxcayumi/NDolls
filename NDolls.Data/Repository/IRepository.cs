@@ -27,6 +27,7 @@ namespace NDolls.Data
 
         bool Add(T model);
         bool Update(T model);
+        bool AddOrUpdate(T model);
         bool Delete(string keyValue);
         bool Delete(string[] keyValues);
         bool DeleteByCondition(Item item);

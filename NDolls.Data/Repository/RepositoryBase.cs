@@ -262,12 +262,34 @@ namespace NDolls.Data
             return Persist(new OptEntity(model, OptType.Create), assocations);
         }
 
+        /// <summary>
+        /// 修改实体
+        /// </summary>
+        /// <param name="model">实体对象</param>
+        /// <returns>修改是否成功</returns>
         public bool Update(T model)
         {
             Fields fields = EntityUtil.GetFieldsByType(model.GetType());
             List<AssociationAttribute> assocations = fields.AssociationFields;
 
             return Persist(new OptEntity(model, OptType.Update), assocations);
+        }
+
+        /// <summary>
+        /// 添加或修改（自动判断对象是否存在）
+        /// </summary>
+        /// <param name="model">实体对象</param>
+        /// <returns>执行是否成功</returns>
+        public bool AddOrUpdate(T model)
+        {
+            if (Exist(model))
+            {
+                return Add(model);
+            }
+            else
+            {
+                return Update(model);
+            }
         }
 
         public bool Delete(string keyValue)
