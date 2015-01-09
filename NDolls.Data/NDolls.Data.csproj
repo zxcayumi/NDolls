@@ -33,8 +33,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.94.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLL\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,23 +53,45 @@
     <Compile Include="Attribute\AssociationAttribute.cs" />
     <Compile Include="Attribute\AssociationType.cs" />
     <Compile Include="Attribute\CascadeType.cs" />
+    <Compile Include="Attribute\CustomAttribute.cs" />
     <Compile Include="Attribute\DataFieldAttribute.cs" />
     <Compile Include="Attribute\EntityAttribute.cs" />
     <Compile Include="Attribute\ValidateAttribute.cs" />
-    <Compile Include="DBTransaction.cs" />
+    <Compile Include="DataConfig.cs" />
+    <Compile Include="DBHelper\HelperBase.cs" />
+    <Compile Include="DBHelper\DBTransaction.cs" />
+    <Compile Include="DBHelper\IDBHelper.cs" />
+    <Compile Include="DBHelper\SQLFactory.cs" />
+    <Compile Include="DBHelper\SQLiteHelper.cs" />
+    <Compile Include="DBHelper\TranSession.cs" />
     <Compile Include="Entity\DataField.cs" />
     <Compile Include="Entity\EntityBase.cs" />
     <Compile Include="Entity\Fields.cs" />
     <Compile Include="Entity\ConditionItem.cs" />
+    <Compile Include="Entity\Item.cs" />
     <Compile Include="Entity\OptEntity.cs" />
-    <Compile Include="IRepository.cs" />
+    <Compile Include="Entity\OrderItem.cs" />
+    <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository.cs" />
-    <Compile Include="RepositoryBase.cs" />
-    <Compile Include="RepositoryFactory.cs" />
-    <Compile Include="SQLHelper.cs" />
+    <Compile Include="Repository\SqlClientRepository.cs" />
+    <Compile Include="Repository\RepositoryBase.cs" />
+    <Compile Include="Repository\RepositoryFactory.cs" />
+    <Compile Include="DBHelper\SqlClientHelper.cs" />
+    <Compile Include="Repository\SQLiteRepository.cs" />
+    <Compile Include="SQL.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SQL.resx</DependentUpon>
+    </Compile>
     <Compile Include="Storage.cs" />
+    <Compile Include="Util\DataConvert.cs" />
     <Compile Include="Util\EntityUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SQL.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SQL.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NDolls.Core\NDolls.Core.csproj">

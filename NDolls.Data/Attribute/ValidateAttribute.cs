@@ -6,8 +6,9 @@ using System.Text;
 namespace NDolls.Data.Attribute
 {
     /// <summary>
-    /// 实体类特性描述
+    /// 字段验证特性类
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = true)]
     public class ValidateAttribute : System.Attribute
     {
         /// <summary>
@@ -28,6 +29,20 @@ namespace NDolls.Data.Attribute
         /// <param name="expression">正则验证表达式 或 内置正则表达式key</param>
         public ValidateAttribute(string fieldDesc, string expression)
         {
+            this.FieldDesc = fieldDesc;
+            this.Nullable = false;
+            this.Expression = expression;
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="fieldName">需验证字段的名称（属性变量名）</param>
+        /// <param name="fieldDesc">字段描述</param>
+        /// <param name="expression">正则表达式</param>
+        public ValidateAttribute(string fieldName, string fieldDesc, string expression)
+        {
+            this.FieldName = fieldName;
             this.FieldDesc = fieldDesc;
             this.Nullable = false;
             this.Expression = expression;
@@ -62,7 +77,7 @@ namespace NDolls.Data.Attribute
         }
 
         /// <summary>
-        /// 关联对象字段名
+        /// 属性对应字段名
         /// </summary>
         public string FieldName { get; set; }
 

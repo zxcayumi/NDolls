@@ -8,6 +8,7 @@ namespace NDolls.Data.Attribute
     /// <summary>
     /// 实体类字段特性描述
     /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class DataFieldAttribute : System.Attribute
     {
         private string fieldName;//字段名称

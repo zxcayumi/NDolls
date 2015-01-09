@@ -8,16 +8,18 @@ namespace NDolls.Data.Entity
     /// <summary>
     /// 查询条件项
     /// </summary>
-    public class ConditionItem
+    public class ConditionItem : Item
     {
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="fieldName">查询字段(数据库列)名称</param>
         /// <param name="fieldValue">查询字段值</param>
-        /// <param name="conditionType">查询精度[精确 or 模糊]</param>
+        /// <param name="conditionType">字段查询类别</param>
         public ConditionItem(string fieldName, object fieldValue, SearchType conditionType)
         {
+            this.ItemType = ItemType.ConditionItem;
+
             this.FieldName = fieldName;
             this.FieldValue = fieldValue;
             this.ConditionType = conditionType;
@@ -60,6 +62,11 @@ namespace NDolls.Data.Entity
         /// 包含其中值
         /// </summary>
         ValuesIn,
+
+        /// <summary>
+        /// 不包含其中值
+        /// </summary>
+        ValuesNotIn,
 
         /// <summary>
         /// 大于
