@@ -282,7 +282,7 @@ namespace NDolls.Data
         /// <returns>执行是否成功</returns>
         public bool AddOrUpdate(T model)
         {
-            if (Exist(model))
+            if (!Exist(model))
             {
                 return Add(model);
             }
