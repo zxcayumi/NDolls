@@ -222,15 +222,55 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 批量保存
+        /// </summary>
+        /// <param name="entities">实体对象集合</param>
+        /// <returns>是否操作成功</returns>
+        public static bool BatchSave(List<EntityBase> entities)
+        {
+            DBTransaction tran = new DBTransaction();
+            tran.TransactionOpen();
+            try
+            {
+                object obj ;//= RepositoryFactory<EntityBase>.CreateRepository(m, tran);
+                Type type ;//= obj.GetType();
+                foreach (EntityBase m in entities)
+                {
+                    obj = RepositoryFactory<EntityBase>.CreateRepository(m, tran);
+                    type = obj.GetType();
+                    type.GetMethod("AddOrUpdate").Invoke(obj, new object[] { m });
+                }
+
+                tran.TransactionCommit();
+                return true;
+            }
+            catch
+            {
+                tran.TransactionRollback();
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 根据对象主键查询是否存在该对象
         /// </summary>
         /// <param name="keyValue">主键对应的值</param>
         /// <returns>是否存在</returns>
         public bool Exist(T model)
         {
-            string sql = String.Format(selectSQL, "COUNT(*)", tableName, primaryKey + "=@" + primaryKey);
+            String[] pks = primaryKey.Split(',');
+            String conditions = "";
             List<DbParameter> pars = new List<DbParameter>();
-            pars.Add(SQLFactory.CreateParameter(primaryKey, EntityUtil.GetValueByField(model, primaryKey)));
+            foreach(String pk in pks)
+            {
+                if(conditions != "")
+                    conditions += (" AND " + pk + "=@" + pk);
+                else
+                    conditions += (pk + "=@" + pk);
+                pars.Add(SQLFactory.CreateParameter(pk, EntityUtil.GetValueByField(model, pk)));
+            }
+
+            string sql = String.Format(selectSQL, "COUNT(*)", tableName, conditions);            
 
             return "0" != DBHelper.ExecuteScalar(System.Data.CommandType.Text, sql, pars).ToString();
         }
@@ -292,6 +332,11 @@ namespace NDolls.Data
             }
         }
 
+        /// <summary>
+        /// 按主键删除
+        /// </summary>
+        /// <param name="keyValue">主键值</param>
+        /// <returns>删除是否成功</returns>
         public bool Delete(string keyValue)
         {
             string sql = String.Format(deleteSQL, tableName, primaryKey + "=@" + primaryKey);
@@ -309,6 +354,11 @@ namespace NDolls.Data
             }
         }
 
+        /// <summary>
+        /// 按主键删除
+        /// </summary>
+        /// <param name="keyValues">主键值</param>
+        /// <returns>删除是否成功</returns>
         public bool Delete(string[] keyValues)
         {
             if (primaryKeys.Length != keyValues.Length)

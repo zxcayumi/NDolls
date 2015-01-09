@@ -23,7 +23,6 @@ namespace NDolls.Data
             }
             else
             {
-                Type sd = typeof(T);
                 Type type = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(typeof(T));
                 IRepository<T> r = Activator.CreateInstance(type) as IRepository<T>;
                 repositories.Add(key, r);
@@ -44,9 +43,29 @@ namespace NDolls.Data
             }
             else
             {
-                Type sd = typeof(T);
                 Type type = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(typeof(T));
                 IRepository<T> r = Activator.CreateInstance(type, tran) as IRepository<T>;
+                repositories.Add(key + "tran", r);
+                return r;
+            }
+        }
+
+        /// <summary>
+        /// 获取Repository容器
+        /// </summary>
+        /// <param name="key">容器key</param>
+        /// <returns>对应的Repository容器</returns>
+        public static object CreateRepository(EntityBase m , DBTransaction tran)
+        {
+            String key = m.GetType().Name;
+            if (repositories.ContainsKey(key + "tran"))
+            {
+                return repositories[key + "tran"];
+            }
+            else
+            {
+                Type type = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(m.GetType());
+                object r = Activator.CreateInstance(type, tran);
                 repositories.Add(key + "tran", r);
                 return r;
             }
