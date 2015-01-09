@@ -375,13 +375,12 @@ namespace NDolls.Data
 
             try
             {
-                DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars);
-                return true;
+                if(DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars)>0)
+                    return true;
             }
             catch
-            {
-                return false;
-            }
+            {}
+            return false;
         }
 
         public bool DeleteByCondition(Item condition)
