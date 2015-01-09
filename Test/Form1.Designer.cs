@@ -58,6 +58,8 @@
             this.btnCustom = new System.Windows.Forms.Button();
             this.btnConn = new System.Windows.Forms.Button();
             this.btnTransaction = new System.Windows.Forms.Button();
+            this.button27 = new System.Windows.Forms.Button();
+            this.btnAddOrUpdate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -360,11 +362,33 @@
             this.btnTransaction.UseVisualStyleBackColor = true;
             this.btnTransaction.Click += new System.EventHandler(this.btnTransaction_Click);
             // 
+            // button27
+            // 
+            this.button27.Location = new System.Drawing.Point(471, 342);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(75, 23);
+            this.button27.TabIndex = 30;
+            this.button27.Text = "事务保存";
+            this.button27.UseVisualStyleBackColor = true;
+            this.button27.Click += new System.EventHandler(this.button27_Click_1);
+            // 
+            // btnAddOrUpdate
+            // 
+            this.btnAddOrUpdate.Location = new System.Drawing.Point(189, 313);
+            this.btnAddOrUpdate.Name = "btnAddOrUpdate";
+            this.btnAddOrUpdate.Size = new System.Drawing.Size(79, 23);
+            this.btnAddOrUpdate.TabIndex = 31;
+            this.btnAddOrUpdate.Text = "AddOrUpdate";
+            this.btnAddOrUpdate.UseVisualStyleBackColor = true;
+            this.btnAddOrUpdate.Click += new System.EventHandler(this.btnAddOrUpdate_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 526);
+            this.Controls.Add(this.btnAddOrUpdate);
+            this.Controls.Add(this.button27);
             this.Controls.Add(this.btnTransaction);
             this.Controls.Add(this.btnConn);
             this.Controls.Add(this.btnCustom);
@@ -434,6 +458,8 @@
         private System.Windows.Forms.Button btnCustom;
         private System.Windows.Forms.Button btnConn;
         private System.Windows.Forms.Button btnTransaction;
+        private System.Windows.Forms.Button button27;
+        private System.Windows.Forms.Button btnAddOrUpdate;
     }
 }
 

@@ -425,5 +425,88 @@ namespace Test
                 MessageBox.Show("添加失败");
             }
         }
+
+        private void button27_Click_1(object sender, EventArgs e)
+        {
+            Model.Test_Table m1 = new Model.Test_Table();
+            m1.key1 = "k001";
+            m1.key2 = "k002";
+            m1.memo = "测试下";
+
+            Model.Test_Table m2 = new Model.Test_Table();
+            m2.key1 = "k0011";
+            m2.key2 = "k0022";
+            m2.memo = "测试下2";
+
+            Model.Sys_User m3 = new Model.Sys_User();
+            m3.CreateTime = DateTime.Now;
+            m3.Password = "123123";
+            m3.Status = true;
+            m3.UpdateTime = DateTime.Now;
+            m3.UserName = "test" + DateTime.Now.Ticks.ToString();
+            m3.UserRole = "testrole";
+
+            Model.ECom_Work work = new Model.ECom_Work();
+            work.Address = "zxc";
+            work.City = "zxc";
+            work.Province = "zxc";
+            work.Classification = "sdfds";
+            work.Contents = "zxc";
+            work.CreateTime = DateTime.Now;
+            work.District = "zxc";
+            work.ExpirationDate = DateTime.Now;
+            work.HTMLUrl = "zxc";
+            work.Status = true;
+            work.Title = "zxc";
+            work.TitleColor = "zxc";
+            work.UpdateTime = DateTime.Now;
+            work.Province = "sdf";
+            work.UserName = "zxcayumi";
+            work.WorkID = Guid.NewGuid().ToString();
+            work.WorkType = "放活";
+
+            Model.ECom_Work work1 = new Model.ECom_Work();
+            work1.Address = "zxc";
+            work1.City = "zxc";
+            work1.Classification = "sdfds";
+            work1.Contents = "zxc";
+            work1.CreateTime = DateTime.Now;
+            work1.District = "zxc";
+            work1.ExpirationDate = DateTime.Now;
+            work1.HTMLUrl = "zxc";
+            work1.Status = true;
+            work1.Title = "zxc";
+            work1.TitleColor = "zxc";
+            work1.UpdateTime = DateTime.Now;
+            work1.UserName = "zxcayumi";
+            work1.Province = "sdf";
+            work1.WorkID = Guid.NewGuid().ToString();
+            work1.WorkType = "放活";
+            m3.Works = new List<Model.ECom_Work>() { work, work1 };
+
+            List<EntityBase> list = new List<EntityBase>();
+            list.Add(m1);
+            list.Add(m2);
+            list.Add(m3);
+            if (RepositoryBase<EntityBase>.BatchSave(list))
+            {
+                MessageBox.Show("保存成功");
+            }
+        }
+
+        private void btnAddOrUpdate_Click(object sender, EventArgs e)
+        {
+            Test.Model.Test_Table m = new Model.Test_Table();
+            m.id = 111;
+            m.key1 = "121";
+            m.key2 = "2312";
+            m.memo = "sdfsdf";
+
+            IRepository<Test.Model.Test_Table> r = RepositoryFactory<Test.Model.Test_Table>.CreateRepository("Model.Test_Table");
+            if (r.AddOrUpdate(m))
+            {
+                MessageBox.Show("保存成功");
+            }
+        }
     }
 }
