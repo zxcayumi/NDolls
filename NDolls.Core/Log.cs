@@ -29,6 +29,7 @@ namespace NDolls.Core
         public void WriteLog(string content)
         {
             DateTime dt = DateTime.Now;
+            String filePath = "";
             try
             {
 
@@ -36,25 +37,28 @@ namespace NDolls.Core
                 {
                     Directory.CreateDirectory(logPath); //建立目录　Directory为目录对象
                 }
+
+                filePath = logPath + "\\log";
                 switch (mod)
                 {
                     case LogMod.Year:
-                        logPath += "\\" + dt.Year;
+                        filePath += dt.Year;
                         break;
                     case LogMod.Month:
-                        logPath += "\\" + dt.ToString("yyyyMM");
+                        filePath += dt.ToString("yyyyMM");
                         break;
                     case LogMod.Day:
-                        logPath += "\\" + dt.ToString("yyyyMMdd");
+                        filePath += dt.ToString("yyyyMMdd");
                         break;
                     default:
-                        logPath += "\\" + dt.ToString("yyyyMM");
+                        filePath += dt.ToString("yyyyMM");
                         break;
                 }
-                logPath += ".txt";
+                filePath += ".txt";
 
-                StreamWriter FileWriter = new StreamWriter(logPath, true); //创建日志文件
-                FileWriter.WriteLine("Time: " + DateTime.Now.ToLongDateString() + "\n");
+                StreamWriter FileWriter = new StreamWriter(filePath, true); //创建日志文件
+                FileWriter.WriteLine("Time: " + DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss"));
+                FileWriter.WriteLine(content);
                 FileWriter.Close(); //关闭StreamWriter对象
             }
             catch (Exception ex)
