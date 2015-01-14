@@ -26,3 +26,5 @@ list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 1.级联删除还未支持(Delete按主键单一主对象删除、DeleteByCondition按条件多个主对象)；
 2.未支持InsertOrUpdate--已支持
 3.查询条件OR的支持(考虑创建条件组解决ConditionGroup)；
+
+1.在同一条记录的操作 如果这个时间点有人操作了 那么别人是无法再进行操作的 操作完成后 该记录解锁 别人可以才可以进行操作
