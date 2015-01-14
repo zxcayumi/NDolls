@@ -232,8 +232,8 @@ namespace NDolls.Data
             tran.TransactionOpen();
             try
             {
-                object obj ;//= RepositoryFactory<EntityBase>.CreateRepository(m, tran);
-                Type type ;//= obj.GetType();
+                object obj ;
+                Type type ;
                 foreach (EntityBase m in entities)
                 {
                     obj = RepositoryFactory<EntityBase>.CreateRepository(m, tran);
@@ -242,12 +242,22 @@ namespace NDolls.Data
                 }
 
                 tran.TransactionCommit();
+                ClearCache(tran, entities);//事务结束清理Repository缓存
                 return true;
             }
             catch
             {
                 tran.TransactionRollback();
+                ClearCache(tran, entities);//事务结束清理Repository缓存
                 return false;
+            }
+        }
+
+        private static void ClearCache(DBTransaction tran, List<EntityBase> entities)
+        {
+            foreach (EntityBase m in entities)
+            {
+                RepositoryFactory<EntityBase>.RemoveRepository(tran.SessionID.ToString() + "_" + m.GetType().ToString());
             }
         }
 

@@ -57,7 +57,7 @@ namespace NDolls.Data
         /// <returns>对应的Repository容器</returns>
         public static IRepository<T> CreateRepository(DBTransaction tran)
         {
-            String key = tran.SessionID.ToString();
+            String key = tran.SessionID.ToString() + "_" + typeof(T).FullName;
             if (repositories.ContainsKey(key))
             {
                 return (IRepository<T>)repositories[key];
@@ -78,7 +78,7 @@ namespace NDolls.Data
         /// <returns>对应的Repository容器</returns>
         public static object CreateRepository(EntityBase m , DBTransaction tran)
         {
-            String key = tran.SessionID.ToString();
+            String key = tran.SessionID.ToString() + "_" + m.GetType().FullName;
             if (repositories.ContainsKey(key))
             {
                 return repositories[key];
@@ -99,7 +99,7 @@ namespace NDolls.Data
         /// <returns>指定类型的容器动态类</returns>
         public static object CreateRepository(Type type,DBTransaction tran)
         {
-            String key = tran.SessionID.ToString();
+            String key = tran.SessionID.ToString() + "_" + type.FullName;
             if (repositories.ContainsKey(key))
             {
                 return repositories[key];
