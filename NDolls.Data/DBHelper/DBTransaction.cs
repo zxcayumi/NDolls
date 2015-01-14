@@ -28,9 +28,35 @@ namespace NDolls.Data
         private IDBHelper dbHelper;
         public List<OptEntity> entities = new List<OptEntity>();
 
+        #region 构造函数
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public DBTransaction()
+        {
+            this.dbHelper = SQLFactory.CreateDBHelper();
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="entities">操作对象集合</param>
+        public DBTransaction(IDBHelper dbHelper, List<OptEntity> entities)
+        {
+            this.dbHelper = dbHelper;
+            this.entities = entities;
+        }
+        #endregion
+
         #region 事务处理相关
         private static Dictionary<Guid, TranSession> tranConnectionDic = new Dictionary<Guid, TranSession>();//事务连接存储字典
         private TranSession ts = new TranSession();
+
+        public Guid SessionID
+        {
+            get
+            { return ts.SID; }
+        }
 
         /// <summary>
         /// 开启事务处理
@@ -63,6 +89,9 @@ namespace NDolls.Data
             if (ts.STransaction != null)
                 ts.STransaction.Commit();
             TranConnClose();
+
+            //事务完毕后清理缓存
+            ClearCache();
         }
 
         /// <summary>
@@ -73,6 +102,20 @@ namespace NDolls.Data
             if (ts.STransaction != null)
                 ts.STransaction.Rollback();
             TranConnClose();
+
+            //事务完毕后清理缓存
+            ClearCache();
+        }
+
+        /// <summary>
+        /// 清理Repository缓存
+        /// </summary>
+        private void ClearCache()
+        {
+            foreach (OptEntity item in entities)
+            {
+                RepositoryFactory<EntityBase>.RemoveRepository(SessionID.ToString() + "_" + item.Entity.GetType().ToString());
+            }
         }
 
         /// <summary>
@@ -86,26 +129,6 @@ namespace NDolls.Data
                 ts.SConnection = null;
                 tranConnectionDic.Remove(ts.SID);//关闭批量事务操作，将TranSession从字典移除
             }
-        }
-
-        #endregion
-
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        public DBTransaction()
-        {
-            this.dbHelper = SQLFactory.CreateDBHelper();
-        }
-
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="entities">操作对象集合</param>
-        public DBTransaction(IDBHelper dbHelper,List<OptEntity> entities)
-        {
-            this.dbHelper = dbHelper;
-            this.entities = entities;
         }
 
         /// <summary>
@@ -174,6 +197,7 @@ namespace NDolls.Data
             }
             
         }
+        #endregion
 
         #region 辅助方法
 
