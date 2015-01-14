@@ -32,6 +32,12 @@ namespace NDolls.Data
         private static Dictionary<Guid, TranSession> tranConnectionDic = new Dictionary<Guid, TranSession>();//事务连接存储字典
         private TranSession ts = new TranSession();
 
+        public Guid SessionID
+        {
+            get
+            { return ts.SID; }
+        }
+
         /// <summary>
         /// 开启事务处理
         /// </summary>
@@ -63,6 +69,9 @@ namespace NDolls.Data
             if (ts.STransaction != null)
                 ts.STransaction.Commit();
             TranConnClose();
+
+            //事务完毕后清理缓存
+            RepositoryFactory<EntityBase>.RemoveRepository(SessionID.ToString());
         }
 
         /// <summary>
@@ -73,6 +82,9 @@ namespace NDolls.Data
             if (ts.STransaction != null)
                 ts.STransaction.Rollback();
             TranConnClose();
+
+            //事务完毕后清理缓存
+            RepositoryFactory<EntityBase>.RemoveRepository(SessionID.ToString());
         }
 
         /// <summary>

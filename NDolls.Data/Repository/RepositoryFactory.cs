@@ -31,47 +31,6 @@ namespace NDolls.Data
         }
 
         /// <summary>
-        /// 获取Repository容器
-        /// </summary>
-        /// <param name="key">容器key</param>
-        /// <returns>对应的Repository容器</returns>
-        public static IRepository<T> CreateRepository(string key,DBTransaction tran)
-        {
-            if (repositories.ContainsKey(key + "tran"))
-            {
-                return (IRepository<T>)repositories[key + "tran"];
-            }
-            else
-            {
-                Type type = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(typeof(T));
-                IRepository<T> r = Activator.CreateInstance(type, tran) as IRepository<T>;
-                repositories.Add(key + "tran", r);
-                return r;
-            }
-        }
-
-        /// <summary>
-        /// 获取Repository容器
-        /// </summary>
-        /// <param name="key">容器key</param>
-        /// <returns>对应的Repository容器</returns>
-        public static object CreateRepository(EntityBase m , DBTransaction tran)
-        {
-            String key = m.GetType().Name;
-            if (repositories.ContainsKey(key + "tran"))
-            {
-                return repositories[key + "tran"];
-            }
-            else
-            {
-                Type type = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(m.GetType());
-                object r = Activator.CreateInstance(type, tran);
-                repositories.Add(key + "tran", r);
-                return r;
-            }
-        }
-
-        /// <summary>
         /// 获取指定类型的容器Repository容器
         /// </summary>
         /// <param name="type">指定的类型</param>
@@ -92,23 +51,75 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 获取Repository容器
+        /// </summary>
+        /// <param name="key">容器key</param>
+        /// <returns>对应的Repository容器</returns>
+        public static IRepository<T> CreateRepository(DBTransaction tran)
+        {
+            String key = tran.SessionID.ToString();
+            if (repositories.ContainsKey(key))
+            {
+                return (IRepository<T>)repositories[key];
+            }
+            else
+            {
+                Type type = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(typeof(T));
+                IRepository<T> r = Activator.CreateInstance(type, tran) as IRepository<T>;
+                repositories.Add(key, r);
+                return r;
+            }
+        }
+
+        /// <summary>
+        /// 获取Repository容器
+        /// </summary>
+        /// <param name="key">容器key</param>
+        /// <returns>对应的Repository容器</returns>
+        public static object CreateRepository(EntityBase m , DBTransaction tran)
+        {
+            String key = tran.SessionID.ToString();
+            if (repositories.ContainsKey(key))
+            {
+                return repositories[key];
+            }
+            else
+            {
+                Type type = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(m.GetType());
+                object r = Activator.CreateInstance(type, tran);
+                repositories.Add(key, r);
+                return r;
+            }
+        }
+
+        /// <summary>
         /// 获取指定类型的容器Repository容器
         /// </summary>
         /// <param name="type">指定的类型</param>
         /// <returns>指定类型的容器动态类</returns>
         public static object CreateRepository(Type type,DBTransaction tran)
         {
-            if (repositories.ContainsKey(type.FullName + "tran"))
+            String key = tran.SessionID.ToString();
+            if (repositories.ContainsKey(key))
             {
-                return repositories[type.FullName + "tran"];
+                return repositories[key];
             }
             else
             {
                 Type dtyp = Type.GetType("NDolls.Data." + DataConfig.DatabaseType + "Repository`1").MakeGenericType(type);
                 object obj = Activator.CreateInstance(dtyp, tran);
-                repositories.Add(type.FullName + "tran", obj);
+                repositories.Add(key, obj);
                 return obj;
             }
+        }
+
+        /// <summary>
+        /// 移除key对应的Repository容器
+        /// </summary>
+        /// <param name="key">Repository容器key值</param>
+        public static void RemoveRepository(String key)
+        {
+            repositories.Remove(key);
         }
 
     }
