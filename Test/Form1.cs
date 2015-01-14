@@ -366,8 +366,8 @@ namespace Test
             m3.Password = "123123";
             m3.Status = true;
             m3.UpdateTime = DateTime.Now;
-            m3.UserName = "test" + DateTime.Now.Ticks.ToString();
-            m3.UserRole = "testrole";
+            m3.UserName = "test";// +DateTime.Now.Ticks.ToString();
+            m3.UserRole = "testrole111";
 
             Model.ECom_Work work = new Model.ECom_Work();
             work.Address = "zxc";
@@ -409,13 +409,13 @@ namespace Test
 
             DBTransaction tran = new DBTransaction();
             tran.TransactionOpen();
-            IRepository<Model.Test_Table> r = RepositoryFactory<Model.Test_Table>.CreateRepository("Model.Test_Table",tran);
-            IRepository<Model.Sys_User> r1 = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User", tran);
+            IRepository<Model.Test_Table> r = RepositoryFactory<Model.Test_Table>.CreateRepository(tran);
+            IRepository<Model.Sys_User> r1 = RepositoryFactory<Model.Sys_User>.CreateRepository(tran);
             try
             {
-                r.Add(m1);
-                r.Add(m2);
-                r1.Add(m3);
+                r.AddOrUpdate(m1);
+                r.AddOrUpdate(m2);
+                r1.AddOrUpdate(m3);
                 tran.TransactionCommit();
                 MessageBox.Show("添加成功");
             }
