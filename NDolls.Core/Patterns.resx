@@ -201,4 +201,8 @@
     <value>^[+-]?([0-9]*\.?[0-9]+|[0-9]+\.?[0-9]*)([eE][+-]?[0-9]+)?$</value>
     <comment>整数或小数</comment>
   </data>
+  <data name="PositiveNumber" xml:space="preserve">
+    <value>^([0-9]*\.?[0-9]+|[0-9]+\.?[0-9]*)([eE][0-9]+)?$</value>
+    <comment>整数或小数</comment>
+  </data>
 </root>
