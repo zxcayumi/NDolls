@@ -28,3 +28,4 @@ list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 3.查询条件OR的支持(考虑创建条件组解决ConditionGroup)；
 
 1.修改时两种策略（实体为空的信息写入数据库；实体为空的信息忽略不予处理，保留数据库信息原状态）
+2.查询的事务操作，分页缺少总页数
