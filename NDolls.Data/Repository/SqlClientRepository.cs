@@ -80,7 +80,7 @@ namespace NDolls.Data
         /// <returns>查询结果集合</returns>
         public List<T> FindByPage(int pageCount, int index, List<Item> items)
         {
-            String sql = "SELECT TOP " + pageCount + " * FROM(SELECT row_number() OVER(ORDER BY " + primaryKey + ") row,* FROM " + tableName + " ) tt WHERE row > " + ((index - 1) * 10); ;
+            String sql = "SELECT TOP " + pageCount + " * FROM(SELECT row_number() OVER(ORDER BY " + primaryKey + ") row,* FROM " + tableName + " ) tt WHERE row > " + ((index - 1) * 10); 
 
             List<T> list = new List<T>();
             list = DataConvert<T>.ToEntities(DBHelper.Query(sql, null));
