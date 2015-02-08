@@ -481,6 +481,13 @@ namespace NDolls.Data
                 {
                     fieldName = item.FieldName;
                     parameterName = item.FieldName;
+
+                    if (item.FieldValue == null)
+                    {
+                        sb.Append(fieldName + " is NULL AND ");
+                        continue;
+                    }
+
                     if (pars.Exists(p => p.ParameterName == parameterName))
                     {
                         parameterName += item.GetHashCode();
