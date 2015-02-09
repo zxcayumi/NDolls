@@ -482,12 +482,6 @@ namespace NDolls.Data
                     fieldName = item.FieldName;
                     parameterName = item.FieldName;
 
-                    if (item.FieldValue == null)
-                    {
-                        sb.Append(fieldName + " is NULL AND ");
-                        continue;
-                    }
-
                     if (pars.Exists(p => p.ParameterName == parameterName))
                     {
                         parameterName += item.GetHashCode();
@@ -496,6 +490,12 @@ namespace NDolls.Data
                     switch (item.ConditionType)
                     {
                         case SearchType.Accurate:
+                            if (item.FieldValue == null)
+                            {
+                                sb.Append(fieldName + " is NULL AND ");
+                                continue;
+                            }
+
                             sb.Append(fieldName + "=@" + parameterName + " AND ");
                             pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
                             break;
@@ -504,6 +504,12 @@ namespace NDolls.Data
                             pars.Add(SQLFactory.CreateParameter(parameterName, "%" + item.FieldValue + "%"));
                             break;
                         case SearchType.Unequal:
+                            if (item.FieldValue == null)
+                            {
+                                sb.Append(fieldName + " is NOT NULL AND ");
+                                continue;
+                            }
+
                             sb.Append(fieldName + " <> @" + parameterName + " AND ");
                             pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
                             break;
