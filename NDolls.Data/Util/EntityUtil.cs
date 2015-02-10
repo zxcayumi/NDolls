@@ -242,13 +242,23 @@ namespace NDolls.Data.Util
             Fields fields = GetFieldsByType(type);
 
             PropertyInfo info;
+            Type refType;
             foreach (AssociationAttribute aField in fields.AssociationFields)
             {
                 if (aField.CasType != CascadeType.ALL && aField.CasType != CascadeType.SELECT && aField.CasType != CascadeType.UNDELETE)
                     continue;
 
                 info = type.GetProperty(aField.FieldName);
-                dynamic repository = RepositoryFactory<EntityBase>.CreateRepository(info.PropertyType.GetGenericArguments()[0]);//此处泛型T无实际作用
+                if (aField.AssType == AssociationType.Association)//关联关系
+                {
+                    refType = info.PropertyType;
+                }
+                else//组合或聚合关系
+                {
+                    refType = info.PropertyType.GetGenericArguments()[0];
+                }
+
+                dynamic repository = RepositoryFactory<EntityBase>.CreateRepository(refType);//此处泛型T无实际作用
                 switch (aField.AssType)
                 {
                     case AssociationType.Association://关联关系
