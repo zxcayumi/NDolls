@@ -31,7 +31,7 @@ namespace NDolls.Data
         {
             get 
             {
-                if (databaseType != null && Enum.GetName(typeof(DBType), databaseType) != System.Configuration.ConfigurationManager.AppSettings["DBType"])
+                if (Enum.GetName(typeof(DBType), databaseType) != System.Configuration.ConfigurationManager.AppSettings["DBType"])
                 {
                     return databaseType;
                 }

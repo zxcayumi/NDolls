@@ -15,14 +15,6 @@ namespace NDolls.Data
         // Hashtable to store cached parameters
         private static Hashtable parmCache = Hashtable.Synchronized(new Hashtable());
 
-        public DbConnection Connection
-        {
-            get
-            {
-                return new SqlConnection(DataConfig.ConnectionString);
-            }
-        }
-
         /// <summary>
         /// Execute a SqlCommand (that returns no resultset) against the database specified in the connection string 
         /// using the provided parameters.

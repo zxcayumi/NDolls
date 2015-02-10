@@ -13,16 +13,6 @@ namespace NDolls.Data
     /// </summary>
     public class SQLiteHelper : HelperBase, IDBHelper
     {
-        /// <summary>
-        /// 数据库连接
-        /// </summary>
-        public DbConnection Connection
-        {
-            get
-            {
-                return new SQLiteConnection(DataConfig.ConnectionString);
-            }
-        }
 
         /// <summary>
         /// 执行数据库操作(新增、更新或删除)

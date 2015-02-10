@@ -11,7 +11,7 @@ namespace NDolls.Data
         /// <summary>
         /// 连接字符串
         /// </summary>
-        public static string ConnectionString
+        public string ConnectionString
         {
             get 
             {
@@ -19,5 +19,15 @@ namespace NDolls.Data
             }
         }
 
+        /// <summary>
+        /// 数据库连接
+        /// </summary>
+        public DbConnection Connection
+        {
+            get
+            {
+                return SQLFactory.CreateDBConnection();
+            }
+        }
     }
 }
