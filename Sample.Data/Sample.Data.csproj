@@ -53,6 +53,7 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Sys_User.cs" />
     <Compile Include="Model\T_Class.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,7 +88,7 @@
     <EmbeddedResource Include="Samples\SearchSample.resx">
       <DependentUpon>SearchSample.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="App.config" />
     <None Include="App_Data\test.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

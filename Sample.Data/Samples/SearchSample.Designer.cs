@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSearchEx = new System.Windows.Forms.Button();
+            this.btnFindAll = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnFindAll = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -43,27 +44,18 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(774, 100);
+            this.panel1.Size = new System.Drawing.Size(774, 64);
             this.panel1.TabIndex = 0;
             // 
-            // panel2
+            // btnSearchEx
             // 
-            this.panel2.Controls.Add(this.dataGridView1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 100);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(774, 436);
-            this.panel2.TabIndex = 1;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(774, 436);
-            this.dataGridView1.TabIndex = 0;
+            this.btnSearchEx.Location = new System.Drawing.Point(674, 437);
+            this.btnSearchEx.Name = "btnSearchEx";
+            this.btnSearchEx.Size = new System.Drawing.Size(75, 23);
+            this.btnSearchEx.TabIndex = 1;
+            this.btnSearchEx.Text = "跨库查询";
+            this.btnSearchEx.UseVisualStyleBackColor = true;
+            this.btnSearchEx.Visible = false;
             // 
             // btnFindAll
             // 
@@ -74,6 +66,26 @@
             this.btnFindAll.Text = "查询全部";
             this.btnFindAll.UseVisualStyleBackColor = true;
             this.btnFindAll.Click += new System.EventHandler(this.btnFindAll_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.btnSearchEx);
+            this.panel2.Controls.Add(this.dataGridView1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 64);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(774, 472);
+            this.panel2.TabIndex = 1;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(774, 472);
+            this.dataGridView1.TabIndex = 0;
             // 
             // SearchSample
             // 
@@ -99,5 +111,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnFindAll;
+        private System.Windows.Forms.Button btnSearchEx;
     }
 }

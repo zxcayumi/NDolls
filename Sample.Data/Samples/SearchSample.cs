@@ -12,7 +12,8 @@ namespace Sample.Data.Samples
 {
     public partial class SearchSample : Form
     {
-        IRepository<Model.T_Class> r = RepositoryFactory<Model.T_Class>.CreateRepository("Model.T_Class");
+        IRepository<Model.T_Class> r = RepositoryFactory<Model.T_Class>.CreateRepository("Sample.Data.Model.T_Class");
+        IRepository<Sample.Data.Model.Sys_User> ur = RepositoryFactory<Sample.Data.Model.Sys_User>.CreateRepository("Sample.Data.Model.Sys_User");
 
         public SearchSample()
         {
