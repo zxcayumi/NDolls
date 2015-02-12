@@ -35,6 +35,9 @@ list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 6.Model转数据库Table的支持；
 7.执行增加一条数据功能的时候，可以扩展记录这条数据的日志操作
 
+1.sqlite分页查询少一条；
+2.sqlite时间日期类型转Json时格式问题；
+
 
 
 
