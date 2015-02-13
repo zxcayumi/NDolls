@@ -24,5 +24,10 @@ namespace Sample.Data.Samples
         {            
             dataGridView1.DataSource = r.FindAll();
         }
+
+        private void btnPSearch_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = r.FindByPage(10, int.Parse(varPager.Text), null);
+        }
     }
 }
