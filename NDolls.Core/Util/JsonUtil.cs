@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NDolls.Core.Util
 {
@@ -40,7 +41,7 @@ namespace NDolls.Core.Util
         {
             if (model != null)
             {
-                return js.Serialize(model);
+                return TransDate(js.Serialize(model));
             }
             else
             {
@@ -55,7 +56,7 @@ namespace NDolls.Core.Util
         {
             if (list != null)
             {
-                return js.Serialize(list);
+                return TransDate(js.Serialize(list));
             }
             else
             {
@@ -80,6 +81,22 @@ namespace NDolls.Core.Util
             {
                 return default(T);
             }
+        }
+
+        /// <summary>
+        /// 将Date(****)类型的日期转为年月日格式
+        /// </summary>
+        private static String TransDate(String str)
+        {
+            str = Regex.Replace(str, @"\\/Date\((\d+)\)\\/", match =>
+            {
+                DateTime dt = new DateTime(1970, 1, 1);
+                dt = dt.AddMilliseconds(long.Parse(match.Groups[1].Value));
+                dt = dt.ToLocalTime();
+                return dt.ToString("yyyy-MM-dd HH:mm:ss");
+            });
+
+            return str;
         }
 
         /// <summary>

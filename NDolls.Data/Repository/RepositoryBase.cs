@@ -202,26 +202,6 @@ namespace NDolls.Data
         }
 
         /// <summary>
-        /// 用户自定义sql语句执行（非查询语句）
-        /// </summary>
-        /// <param name="sql">非查询sql语句</param>
-        /// <returns>执行成功的数据行数</returns>
-        public static int Excute(String sql)
-        {
-            return SQLFactory.CreateDBHelper().ExecuteNonQuery(System.Data.CommandType.Text, sql, null);
-        }
-
-        /// <summary>
-        /// 用户自定义sql语句查询
-        /// </summary>
-        /// <param name="sql">查询语句</param>
-        /// <returns>查询结果集</returns>
-        public static DataTable Query(String sql)
-        {
-            return SQLFactory.CreateDBHelper().Query(sql, null);
-        }
-
-        /// <summary>
         /// 批量保存
         /// </summary>
         /// <param name="entities">实体对象集合</param>
@@ -481,6 +461,7 @@ namespace NDolls.Data
                 {
                     fieldName = item.FieldName;
                     parameterName = item.FieldName;
+
                     if (pars.Exists(p => p.ParameterName == parameterName))
                     {
                         parameterName += item.GetHashCode();
@@ -489,6 +470,12 @@ namespace NDolls.Data
                     switch (item.ConditionType)
                     {
                         case SearchType.Accurate:
+                            if (item.FieldValue == null)
+                            {
+                                sb.Append(fieldName + " is NULL AND ");
+                                continue;
+                            }
+
                             sb.Append(fieldName + "=@" + parameterName + " AND ");
                             pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
                             break;
@@ -497,6 +484,12 @@ namespace NDolls.Data
                             pars.Add(SQLFactory.CreateParameter(parameterName, "%" + item.FieldValue + "%"));
                             break;
                         case SearchType.Unequal:
+                            if (item.FieldValue == null)
+                            {
+                                sb.Append(fieldName + " is NOT NULL AND ");
+                                continue;
+                            }
+
                             sb.Append(fieldName + " <> @" + parameterName + " AND ");
                             pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
                             break;
@@ -569,6 +562,28 @@ namespace NDolls.Data
             return EntityUtil.ValidateEntity(entity);
         }
 
+        #endregion
+
+        #region 自定义数据库操作
+        /// <summary>
+        /// 用户自定义sql语句执行（非查询语句）
+        /// </summary>
+        /// <param name="sql">非查询sql语句</param>
+        /// <returns>执行成功的数据行数</returns>
+        public static int Excute(String sql)
+        {
+            return SQLFactory.CreateDBHelper().ExecuteNonQuery(System.Data.CommandType.Text, sql, null);
+        }
+
+        /// <summary>
+        /// 用户自定义sql语句查询
+        /// </summary>
+        /// <param name="sql">查询语句</param>
+        /// <returns>查询结果集</returns>
+        public static DataTable Query(String sql)
+        {
+            return SQLFactory.CreateDBHelper().Query(sql, null);
+        }
         #endregion
 
         #region 事务处理

@@ -75,7 +75,7 @@ namespace NDolls.Data
         /// <returns>查询结果集合</returns>
         public List<T> FindByPage(int pageCount, int index, List<Item> items)
         {
-            String sql = "SELECT * FROM " + tableName + " WHERE {0} LIMIT " + pageCount + " OFFSET " + index;
+            String sql = "SELECT * FROM " + tableName + " WHERE {0} LIMIT " + pageCount + " OFFSET " + (index-1)*pageCount;
 
             //构造查询条件
             List<DbParameter> pars = new List<DbParameter>();

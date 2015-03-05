@@ -5,7 +5,7 @@ using System.Data;
 using NDolls.Data.Attribute;
 using NDolls.Data.Entity;
 
-namespace Sample.Data.Samples.Model
+namespace Sample.Data.Model
 {
     [Entity("T_Class", "ID")]
     public class T_Class : EntityBase
