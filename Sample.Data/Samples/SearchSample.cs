@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NDolls.Data;
+using NDolls.Data.Entity;
 
 namespace Sample.Data.Samples
 {
@@ -28,6 +29,13 @@ namespace Sample.Data.Samples
         private void btnPSearch_Click(object sender, EventArgs e)
         {
             dataGridView1.DataSource = r.FindByPage(10, int.Parse(varPager.Text), null);
+        }
+
+        private void btnConSearch_Click(object sender, EventArgs e)
+        {
+            List<Item> list = new List<Item>();
+            ConditionItem item = new ConditionItem("ClassType", "帅哥班", SearchType.Accurate);//精确查询
+            dataGridView1.DataSource = r.FindByCondition(item);
         }
     }
 }

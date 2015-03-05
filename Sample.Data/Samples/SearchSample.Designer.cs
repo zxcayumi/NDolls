@@ -37,6 +37,8 @@
             this.btnSearchEx = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnConSearch = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -44,11 +46,13 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnConSearch);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.varPager);
             this.panel1.Controls.Add(this.btnPSearch);
             this.panel1.Controls.Add(this.btnFindAll);
+            this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -131,6 +135,24 @@
             this.dataGridView1.Size = new System.Drawing.Size(774, 487);
             this.dataGridView1.TabIndex = 0;
             // 
+            // btnConSearch
+            // 
+            this.btnConSearch.Location = new System.Drawing.Point(279, 13);
+            this.btnConSearch.Name = "btnConSearch";
+            this.btnConSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnConSearch.TabIndex = 5;
+            this.btnConSearch.Text = "条件查询";
+            this.btnConSearch.UseVisualStyleBackColor = true;
+            this.btnConSearch.Click += new System.EventHandler(this.btnConSearch_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(93, -1);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(180, 43);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            // 
             // SearchSample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -161,5 +183,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox varPager;
         private System.Windows.Forms.Button btnPSearch;
+        private System.Windows.Forms.Button btnConSearch;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
