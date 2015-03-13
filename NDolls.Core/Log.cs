@@ -79,7 +79,7 @@ namespace NDolls.Core
                     throw ex;
                 }
 
-                System.Threading.Thread.Sleep(5000);
+                System.Threading.Thread.Sleep(2000);
             }
         }
     }
