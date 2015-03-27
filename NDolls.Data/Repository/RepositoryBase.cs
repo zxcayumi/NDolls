@@ -576,6 +576,32 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 用户自定义sql语句批量执行（非查询语句）
+        /// </summary>
+        /// <param name="sql">非查询sql语句集合</param>
+        /// <returns>是否成功</returns>
+        public static bool Excute(List<String> sqls)
+        {
+            DbConnection conn = SQLFactory.CreateDBConnection();
+            if (conn.State == ConnectionState.Closed) conn.Open();
+            DbTransaction tran = conn.BeginTransaction();
+            try
+            {
+                foreach (String sql in sqls)
+                {
+                    SQLFactory.CreateDBHelper().ExecuteNonQuery(tran,System.Data.CommandType.Text, sql, null);
+                }
+
+                tran.Commit();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// 用户自定义sql语句查询
         /// </summary>
         /// <param name="sql">查询语句</param>

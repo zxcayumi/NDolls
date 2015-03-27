@@ -202,7 +202,15 @@
     <comment>整数或小数</comment>
   </data>
   <data name="PositiveNumber" xml:space="preserve">
-    <value>^[1-9]\d*(\.\d+)?$</value>
+    <value>^(?:[1-9]\d*|0)(?:\.\d+)?$</value>
     <comment>正数(整数或浮点数)</comment>
+  </data>
+  <data name="NonNegativeInt" xml:space="preserve">
+    <value>^[1-9]\d*|0$</value>
+    <comment>非负整数</comment>
+  </data>
+  <data name="NonPositiveInt" xml:space="preserve">
+    <value>^-[1-9]\d*|0$</value>
+    <comment>非正整数</comment>
   </data>
 </root>
