@@ -76,6 +76,16 @@ namespace NDolls.Data.Entity
         /// <summary>
         /// 小于
         /// </summary>
-        Lower
+        Lower,
+
+        /// <summary>
+        /// 大于等于
+        /// </summary>
+        GreaterEqual,
+
+        /// <summary>
+        /// 小于等于
+        /// </summary>
+        LowerEqual
     }
 }

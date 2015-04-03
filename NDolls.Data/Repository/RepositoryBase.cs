@@ -50,7 +50,7 @@ namespace NDolls.Data
         #region 公共方法
 
         /// <summary>
-        /// 根据查询条件获取对象集合
+        /// 根据查询条件获取对象集合（由于不同数据库的分页方式不同，将实现放到子类）
         /// </summary>
         /// <param name="top">查询数量(0:查询所有)</param>
         /// <param name="conditions">查询（排序）项集合</param>
@@ -533,6 +533,14 @@ namespace NDolls.Data
                             break;
                         case SearchType.Lower:
                             sb.Append(fieldName + " < @" + parameterName + " AND ");
+                            pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
+                            break;
+                        case SearchType.GreaterEqual:
+                            sb.Append(fieldName + " >= @" + parameterName + " AND ");
+                            pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
+                            break;
+                        case SearchType.LowerEqual:
+                            sb.Append(fieldName + " <= @" + parameterName + " AND ");
                             pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
                             break;
                         default:
