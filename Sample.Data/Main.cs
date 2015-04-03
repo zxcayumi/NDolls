@@ -39,6 +39,7 @@ namespace Sample.Data
             m.ClassType = "帅哥班";
             m.CreatDate = DateTime.Now;
             m.Teacher = "zxcayumi";
+            m.StuCount = DateTime.Now.Second;
 
             if (r.Add(m))
             {

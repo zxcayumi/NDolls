@@ -37,5 +37,12 @@ namespace Sample.Data.Samples
             ConditionItem item = new ConditionItem("ClassType", "帅哥班", SearchType.Accurate);//精确查询
             dataGridView1.DataSource = r.FindByCondition(item);
         }
+
+        private void btnConSearch1_Click(object sender, EventArgs e)
+        {
+            List<Item> list = new List<Item>();
+            ConditionItem item = new ConditionItem("StuCount", "46", SearchType.GreaterEqual);//精确查询
+            dataGridView1.DataSource = r.FindByCondition(item);
+        }
     }
 }
