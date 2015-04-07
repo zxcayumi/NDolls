@@ -193,12 +193,31 @@ namespace NDolls.Data
         /// <summary>
         /// 用户自定义查询
         /// </summary>
-        /// <param name="customCondition">用户自己拼写的查询条件语句</param>
+        /// <param name="customCondition">用户自定义条件</param>
         /// <returns>查询的结果集</returns>
         public List<T> Find(String customCondition)
         {
+            if (String.IsNullOrEmpty(customCondition))
+            {
+                customCondition = "1 = 1";
+            }
             string sql = String.Format(selectSQL, "*", tableName, customCondition);
             return DataConvert<T>.ToEntities(DBHelper.Query(sql, null));
+        }
+
+        /// <summary>
+        /// 获取符合条件的数据个数
+        /// </summary>
+        /// <param name="customCondition">用户自定义条件</param>
+        /// <returns>符合条件的数据个数</returns>
+        public int GetCount(String customCondition)
+        {
+            if (String.IsNullOrEmpty(customCondition))
+            {
+                customCondition = "1 = 1";
+            }
+            string sql = String.Format(selectSQL, "COUNT(*)", tableName, customCondition);
+            return int.Parse(DBHelper.Query(sql, null).Rows[0][0].ToString());
         }
 
         /// <summary>
