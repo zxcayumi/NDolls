@@ -197,7 +197,7 @@ namespace NDolls.Data.Util
 
                 if (!item.Nullable && (fieldValue == null || fieldValue.ToString() == ""))
                 {
-                    return item.FieldName + "," + item.FieldDesc + Messages.NullableError;
+                    return item.FieldName + "," + item.FieldDesc + (item.FieldDesc == "" ? Messages.NullableError : "");
                 }
 
                 pattern = ValidateUtil.GetPattern(item.Expression);//尝试获取内置已存在正则表达式
