@@ -44,6 +44,7 @@ list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 12.查询条件OR的支持(考虑创建条件组解决ConditionGroup)；
 13.级联删除还未支持(Delete按主键单一主对象删除、DeleteByCondition按条件多个主对象)；
 14.Exist更多重载支持（ConditionItem）；
+15.根据model查询改进
 
 
 
