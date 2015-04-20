@@ -74,13 +74,13 @@ namespace NDolls.Data
         /// <summary>
         /// 分页查询
         /// </summary>
-        /// <param name="pageCount">每页大小</param>
+        /// <param name="pageSize">每页大小</param>
         /// <param name="index">当前页索引</param>
         /// <param name="items">查询（排序）项集合</param>
         /// <returns>查询结果集合</returns>
-        public List<T> FindByPage(int pageCount, int index, List<Item> items)
+        public List<T> FindByPage(int pageSize, int index, List<Item> items)
         {
-            String sql = "SELECT TOP " + pageCount + " * FROM(SELECT row_number() OVER(ORDER BY " + primaryKey + ") row,* FROM " + tableName + " ) tt WHERE row > " + ((index - 1) * 10); 
+            String sql = "SELECT TOP " + pageSize + " * FROM(SELECT row_number() OVER(ORDER BY " + primaryKey + ") row,* FROM " + tableName + " ) tt WHERE row > " + ((index - 1) * 10); 
 
             List<T> list = new List<T>();
             list = DataConvert<T>.ToEntities(DBHelper.Query(sql, null));
