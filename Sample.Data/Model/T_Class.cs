@@ -42,5 +42,10 @@ namespace Sample.Data.Model
         [DataField("CreatDate", "date")]
         public DateTime CreatDate { get; set; }
 
+        /// <summary>
+        /// 学生数量
+        /// </summary>		
+        [DataField("StuCount", "int")]
+        public int StuCount { get; set; }
     }
 }

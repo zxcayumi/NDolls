@@ -9,7 +9,6 @@ namespace NDolls.Data
 {
     public interface IRepository<T> where T:EntityBase
     {
-        //List<Attribute.CustomAttribute> CustomFields { get; }
         List<Attribute.CustomAttribute> GetCustomFieldsByType(String type);
 
         List<T> FindAll();
@@ -22,6 +21,7 @@ namespace NDolls.Data
         T FindByPK(string keyValue);
         T FindByPK(string[] keyValues);
         List<T> Find(String customCondition);
+        int GetCount(String customCondition);
 
         String Validate(T entity);
 

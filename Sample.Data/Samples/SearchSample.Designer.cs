@@ -29,16 +29,17 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnConSearch = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.varPager = new System.Windows.Forms.TextBox();
             this.btnPSearch = new System.Windows.Forms.Button();
             this.btnFindAll = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnSearchEx = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnConSearch = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnConSearch1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -46,6 +47,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnConSearch1);
             this.panel1.Controls.Add(this.btnConSearch);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
@@ -58,6 +60,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(774, 49);
             this.panel1.TabIndex = 0;
+            // 
+            // btnConSearch
+            // 
+            this.btnConSearch.Location = new System.Drawing.Point(279, 13);
+            this.btnConSearch.Name = "btnConSearch";
+            this.btnConSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnConSearch.TabIndex = 5;
+            this.btnConSearch.Text = "精确查询";
+            this.btnConSearch.UseVisualStyleBackColor = true;
+            this.btnConSearch.Click += new System.EventHandler(this.btnConSearch_Click);
             // 
             // label2
             // 
@@ -105,6 +117,14 @@
             this.btnFindAll.UseVisualStyleBackColor = true;
             this.btnFindAll.Click += new System.EventHandler(this.btnFindAll_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Location = new System.Drawing.Point(93, -1);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(180, 43);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            // 
             // btnSearchEx
             // 
             this.btnSearchEx.Location = new System.Drawing.Point(674, 437);
@@ -135,23 +155,15 @@
             this.dataGridView1.Size = new System.Drawing.Size(774, 487);
             this.dataGridView1.TabIndex = 0;
             // 
-            // btnConSearch
+            // btnConSearch1
             // 
-            this.btnConSearch.Location = new System.Drawing.Point(279, 13);
-            this.btnConSearch.Name = "btnConSearch";
-            this.btnConSearch.Size = new System.Drawing.Size(75, 23);
-            this.btnConSearch.TabIndex = 5;
-            this.btnConSearch.Text = "条件查询";
-            this.btnConSearch.UseVisualStyleBackColor = true;
-            this.btnConSearch.Click += new System.EventHandler(this.btnConSearch_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Location = new System.Drawing.Point(93, -1);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(180, 43);
-            this.groupBox1.TabIndex = 6;
-            this.groupBox1.TabStop = false;
+            this.btnConSearch1.Location = new System.Drawing.Point(360, 13);
+            this.btnConSearch1.Name = "btnConSearch1";
+            this.btnConSearch1.Size = new System.Drawing.Size(75, 23);
+            this.btnConSearch1.TabIndex = 7;
+            this.btnConSearch1.Text = "不等于查询";
+            this.btnConSearch1.UseVisualStyleBackColor = true;
+            this.btnConSearch1.Click += new System.EventHandler(this.btnConSearch1_Click);
             // 
             // SearchSample
             // 
@@ -185,5 +197,6 @@
         private System.Windows.Forms.Button btnPSearch;
         private System.Windows.Forms.Button btnConSearch;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btnConSearch1;
     }
 }

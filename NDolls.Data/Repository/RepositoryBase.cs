@@ -50,7 +50,7 @@ namespace NDolls.Data
         #region 公共方法
 
         /// <summary>
-        /// 根据查询条件获取对象集合
+        /// 根据查询条件获取对象集合（由于不同数据库的分页方式不同，将实现放到子类）
         /// </summary>
         /// <param name="top">查询数量(0:查询所有)</param>
         /// <param name="conditions">查询（排序）项集合</param>
@@ -193,12 +193,31 @@ namespace NDolls.Data
         /// <summary>
         /// 用户自定义查询
         /// </summary>
-        /// <param name="customCondition">用户自己拼写的查询条件语句</param>
+        /// <param name="customCondition">用户自定义条件</param>
         /// <returns>查询的结果集</returns>
         public List<T> Find(String customCondition)
         {
+            if (String.IsNullOrEmpty(customCondition))
+            {
+                customCondition = "1 = 1";
+            }
             string sql = String.Format(selectSQL, "*", tableName, customCondition);
             return DataConvert<T>.ToEntities(DBHelper.Query(sql, null));
+        }
+
+        /// <summary>
+        /// 获取符合条件的数据个数
+        /// </summary>
+        /// <param name="customCondition">用户自定义条件</param>
+        /// <returns>符合条件的数据个数</returns>
+        public int GetCount(String customCondition)
+        {
+            if (String.IsNullOrEmpty(customCondition))
+            {
+                customCondition = "1 = 1";
+            }
+            string sql = String.Format(selectSQL, "COUNT(*)", tableName, customCondition);
+            return int.Parse(DBHelper.Query(sql, null).Rows[0][0].ToString());
         }
 
         /// <summary>
@@ -533,6 +552,14 @@ namespace NDolls.Data
                             break;
                         case SearchType.Lower:
                             sb.Append(fieldName + " < @" + parameterName + " AND ");
+                            pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
+                            break;
+                        case SearchType.GreaterEqual:
+                            sb.Append(fieldName + " >= @" + parameterName + " AND ");
+                            pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
+                            break;
+                        case SearchType.LowerEqual:
+                            sb.Append(fieldName + " <= @" + parameterName + " AND ");
                             pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
                             break;
                         default:
