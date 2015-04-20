@@ -80,10 +80,16 @@ namespace NDolls.Data
         /// <returns>查询结果集合</returns>
         public List<T> FindByPage(int pageSize, int index, List<Item> items)
         {
-            String sql = "SELECT TOP " + pageSize + " * FROM(SELECT row_number() OVER(ORDER BY " + primaryKey + ") row,* FROM " + tableName + " ) tt WHERE row > " + ((index - 1) * 10); 
+            String sql = "SELECT TOP " + pageSize + " * FROM(SELECT row_number() OVER(ORDER BY " + primaryKey + ") row,* FROM " + tableName + " ) tt WHERE {0} AND row > " + ((index - 1) * 10);
 
+            //构造查询条件
+            List<DbParameter> pars = new List<DbParameter>();
+            //生成查询语句
+            string conSql = getConditionSQL(items, pars);//sql条件部分
+
+            sql = String.Format(sql, conSql);
             List<T> list = new List<T>();
-            list = DataConvert<T>.ToEntities(DBHelper.Query(sql, null));
+            list = DataConvert<T>.ToEntities(DBHelper.Query(sql, pars));
 
             return list;
         }
