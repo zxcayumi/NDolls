@@ -45,7 +45,7 @@ list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 13.级联删除还未支持(Delete按主键单一主对象删除、DeleteByCondition按条件多个主对象)；
 14.ORM映射时，类属性和注解中的数据库字段名称可以不一致，现在则不行；
 15.Exist更多重载支持（ConditionItem）；
-16.根据model查询改进
+16.根据model查询改进--已修正
 
 
 
