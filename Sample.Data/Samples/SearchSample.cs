@@ -33,9 +33,10 @@ namespace Sample.Data.Samples
 
         private void btnConSearch_Click(object sender, EventArgs e)
         {
-            List<Item> list = new List<Item>();
-            ConditionItem item = new ConditionItem("ClassType", "帅哥班", SearchType.Accurate);//精确查询
-            dataGridView1.DataSource = r.FindByCondition(item);
+            Model.T_Class m = new Model.T_Class();
+            m.ClassName = varClassName.Text;
+            m.Teacher = varTeacher.Text;
+            dataGridView1.DataSource = r.Find(m);
         }
 
         private void btnConSearch1_Click(object sender, EventArgs e)

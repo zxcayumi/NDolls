@@ -39,7 +39,7 @@ namespace Sample.Data.Model
         /// <summary>
         /// 创建日期
         /// </summary>		
-        [DataField("CreatDate", "date")]
+        [DataField("CreatDate", "datetime")]
         public DateTime CreatDate { get; set; }
 
         /// <summary>

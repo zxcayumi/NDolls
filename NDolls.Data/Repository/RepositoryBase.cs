@@ -112,12 +112,17 @@ namespace NDolls.Data
             List<DataField> fields = EntityUtil.GetDataFields(model);
             foreach (DataField field in fields)
             {
-                if (field.FieldValue == null || field.FieldType.ToLower().Contains("datetime"))
+                if (field.FieldValue == null || field.FieldValue.ToString() == "" || field.FieldType.ToLower().Contains("date"))
                     continue;
 
                 if (field.FieldType.ToLower().Contains("varchar"))
                 {
                     conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Fuzzy));
+                }
+                else if ("int,float,decimal,double,number".Contains(field.FieldType.ToLower()))
+                {
+                    if ((int)field.FieldValue > 0)
+                        conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Lower));
                 }
                 else
                 {
