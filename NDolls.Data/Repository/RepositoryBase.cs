@@ -323,10 +323,20 @@ namespace NDolls.Data
         /// <returns>修改是否成功</returns>
         public bool Update(T model)
         {
+            return Update(model, OptType.UpdateAllowedNull);
+        }
+
+        /// <summary>
+        /// 修改实体
+        /// </summary>
+        /// <param name="model">实体对象</param>
+        /// <returns>修改是否成功</returns>
+        public bool Update(T model, OptType type)
+        {
             Fields fields = EntityUtil.GetFieldsByType(model.GetType());
             List<AssociationAttribute> assocations = fields.AssociationFields;
 
-            return Persist(new OptEntity(model, OptType.Update), assocations);
+            return Persist(new OptEntity(model, type), assocations);
         }
 
         /// <summary>
@@ -684,12 +694,12 @@ namespace NDolls.Data
                             if (item.CasType == CascadeType.SAVE || item.CasType == CascadeType.UNDELETE || item.CasType == CascadeType.ALL)
                             {
                                 if (repository.Exist(obj))
-                                    optType = OptType.Update;
+                                    optType = OptType.UpdateAllowedNull;
                                 else
                                     optType = OptType.Create;
                             }
                             else if (item.CasType == CascadeType.UPDATE)
-                                optType = OptType.Update;
+                                optType = OptType.UpdateAllowedNull;
 
                             entities.Add(new OptEntity(obj, optType));
                             break;
@@ -701,12 +711,12 @@ namespace NDolls.Data
                                 if (item.CasType == CascadeType.SAVE || item.CasType == CascadeType.UNDELETE || item.CasType == CascadeType.ALL)
                                 {
                                     if (repository.Exist(entity))
-                                        optType = OptType.Update;
+                                        optType = OptType.UpdateAllowedNull;
                                     else
                                         optType = OptType.Create;
                                 }
                                 else if (item.CasType == CascadeType.UPDATE)
-                                    optType = OptType.Update;
+                                    optType = OptType.UpdateAllowedNull;
 
                                 entities.Add(new OptEntity(entity, optType));
                             }

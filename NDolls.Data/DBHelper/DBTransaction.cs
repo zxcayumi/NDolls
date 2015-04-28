@@ -164,8 +164,11 @@ namespace NDolls.Data
                         case OptType.Create://新增                            
                             sql = getCreateSQL(item.Entity);
                             break;
-                        case OptType.Update://修改
-                            sql = getUpdateSQL(item.Entity);
+                        case OptType.UpdateAllowedNull://修改
+                            sql = getUpdateSQL(item.Entity, OptType.UpdateAllowedNull);
+                            break;
+                        case OptType.UpdateIgnoreNull://修改
+                            sql = getUpdateSQL(item.Entity, OptType.UpdateIgnoreNull);
                             break;
                         case OptType.Save:
                             break;
@@ -230,7 +233,12 @@ namespace NDolls.Data
             return String.Format(insertSQL, tableName, fs.ToString().TrimEnd(','), vs.ToString().TrimEnd(',')) + identitySql ;
         }
 
-        private string getUpdateSQL(EntityBase entity)
+        /// <summary>
+        /// 获取UpdateSQL语句
+        /// </summary>
+        /// <param name="entity">实体对象</param>
+        /// <param name="allowNull">是否允许值为null的属性(true:为null的属性赋空值；false:忽略为null的属性不做处理，保持数据库原样)</param>
+        private string getUpdateSQL(EntityBase entity,OptType allowNull)
         {
             condition = "";
 
@@ -247,7 +255,14 @@ namespace NDolls.Data
                 {
                     if (!field.IsIdentity)
                     {
-                        fs.Append(field.FieldName + "=@" + field.FieldName + ",");
+                        if (field.FieldValue == null && allowNull != OptType.UpdateAllowedNull)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            fs.Append(field.FieldName + "=@" + field.FieldName + ",");
+                        }
                     }
                 }
             }

@@ -39,7 +39,12 @@ namespace NDolls.Data.Entity
         /// <summary>
         /// 修改操作
         /// </summary>
-        Update,
+        UpdateAllowedNull,
+
+        /// <summary>
+        /// 忽略Null值的修改操作
+        /// </summary>
+        UpdateIgnoreNull,
 
         /// <summary>
         /// 删除操作
