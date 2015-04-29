@@ -213,6 +213,20 @@ namespace NDolls.Data
         /// <summary>
         /// 获取符合条件的数据个数
         /// </summary>
+        /// <param name="items">查询项集合</param>
+        /// <returns>符合条件的数据个数</returns>
+        public int GetCount(List<Item> items)
+        {
+            List<DbParameter> pars = new List<DbParameter>();//构造查询条件
+            string conSql = getConditionSQL(items, pars);////生成查询语句,sql条件部分
+            string sql = String.Format(selectSQL, "COUNT(*)", tableName, conSql);
+
+            return Convert.ToInt32(DBHelper.ExecuteScalar(System.Data.CommandType.Text, sql, pars));
+        }
+
+        /// <summary>
+        /// 获取符合条件的数据个数
+        /// </summary>
         /// <param name="customCondition">用户自定义条件</param>
         /// <returns>符合条件的数据个数</returns>
         public int GetCount(String customCondition)

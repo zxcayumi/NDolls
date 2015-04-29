@@ -21,6 +21,7 @@ namespace NDolls.Data
         T FindByPK(string keyValue);
         T FindByPK(string[] keyValues);
         List<T> Find(String customCondition);
+        int GetCount(List<Item> items);
         int GetCount(String customCondition);
 
         String Validate(T entity);
