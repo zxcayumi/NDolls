@@ -40,7 +40,7 @@ namespace NDolls.Data.Attribute
         /// <param name="associationType">关联对象类别</param>
         public AssociationAttribute(string refField, string fieldName, AssociationType associationType)
         {
-            this.RefField = refField;
+            this.CurField = refField;
             this.ObjField = fieldName;
             this.AssType = associationType;
             this.CasType = CascadeType.SELECT;
@@ -49,14 +49,14 @@ namespace NDolls.Data.Attribute
         /// <summary>
         /// 关联特性构造函数
         /// </summary>
-        /// <param name="refField">与关联对象关联的主对象字段名</param>
-        /// <param name="fieldName">关联对象字段名</param>
+        /// <param name="curFieldName">当前类字段</param>
+        /// <param name="refFieldName">关联类关联字段</param>
         /// <param name="associationType">关联对象类别</param>
         /// <param name="cascadeType">关联对象级联操作方式</param>
-        public AssociationAttribute(string refField, string fieldName, AssociationType associationType, CascadeType cascadeType)
+        public AssociationAttribute(string curFieldName, string refFieldName, AssociationType associationType, CascadeType cascadeType)
         {
-            this.RefField = refField;
-            this.ObjField = fieldName;
+            this.CurField = curFieldName;
+            this.ObjField = refFieldName;
             this.AssType = associationType;
             this.CasType = cascadeType;
         }
@@ -67,12 +67,12 @@ namespace NDolls.Data.Attribute
         public string FieldName { get; set; }
 
         /// <summary>
-        /// 当前对象引用字段名【主键】
+        /// 当前对象引用字段名
         /// </summary>
-        public string RefField { get; set; }
+        public string CurField { get; set; }
 
         /// <summary>
-        /// 关联目标对象字段名【外键】
+        /// 关联目标对象字段名
         /// </summary>
         public string ObjField { get; set; }
 

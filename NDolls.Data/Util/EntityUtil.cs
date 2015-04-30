@@ -262,12 +262,12 @@ namespace NDolls.Data.Util
                 switch (aField.AssType)
                 {
                     case AssociationType.Association://关联关系
-                        info.SetValue(model, repository.FindByPK(type.GetProperty(aField.RefField).GetValue(model, null).ToString()), null);
+                        info.SetValue(model, repository.FindByPK(type.GetProperty(aField.CurField).GetValue(model, null).ToString()), null);
                         break;
                     case AssociationType.Aggregation://聚合关系
                     case AssociationType.Composition://组合关系
                         dynamic list =
-                            repository.FindByCondition(new List<Item> { new ConditionItem(aField.ObjField, GetValueByField((EntityBase)model, aField.RefField), SearchType.Accurate) });
+                            repository.FindByCondition(new List<Item> { new ConditionItem(aField.ObjField, GetValueByField((EntityBase)model, aField.CurField), SearchType.Accurate) });
                         info.SetValue(model, list, null);
                         break;
                     default:

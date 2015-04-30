@@ -21,12 +21,14 @@ namespace NDolls.Data
         T FindByPK(string keyValue);
         T FindByPK(string[] keyValues);
         List<T> Find(String customCondition);
+        int GetCount(List<Item> items);
         int GetCount(String customCondition);
 
         String Validate(T entity);
 
         bool Add(T model);
         bool Update(T model);
+        bool Update(T model, OptType type);
         bool AddOrUpdate(T model);
         bool Delete(string keyValue);
         bool Delete(string[] keyValues);

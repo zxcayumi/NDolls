@@ -112,12 +112,17 @@ namespace NDolls.Data
             List<DataField> fields = EntityUtil.GetDataFields(model);
             foreach (DataField field in fields)
             {
-                if (field.FieldValue == null || field.FieldType.ToLower().Contains("datetime"))
+                if (field.FieldValue == null || field.FieldValue.ToString() == "" || field.FieldType.ToLower().Contains("date"))
                     continue;
 
                 if (field.FieldType.ToLower().Contains("varchar"))
                 {
                     conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Fuzzy));
+                }
+                else if ("int,float,decimal,double,number".Contains(field.FieldType.ToLower()))
+                {
+                    if ((int)field.FieldValue > 0)
+                        conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Lower));
                 }
                 else
                 {
@@ -203,6 +208,20 @@ namespace NDolls.Data
             }
             string sql = String.Format(selectSQL, "*", tableName, customCondition);
             return DataConvert<T>.ToEntities(DBHelper.Query(sql, null));
+        }
+
+        /// <summary>
+        /// 获取符合条件的数据个数
+        /// </summary>
+        /// <param name="items">查询项集合</param>
+        /// <returns>符合条件的数据个数</returns>
+        public int GetCount(List<Item> items)
+        {
+            List<DbParameter> pars = new List<DbParameter>();//构造查询条件
+            string conSql = getConditionSQL(items, pars);////生成查询语句,sql条件部分
+            string sql = String.Format(selectSQL, "COUNT(*)", tableName, conSql);
+
+            return Convert.ToInt32(DBHelper.ExecuteScalar(System.Data.CommandType.Text, sql, pars));
         }
 
         /// <summary>
@@ -318,10 +337,20 @@ namespace NDolls.Data
         /// <returns>修改是否成功</returns>
         public bool Update(T model)
         {
+            return Update(model, OptType.UpdateAllowedNull);
+        }
+
+        /// <summary>
+        /// 修改实体
+        /// </summary>
+        /// <param name="model">实体对象</param>
+        /// <returns>修改是否成功</returns>
+        public bool Update(T model, OptType type)
+        {
             Fields fields = EntityUtil.GetFieldsByType(model.GetType());
             List<AssociationAttribute> assocations = fields.AssociationFields;
 
-            return Persist(new OptEntity(model, OptType.Update), assocations);
+            return Persist(new OptEntity(model, type), assocations);
         }
 
         /// <summary>
@@ -679,12 +708,12 @@ namespace NDolls.Data
                             if (item.CasType == CascadeType.SAVE || item.CasType == CascadeType.UNDELETE || item.CasType == CascadeType.ALL)
                             {
                                 if (repository.Exist(obj))
-                                    optType = OptType.Update;
+                                    optType = OptType.UpdateAllowedNull;
                                 else
                                     optType = OptType.Create;
                             }
                             else if (item.CasType == CascadeType.UPDATE)
-                                optType = OptType.Update;
+                                optType = OptType.UpdateAllowedNull;
 
                             entities.Add(new OptEntity(obj, optType));
                             break;
@@ -696,12 +725,12 @@ namespace NDolls.Data
                                 if (item.CasType == CascadeType.SAVE || item.CasType == CascadeType.UNDELETE || item.CasType == CascadeType.ALL)
                                 {
                                     if (repository.Exist(entity))
-                                        optType = OptType.Update;
+                                        optType = OptType.UpdateAllowedNull;
                                     else
                                         optType = OptType.Create;
                                 }
                                 else if (item.CasType == CascadeType.UPDATE)
-                                    optType = OptType.Update;
+                                    optType = OptType.UpdateAllowedNull;
 
                                 entities.Add(new OptEntity(entity, optType));
                             }

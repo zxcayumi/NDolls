@@ -110,13 +110,13 @@ namespace Test
             Model.Sys_User m = new Model.Sys_User();
             m.CreateTime = DateTime.Now;
             m.Password = "123123";
-            m.Status = null;
+            //m.Status = true;
             m.UpdateTime = DateTime.Now;
             m.UserName = "admin";
             m.UserRole = "update"+DateTime.Now.ToLongTimeString();
 
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
-            if (r.Update(m))
+            if (r.Update(m, OptType.UpdateIgnoreNull))
             {
                 MessageBox.Show("修改成功");
             }
