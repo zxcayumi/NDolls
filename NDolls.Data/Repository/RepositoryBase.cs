@@ -496,107 +496,33 @@ namespace NDolls.Data
         {
             StringBuilder sb = new StringBuilder();
             List<Item> conditions = items != null ? items.FindAll(p => p.ItemType == ItemType.ConditionItem) : null;//条件项集合
+            List<Item> groups = items != null ? items.FindAll(p => p.ItemType == ItemType.ConditionGroup) : null;//条件组集合
             List<Item> orders = items != null ? items.FindAll(p => p.ItemType == ItemType.OrderItem) : null;//排序项集合
 
-            if (conditions == null || conditions.Count == 0)
+            //条件项集合
+            if (conditions != null)
             {
-                sb.Append("1=1 AND ");
-            }
-            else
-            {
-                String fieldName, parameterName;
                 foreach (ConditionItem item in conditions)
                 {
-                    fieldName = item.FieldName;
-                    parameterName = item.FieldName;
-
-                    if (pars.Exists(p => p.ParameterName == parameterName))
-                    {
-                        parameterName += item.GetHashCode();
-                    }
-
-                    switch (item.ConditionType)
-                    {
-                        case SearchType.Accurate:
-                            if (item.FieldValue == null)
-                            {
-                                sb.Append(fieldName + " is NULL AND ");
-                                continue;
-                            }
-
-                            sb.Append(fieldName + "=@" + parameterName + " AND ");
-                            pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
-                            break;
-                        case SearchType.Fuzzy:
-                            sb.Append(fieldName + " LIKE @" + parameterName + " AND ");
-                            pars.Add(SQLFactory.CreateParameter(parameterName, "%" + item.FieldValue + "%"));
-                            break;
-                        case SearchType.Unequal:
-                            if (item.FieldValue == null)
-                            {
-                                sb.Append(fieldName + " is NOT NULL AND ");
-                                continue;
-                            }
-
-                            sb.Append(fieldName + " <> @" + parameterName + " AND ");
-                            pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
-                            break;
-                        case SearchType.ValuesIn:
-                            sb.Append("(");
-                            String[] fiels = item.FieldValue.ToString().Split(',');
-                            for (int i = 0; i < fiels.Length; i++)
-                            {
-                                if (i == (fiels.Length - 1))
-                                {
-                                    sb.Append(fieldName + " = @" + (parameterName + i));
-                                }
-                                else
-                                {
-                                    sb.Append(fieldName + " = @" + (parameterName + i) + " OR ");
-                                }
-                                pars.Add(SQLFactory.CreateParameter((parameterName + i), fiels[i]));
-                            }
-                            sb.Append(") AND ");
-                            break;
-                        case SearchType.ValuesNotIn:
-                            sb.Append("(");
-                            fiels = item.FieldValue.ToString().Split(',');
-                            for (int i = 0; i < fiels.Length; i++)
-                            {
-                                if (i == (fiels.Length - 1))
-                                {
-                                    sb.Append(item.FieldName + " <> @" + (item.FieldName + i));
-                                }
-                                else
-                                {
-                                    sb.Append(item.FieldName + " <> @" + (item.FieldName + i) + " AND ");
-                                }
-                                pars.Add(SQLFactory.CreateParameter((parameterName + i), fiels[i]));
-                            }
-                            sb.Append(") AND ");
-                            break;
-                        case SearchType.Greater:
-                            sb.Append(fieldName + " > @" + parameterName + " AND ");
-                            pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
-                            break;
-                        case SearchType.Lower:
-                            sb.Append(fieldName + " < @" + parameterName + " AND ");
-                            pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
-                            break;
-                        case SearchType.GreaterEqual:
-                            sb.Append(fieldName + " >= @" + parameterName + " AND ");
-                            pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
-                            break;
-                        case SearchType.LowerEqual:
-                            sb.Append(fieldName + " <= @" + parameterName + " AND ");
-                            pars.Add(SQLFactory.CreateParameter(parameterName, item.FieldValue));
-                            break;
-                        default:
-                            break;
-                    }
+                    item.LoadParameters(sb, pars, JoinType.AND);
                 }
             }
 
+            //条件组集合
+            if (groups != null)
+            {
+                foreach (ConditionGroup group in groups)
+                {
+                    group.LoadParameters(sb, pars, JoinType.OR);
+                }
+            }
+
+            if (sb.Length == 0)
+            {
+                sb.Append("1=1");
+            }
+
+            //排序项集合
             StringBuilder osb = new StringBuilder();
             if (orders != null && orders.Count > 0)
             {
@@ -607,7 +533,7 @@ namespace NDolls.Data
                 }
             }
 
-            return sb.ToString().Substring(0, sb.ToString().LastIndexOf("AND ")) + osb.ToString().TrimEnd(',');
+            return sb.ToString() + osb.ToString().TrimEnd(',');
         }
 
         /// <summary>

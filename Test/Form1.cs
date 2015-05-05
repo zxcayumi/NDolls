@@ -508,5 +508,22 @@ namespace Test
                 MessageBox.Show("保存成功");
             }
         }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            List<Item> list = new List<Item>();
+
+            ConditionGroup g = new ConditionGroup();
+            g.AddCondition(new ConditionItem("UserName","zxcayumi", SearchType.Accurate));
+            g.AddCondition(new ConditionItem("UserName","test", SearchType.Accurate));
+
+            ConditionItem item = new ConditionItem("UserRole","testrole111", SearchType.Accurate);
+
+            list.Add(g);
+            list.Add(item);
+
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
+            dataGridView1.DataSource = r.FindByCondition(list);
+        }
     }
 }

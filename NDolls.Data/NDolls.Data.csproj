@@ -64,6 +64,7 @@
     <Compile Include="DBHelper\SQLFactory.cs" />
     <Compile Include="DBHelper\SQLiteHelper.cs" />
     <Compile Include="DBHelper\TranSession.cs" />
+    <Compile Include="Entity\ConditionGroup.cs" />
     <Compile Include="Entity\DataField.cs" />
     <Compile Include="Entity\EntityBase.cs" />
     <Compile Include="Entity\Fields.cs" />

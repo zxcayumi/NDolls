@@ -76,6 +76,14 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 按条件查询对象集合
+        /// </summary>
+        public List<T> GetModels(String sqlCondition)
+        {
+            return r.Find(sqlCondition);
+        }
+
+        /// <summary>
         /// 无条件分页查询,每页10条记录
         /// </summary>
         public List<T> GetModels(int pageIndex)

@@ -6,7 +6,7 @@ using System.Text;
 namespace NDolls.Data.Entity
 {
     /// <summary>
-    /// 排序项
+    /// 查询排序项
     /// </summary>
     public class OrderItem : Item
     {
@@ -23,6 +23,11 @@ namespace NDolls.Data.Entity
             this.OrderType = orderType;
         }
 
+        public override void LoadParameters(StringBuilder sb, List<System.Data.Common.DbParameter> pars, JoinType joinType)
+        {
+            
+        }
+        
         /// <summary>
         /// 查询项字段名
         /// </summary>
