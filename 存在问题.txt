@@ -41,7 +41,7 @@ list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 9.运行时动态调整Model级联关系；
 10.查询大于等于 小于等于--已支持
 11.Model中的某些属性有的时候需要有的时候不需要加载，如何动态处理；
-12.查询条件OR的支持(考虑创建条件组解决ConditionGroup)；
+12.查询条件OR的支持(考虑创建条件组解决ConditionGroup)；--已支持
 13.级联删除还未支持(Delete按主键单一主对象删除、DeleteByCondition按条件多个主对象)；
 14.ORM映射时，类属性和注解中的数据库字段名称可以不一致，现在则不行；
 15.Exist更多重载支持（ConditionItem）；
