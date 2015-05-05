@@ -30,11 +30,12 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.varMsg1 = new System.Windows.Forms.RichTextBox();
             this.varMsg = new System.Windows.Forms.RichTextBox();
             this.btnDicToJson = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.SuspendLayout();
@@ -52,17 +53,28 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.textBox1);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.varMsg1);
             this.tabPage1.Controls.Add(this.varMsg);
             this.tabPage1.Controls.Add(this.btnDicToJson);
-            this.tabPage1.Location = new System.Drawing.Point(4, 21);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(714, 488);
+            this.tabPage1.Size = new System.Drawing.Size(714, 487);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "JsonUtil";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(29, 307);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "整型验证";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // varMsg1
             // 
@@ -92,23 +104,20 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 21);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(714, 488);
+            this.tabPage2.Size = new System.Drawing.Size(714, 487);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // textBox1
             // 
-            this.button1.Location = new System.Drawing.Point(526, 77);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.textBox1.Location = new System.Drawing.Point(29, 280);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(125, 21);
+            this.textBox1.TabIndex = 6;
             // 
             // Main
             // 
@@ -120,6 +129,7 @@
             this.Text = "功能类测试";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -133,6 +143,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.RichTextBox varMsg1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
 
     }
 }
