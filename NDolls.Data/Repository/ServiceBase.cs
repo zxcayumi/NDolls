@@ -70,6 +70,14 @@ namespace NDolls.Data
         /// <summary>
         /// 按条件查询对象集合
         /// </summary>
+        public List<T> GetModels(Item item)
+        {
+            return r.FindByCondition(item);
+        }
+
+        /// <summary>
+        /// 按条件查询对象集合
+        /// </summary>
         public List<T> GetModels(List<Item> conditions)
         {
             return r.FindByCondition(conditions);
