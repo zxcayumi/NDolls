@@ -10,7 +10,7 @@ namespace NDolls.Data.Entity
     /// </summary>
     public class ConditionGroup : Item
     {
-        private List<ConditionItem> groupConditions = new List<ConditionItem>();
+        private List<Item> groupConditions = new List<Item>();
 
         public ConditionGroup()
         {
@@ -21,7 +21,7 @@ namespace NDolls.Data.Entity
         /// 添加条件项
         /// </summary>
         /// <param name="item"></param>
-        public void AddCondition(ConditionItem item)
+        public void AddCondition(Item item)
         {
             groupConditions.Add(item);
         }
@@ -34,9 +34,20 @@ namespace NDolls.Data.Entity
             }
 
             sb.Append("(");
-            foreach (ConditionItem item in GroupConditions)
+            foreach (Item item in GroupConditions)
             {
-                item.LoadParameters(sb, pars, joinType);
+                if(item is ConditionItem)
+                {
+                    item.LoadParameters(sb, pars, joinType);
+                }
+                else if (item is ConditionGroup)
+                {
+                    ConditionGroup group = item as ConditionGroup;
+                    foreach (Item sub in group.GroupConditions)
+                    {
+                        sub.LoadParameters(sb, pars, JoinType.AND);
+                    }
+                }
             }
             sb.Append(")");
         }
@@ -44,7 +55,7 @@ namespace NDolls.Data.Entity
         /// <summary>
         /// 组条件项集合
         /// </summary>
-        public List<ConditionItem> GroupConditions
+        public List<Item> GroupConditions
         {
             get { return groupConditions; }
             set { groupConditions = value; }

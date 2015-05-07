@@ -513,14 +513,18 @@ namespace Test
         {
             List<Item> list = new List<Item>();
 
-            ConditionGroup g = new ConditionGroup();
-            g.AddCondition(new ConditionItem("UserName","zxcayumi", SearchType.Accurate));
-            g.AddCondition(new ConditionItem("UserName","test", SearchType.Accurate));
+            //ConditionGroup g1 = new ConditionGroup();
+            //g1.AddCondition(new ConditionItem("UserName", "test", SearchType.Fuzzy));
+            //g1.AddCondition(new ConditionItem("UserName", "test", SearchType.Unequal));
 
-            ConditionItem item = new ConditionItem("UserRole","testrole111", SearchType.Accurate);
+            ConditionGroup g = new ConditionGroup();
+            g.AddCondition(new ConditionItem("UserName", "admin", SearchType.Accurate));
+            g.AddCondition(new ConditionItem("UserName", "test", SearchType.Accurate));
+
+            //ConditionItem item = new ConditionItem("UserRole","testrole111", SearchType.Accurate);
 
             list.Add(g);
-            list.Add(item);
+            //list.Add(item);
 
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             dataGridView1.DataSource = r.FindByCondition(list);
