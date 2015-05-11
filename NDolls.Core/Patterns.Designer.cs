@@ -223,7 +223,7 @@ namespace NDolls.Core {
         }
         
         /// <summary>
-        ///   查找类似 ^[1-9]\d*$ 的本地化字符串。
+        ///   查找类似 ^[0-9]*[1-9][0-9]*$ 的本地化字符串。
         /// </summary>
         internal static string PositiveInt {
             get {

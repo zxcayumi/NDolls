@@ -178,7 +178,7 @@
     <comment>正浮点数</comment>
   </data>
   <data name="PositiveInt" xml:space="preserve">
-    <value>^[1-9]\d*$</value>
+    <value>^[0-9]*[1-9][0-9]*$</value>
     <comment>正整数</comment>
   </data>
   <data name="Postcode" xml:space="preserve">
