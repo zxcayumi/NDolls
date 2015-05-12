@@ -511,9 +511,9 @@ namespace NDolls.Data
             //条件组集合
             if (groups != null)
             {
-                foreach (ConditionGroup group in groups)
+                foreach (Item group in groups)
                 {
-                    group.LoadParameters(sb, pars, JoinType.OR);
+                    group.LoadParameters(sb, pars, JoinType.AND);
                 }
             }
 

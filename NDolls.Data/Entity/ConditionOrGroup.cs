@@ -8,11 +8,11 @@ namespace NDolls.Data.Entity
     /// <summary>
     /// 查询项-条件组(组内条件为OR关系)
     /// </summary>
-    public class ConditionGroup : Item
+    public class ConditionOrGroup : Item
     {
         private List<Item> groupConditions = new List<Item>();
 
-        public ConditionGroup()
+        public ConditionOrGroup()
         {
             this.ItemType = Entity.ItemType.ConditionGroup;
         }
@@ -30,7 +30,7 @@ namespace NDolls.Data.Entity
         {
             if (sb.Length > 0)
             {
-                sb.Append(" AND ");
+                sb.Append(" " + joinType.ToString() + " ");
             }
 
             sb.Append("(");
@@ -38,18 +38,25 @@ namespace NDolls.Data.Entity
             {
                 if(item is ConditionItem)
                 {
-                    item.LoadParameters(sb, pars, joinType);
+                    item.LoadParameters(sb, pars, JoinType.OR);
                 }
-                else if (item is ConditionGroup)
+                else if (item is ConditionAndGroup)
                 {
-                    ConditionGroup group = item as ConditionGroup;
-                    foreach (Item sub in group.GroupConditions)
-                    {
-                        sub.LoadParameters(sb, pars, JoinType.AND);
-                    }
+                    ConditionAndGroup group = item as ConditionAndGroup;
+                    group.IsSubGroup = true;
+                    group.LoadParameters(sb, pars, JoinType.OR);
                 }
             }
             sb.Append(")");
+        }
+
+        /// <summary>
+        /// 是否为嵌套组（在别的Group内的子Group）
+        /// </summary>
+        public Boolean IsSubGroup
+        {
+            get;
+            set;
         }
 
         /// <summary>

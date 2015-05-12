@@ -513,15 +513,18 @@ namespace Test
         {
             List<Item> list = new List<Item>();
 
-            //ConditionGroup g1 = new ConditionGroup();
-            //g1.AddCondition(new ConditionItem("UserName", "test", SearchType.Fuzzy));
-            //g1.AddCondition(new ConditionItem("UserName", "test", SearchType.Unequal));
+            ConditionItem item = new ConditionItem("CreateTime", "2015-01-15", SearchType.Greater);
+            list.Add(item);
 
-            ConditionGroup g = new ConditionGroup();
-            g.AddCondition(new ConditionItem("UserName", "admin", SearchType.Accurate));
-            g.AddCondition(new ConditionItem("UserName", "test", SearchType.Accurate));
+            ConditionOrGroup g = new ConditionOrGroup();
+            g.AddCondition(new ConditionItem("UserName", "test", SearchType.Fuzzy));
+            g.AddCondition(new ConditionItem("UserName", "test", SearchType.Unequal));
 
-            //ConditionItem item = new ConditionItem("UserRole","testrole111", SearchType.Accurate);
+            ConditionAndGroup g1 = new ConditionAndGroup();
+            g1.AddCondition(new ConditionItem("UserName", "admin", SearchType.Accurate));
+            g1.AddCondition(new ConditionItem("UserName", "test", SearchType.Unequal));
+
+            g.AddCondition(g1);
 
             list.Add(g);
             //list.Add(item);
