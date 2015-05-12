@@ -60,6 +60,7 @@
             this.btnTransaction = new System.Windows.Forms.Button();
             this.button27 = new System.Windows.Forms.Button();
             this.btnAddOrUpdate = new System.Windows.Forms.Button();
+            this.button28 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -382,11 +383,22 @@
             this.btnAddOrUpdate.UseVisualStyleBackColor = true;
             this.btnAddOrUpdate.Click += new System.EventHandler(this.btnAddOrUpdate_Click);
             // 
+            // button28
+            // 
+            this.button28.Location = new System.Drawing.Point(471, 128);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(75, 23);
+            this.button28.TabIndex = 32;
+            this.button28.Text = "OR查询";
+            this.button28.UseVisualStyleBackColor = true;
+            this.button28.Click += new System.EventHandler(this.button28_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 526);
+            this.Controls.Add(this.button28);
             this.Controls.Add(this.btnAddOrUpdate);
             this.Controls.Add(this.button27);
             this.Controls.Add(this.btnTransaction);
@@ -460,6 +472,7 @@
         private System.Windows.Forms.Button btnTransaction;
         private System.Windows.Forms.Button button27;
         private System.Windows.Forms.Button btnAddOrUpdate;
+        private System.Windows.Forms.Button button28;
     }
 }
 

@@ -29,7 +29,13 @@ namespace UtilTest
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Hello World");
+            String input = textBox1.Text;
+            String pattern = NDolls.Core.Util.ValidateUtil.GetPattern("NonNegativeInt");
+            bool ret = NDolls.Core.Util.ValidateUtil.IsMatch(input, pattern);
+            if (ret)
+            {
+                MessageBox.Show("验证通过");
+            }
         }
     }
 
