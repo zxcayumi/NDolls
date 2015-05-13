@@ -49,6 +49,7 @@ list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 17.一个对象中多个属性之间的逻辑关系可配置（如会员价不大于零售价）；
 
 1.Distinct查询支持？
+2.Validate验证内置的NDolls框架的Model处理过程中？
 
 
 
