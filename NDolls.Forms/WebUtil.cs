@@ -30,7 +30,16 @@ namespace NDolls.Forms
                     {
                         DateTime d = DateTime.Parse(container[pi.Name]);
                         if (d.Year >= 1900)
-                            pi.SetValue(model, d.ToShortDateString(), null);
+                        {
+                            try
+                            {
+                                pi.SetValue(model, (DateTime?)DateTime.ParseExact(container[pi.Name], "yyyy-MM-dd HH:mm:ss", null), null);
+                            }
+                            catch
+                            {
+                                pi.SetValue(model, d.ToString(), null);
+                            }
+                        }
                     }
                     else if (pi.PropertyType.ToString().ToLower().Contains("int"))
                     {
@@ -52,7 +61,7 @@ namespace NDolls.Forms
                         val = container[pi.Name];
                         if (val == "System.Data.DataRowView")
                             val = "";
-                        pi.SetValue(model, val, null);
+                        if(!String.IsNullOrEmpty(val)) pi.SetValue(model, val, null);
                     }
                 }
                 catch
