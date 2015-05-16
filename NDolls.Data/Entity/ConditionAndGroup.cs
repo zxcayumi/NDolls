@@ -28,7 +28,7 @@ namespace NDolls.Data.Entity
 
         public override void LoadParameters(StringBuilder sb, List<System.Data.Common.DbParameter> pars, JoinType joinType)
         {
-            if (sb.Length > 1)
+            if (sb.Length > 1 && !sb.ToString().EndsWith("("))
             {
                 sb.Append(" " + joinType.ToString() + " ");
             }
