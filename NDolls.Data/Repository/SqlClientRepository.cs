@@ -80,7 +80,10 @@ namespace NDolls.Data
         /// <returns>查询结果集合</returns>
         public List<T> FindByPage(int pageSize, int index, List<Item> items)
         {
-            String sql = "SELECT TOP " + pageSize + " * FROM(SELECT row_number() OVER(ORDER BY " + primaryKey + ") row,* FROM " + tableName + " ) tt WHERE {0} AND row > " + ((index - 1) * 10);
+            String sql = "SELECT * FROM " +
+                "(SELECT ROW_NUMBER() OVER (ORDER BY " + primaryKey + ") AS rownum ,* FROM " + tableName + " WHERE {0}) AS temp " +
+                "WHERE temp.rownum BETWEEN " + ((index - 1) * pageSize + 1) + " AND " + pageSize * index;
+                //"SELECT TOP " + pageSize + " * FROM(SELECT row_number() OVER(ORDER BY " + primaryKey + ") row,* FROM " + tableName + " ) tt WHERE {0} AND row > " + ((index - 1) * 10);
 
             //构造查询条件
             List<DbParameter> pars = new List<DbParameter>();
