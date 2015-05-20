@@ -12,6 +12,8 @@ using NDolls.Data.Util;
 using NDolls.Data.Entity;
 using NDolls.Core.Util;
 using NDolls.Data.Attribute;
+using System.Data.Common;
+using System.Data.SqlClient;
 
 namespace Test
 {
@@ -531,6 +533,14 @@ namespace Test
 
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             dataGridView1.DataSource = r.FindByCondition(list);
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            IRepository < Model.Sys_User > r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
+            Paper<Model.Sys_User> p = r.FindPager(4, 1, null);
+            dataGridView1.DataSource = p.Result;
+            MessageBox.Show(p.PageCount.ToString());
         }
     }
 }

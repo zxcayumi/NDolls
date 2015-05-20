@@ -69,13 +69,13 @@ namespace NDolls.Data
         /// <summary>
         /// 分页查询
         /// </summary>
-        /// <param name="pageCount">每页大小</param>
+        /// <param name="pageSize">每页大小</param>
         /// <param name="index">当前页索引</param>
         /// <param name="items">查询（排序）项集合</param>
         /// <returns>查询结果集合</returns>
-        public List<T> FindByPage(int pageCount, int index, List<Item> items)
+        public List<T> FindByPage(int pageSize, int index, List<Item> items)
         {
-            String sql = "SELECT * FROM " + tableName + " WHERE {0} LIMIT " + pageCount + " OFFSET " + (index-1)*pageCount;
+            String sql = "SELECT * FROM " + tableName + " WHERE {0} LIMIT " + pageSize + " OFFSET " + (index - 1) * pageSize;
 
             //构造查询条件
             List<DbParameter> pars = new List<DbParameter>();
@@ -87,6 +87,38 @@ namespace NDolls.Data
             list = DataConvert<T>.ToEntities(DBHelper.Query(sql, pars));
 
             return list;
+        }
+        
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <param name="pageSize">每页大小</param>
+        /// <param name="index">当前页索引</param>
+        /// <param name="items">查询（排序）项集合</param>
+        /// <returns>查询的分页数据</returns>
+        public Paper<T> FindPager(int pageSize, int index, List<Item> items)
+        {
+            String sql = "SELECT * FROM " + tableName + " WHERE {0} LIMIT " + pageSize + " OFFSET " + (index - 1) * pageSize;
+
+            //构造查询条件
+            List<DbParameter> pars = new List<DbParameter>();
+            //生成查询语句
+            string conSql = getConditionSQL(items, pars);//sql条件部分
+
+            sql = String.Format(sql, conSql);
+            List<T> list = new List<T>();
+            list = DataConvert<T>.ToEntities(DBHelper.Query(sql, pars));
+
+            Paper<T> paper = null;
+            if (list != null && list.Count > 0)
+            {
+                paper = new Paper<T>();
+                paper.Current = index;
+                paper.PageCount = (int)Math.Ceiling(GetCount(items) / (decimal)pageSize);
+                paper.Result = list;
+            }
+
+            return paper;
         }
     }
 }

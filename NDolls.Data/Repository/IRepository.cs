@@ -17,7 +17,8 @@ namespace NDolls.Data
         List<T> FindByCondition(List<Item> items);
         List<T> FindByCondition(Item item);
         List<T> FindByCondition(int top, List<Item> items);
-        List<T> FindByPage(int pageCount, int index, List<Item> items);
+        List<T> FindByPage(int pageSize, int current, List<Item> items);
+        Paper<T> FindPager(int pageSize, int current, List<Item> items);
         T FindByPK(string keyValue);
         T FindByPK(string[] keyValues);
         List<T> Find(String customCondition);
