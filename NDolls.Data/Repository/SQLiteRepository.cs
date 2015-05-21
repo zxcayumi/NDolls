@@ -114,7 +114,8 @@ namespace NDolls.Data
             {
                 paper = new Paper<T>();
                 paper.Current = index;
-                paper.PageCount = (int)Math.Ceiling(GetCount(items) / (decimal)pageSize);
+                paper.Total = GetCount(items);
+                paper.PageCount = (int)Math.Ceiling(paper.Total / (decimal)pageSize);
                 paper.Result = list;
             }
 
