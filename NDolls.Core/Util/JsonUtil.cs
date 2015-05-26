@@ -27,7 +27,7 @@ namespace NDolls.Core.Util
                 }
                 else
                 {
-                    json.Append("\"" + key + "\":" + "\"" + js.Serialize(dic[key]) + "\",");
+                    json.Append("\"" + key + "\":" + js.Serialize(dic[key]) + ",");
                 }
             }
 

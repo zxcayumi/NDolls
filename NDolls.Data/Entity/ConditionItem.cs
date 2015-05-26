@@ -52,8 +52,8 @@ namespace NDolls.Data.Entity
                     else
                     {
                         sb.Append(fieldName + "=@" + parameterName);
+                        pars.Add(SQLFactory.CreateParameter(parameterName, FieldValue));
                     }
-                    pars.Add(SQLFactory.CreateParameter(parameterName, FieldValue));
                     break;
                 case SearchType.Fuzzy:
                     sb.Append(fieldName + " LIKE @" + parameterName);
@@ -62,13 +62,13 @@ namespace NDolls.Data.Entity
                 case SearchType.Unequal:
                     if (FieldValue == null)
                     {
-                        sb.Append(fieldName + " is NOT NULL");
+                        sb.Append(fieldName + " IS NOT NULL");
                     }
                     else
                     {
                         sb.Append(fieldName + " <> @" + parameterName);
+                        pars.Add(SQLFactory.CreateParameter(parameterName, FieldValue));
                     }
-                    pars.Add(SQLFactory.CreateParameter(parameterName, FieldValue));
                     break;
                 case SearchType.ValuesIn:
                     sb.Append("(");
