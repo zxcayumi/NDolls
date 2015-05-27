@@ -211,6 +211,41 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 自定义查询
+        /// </summary>
+        /// <param name="fields">要查询的字段</param>
+        /// <param name="items">查询项集合</param>
+        /// <returns>查询结果集</returns>
+        public DataTable FindByCustom(String fields, List<Item> items)
+        {
+            //构造查询条件
+            List<DbParameter> pars = new List<DbParameter>();
+
+            //生成查询语句
+            string conSql = getConditionSQL(items, pars);//sql条件部分
+            string sql = String.Format(selectSQL, fields, tableName, conSql);
+
+            return DBHelper.Query(sql, pars);
+        }
+
+        /// <summary>
+        /// 自定义查询
+        /// </summary>
+        /// <param name="fields">要查询的字段</param>
+        /// <param name="customCondition">自定义条件语句</param>
+        /// <returns>查询结果集</returns>
+        public DataTable FindByCustom(String fields, String customCondition)
+        {
+            if (String.IsNullOrEmpty(customCondition))
+            {
+                customCondition = "1 = 1";
+            }
+            string sql = String.Format(selectSQL, fields, tableName, customCondition);
+
+            return DBHelper.Query(sql, null);
+        }
+
+        /// <summary>
         /// 获取符合条件的数据个数
         /// </summary>
         /// <param name="items">查询项集合</param>
