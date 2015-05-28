@@ -56,6 +56,11 @@ namespace NDolls.Forms
                         val = container[pi.Name];
                         pi.SetValue(model, Convert.ToDouble(val), null);
                     }
+                    else if (pi.PropertyType.ToString().ToLower().Contains("bool"))
+                    {
+                        val = container[pi.Name];
+                        pi.SetValue(model, Boolean.Parse(val), null);
+                    }
                     else
                     {
                         val = container[pi.Name];
