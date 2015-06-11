@@ -127,7 +127,7 @@ namespace Test
         private void button6_Click(object sender, EventArgs e)
         {
             IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
-            if (r.Delete("test1"))
+            if (r.Delete("test635568442097031250"))
             {
                 MessageBox.Show("删除成功");
             }
@@ -418,13 +418,15 @@ namespace Test
                 r.AddOrUpdate(m1);
                 r.AddOrUpdate(m2);
                 r1.AddOrUpdate(m3);
+                r1.Delete("test635568423735156250");
+                r1.Delete("test635568441993906250");
                 tran.TransactionCommit();
-                MessageBox.Show("添加成功");
+                MessageBox.Show("处理成功");
             }
             catch
             {
                 tran.TransactionRollback();
-                MessageBox.Show("添加失败");
+                MessageBox.Show("处理失败");
             }
         }
 

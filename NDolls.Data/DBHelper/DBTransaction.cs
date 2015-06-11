@@ -52,6 +52,17 @@ namespace NDolls.Data
         private static Dictionary<Guid, TranSession> tranConnectionDic = new Dictionary<Guid, TranSession>();//事务连接存储字典
         private TranSession ts = new TranSession();
 
+        /// <summary>
+        /// 事务处理Transaction
+        /// </summary>
+        public DbTransaction Transaction
+        {
+            get { return ts.STransaction; }
+        }
+
+        /// <summary>
+        /// 事务SessionID
+        /// </summary>
         public Guid SessionID
         {
             get

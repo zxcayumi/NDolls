@@ -418,8 +418,14 @@ namespace NDolls.Data
 
             try
             {
-                if(DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars)>0)
-                    return true;
+                if (DBTran == null)
+                {
+                    return DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars) > 0;
+                }
+                else
+                {
+                    return DBHelper.ExecuteNonQuery(DBTran.Transaction, System.Data.CommandType.Text, sql, pars) > 0;
+                }
             }
             catch
             {}
@@ -448,8 +454,14 @@ namespace NDolls.Data
 
             try
             {
-                if(DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars)>0)
-                    return true;
+                if (DBTran == null)
+                {
+                    return DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars) > 0;
+                }
+                else
+                {
+                    return DBHelper.ExecuteNonQuery(DBTran.Transaction, System.Data.CommandType.Text, sql, pars) > 0;
+                }
             }
             catch
             {}
@@ -478,8 +490,14 @@ namespace NDolls.Data
 
             try
             {
-                DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars);
-                return true;
+                if (DBTran == null)
+                {
+                    return DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars) > 0;
+                }
+                else
+                {
+                    return DBHelper.ExecuteNonQuery(DBTran.Transaction, System.Data.CommandType.Text, sql, pars) > 0;
+                }
             }
             catch
             {
