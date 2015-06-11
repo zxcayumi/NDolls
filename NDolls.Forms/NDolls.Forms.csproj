@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SOABase.cs" />
     <Compile Include="WebUtil.cs" />
     <Compile Include="WinUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

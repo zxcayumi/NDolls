@@ -82,6 +82,7 @@
     <Compile Include="Repository\RepositoryFactory.cs" />
     <Compile Include="DBHelper\SqlClientHelper.cs" />
     <Compile Include="Repository\SQLiteRepository.cs" />
+    <Compile Include="Repository\SOABase.cs" />
     <Compile Include="SQL.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
