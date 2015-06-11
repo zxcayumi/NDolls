@@ -59,6 +59,14 @@ namespace NDolls.Data.Entity
                     sb.Append(fieldName + " LIKE @" + parameterName);
                     pars.Add(SQLFactory.CreateParameter(parameterName, "%" + FieldValue + "%"));
                     break;
+                case SearchType.LeftFuzzy:
+                    sb.Append(fieldName + " LIKE @" + parameterName);
+                    pars.Add(SQLFactory.CreateParameter(parameterName, "%" + FieldValue));
+                    break;
+                case SearchType.RightFuzzy:
+                    sb.Append(fieldName + " LIKE @" + parameterName);
+                    pars.Add(SQLFactory.CreateParameter(parameterName, FieldValue + "%"));
+                    break;
                 case SearchType.Unequal:
                     if (FieldValue == null)
                     {
@@ -152,6 +160,16 @@ namespace NDolls.Data.Entity
         /// 模糊查询
         /// </summary>
         Fuzzy,
+
+        /// <summary>
+        /// 左侧模糊查询
+        /// </summary>
+        LeftFuzzy,
+
+        /// <summary>
+        /// 右侧模糊查询
+        /// </summary>
+        RightFuzzy,
 
         /// <summary>
         /// 不等于
