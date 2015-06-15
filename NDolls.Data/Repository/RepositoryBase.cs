@@ -389,6 +389,132 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 按条件批量更新（将model不为空的数据更新至数据库）
+        /// </summary>
+        public bool UpdateByCondition(T model, List<Item> items)
+        {
+            List<DbParameter> pars = new List<DbParameter>();
+
+            String sets = getSetValueSql(model, pars);//Update赋值相关部分
+            String condition = getConditionSQL(items, pars);//Update条件相关部分
+            String sql = String.Format(updateSQL, tableName, sets, condition);
+
+            try
+            {
+                if (DBTran == null)
+                {
+                    return DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars) > 0;
+                }
+                else
+                {
+                    return DBHelper.ExecuteNonQuery(DBTran.Transaction, System.Data.CommandType.Text, sql, pars) > 0;
+                }
+            }
+            catch
+            { }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 按条件批量更新（将model不为空的数据更新至数据库）
+        /// </summary>
+        public bool UpdateByCondition(T model, Item item)
+        {
+            return UpdateByCondition(model, new List<Item>() { item });
+        }
+
+        /// <summary>
+        /// 按条件批量更新（将model不为空的数据更新至数据库）
+        /// </summary>
+        public bool UpdateByCondition(T model, String sqlCondition)
+        {
+            List<DbParameter> pars = new List<DbParameter>();
+
+            String sets = getSetValueSql(model, pars);//Update赋值相关部分
+            String sql = String.Format(updateSQL, tableName, sets, sqlCondition);
+
+            try
+            {
+                if (DBTran == null)
+                {
+                    return DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars) > 0;
+                }
+                else
+                {
+                    return DBHelper.ExecuteNonQuery(DBTran.Transaction, System.Data.CommandType.Text, sql, pars) > 0;
+                }
+            }
+            catch
+            { }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 按条件批量更新
+        /// </summary>
+        public bool UpdateByCondition(Dictionary<String, Object> model, List<Item> items)
+        {
+            List<DbParameter> pars = new List<DbParameter>();
+
+            String sets = getSetValueSql(model, pars);//Update赋值相关部分
+            String condition = getConditionSQL(items, pars);//Update条件相关部分
+            String sql = String.Format(updateSQL, tableName, sets, condition);
+
+            try
+            {
+                if (DBTran == null)
+                {
+                    return DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars) > 0;
+                }
+                else
+                {
+                    return DBHelper.ExecuteNonQuery(DBTran.Transaction, System.Data.CommandType.Text, sql, pars) > 0;
+                }
+            }
+            catch
+            { }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 按条件批量更新
+        /// </summary>
+        public bool UpdateByCondition(Dictionary<String, Object> model, Item item)
+        {
+            return UpdateByCondition(model, new List<Item>() { item });
+        }
+
+        /// <summary>
+        /// 按条件批量更新
+        /// </summary>
+        public bool UpdateByCondition(Dictionary<String, Object> model, String sqlCondition)
+        {
+            List<DbParameter> pars = new List<DbParameter>();
+
+            String sets = getSetValueSql(model, pars);//Update赋值相关部分
+            String sql = String.Format(updateSQL, tableName, sets, sqlCondition);
+
+            try
+            {
+                if (DBTran == null)
+                {
+                    return DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, pars) > 0;
+                }
+                else
+                {
+                    return DBHelper.ExecuteNonQuery(DBTran.Transaction, System.Data.CommandType.Text, sql, pars) > 0;
+                }
+            }
+            catch
+            { }
+
+            return false;
+        }
+
+        /// <summary>
         /// 添加或修改（自动判断对象是否存在）
         /// </summary>
         /// <param name="model">实体对象</param>
@@ -540,12 +666,55 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 根据Dictionary获取Update的SQL语句赋值部分（取mode中不为null的属性）
+        /// </summary>
+        protected String getSetValueSql(Dictionary<String,Object> dic, List<DbParameter> pars)
+        {
+            StringBuilder fs = new StringBuilder();//Update赋值相关部分
+            foreach (String key in dic.Keys)//构造SQL参数集合
+            {
+                if (dic[key] != null && dic[key].ToString() != "")
+                {
+                    fs.Append(key + "=@" + key + ",");
+                    pars.Add(SQLFactory.CreateParameter(key, dic[key].ToString()));
+                }
+            }
+
+            return fs.ToString().TrimEnd(',');
+        }
+
+        /// <summary>
+        /// 根据Model获取Update的SQL语句赋值部分（取mode中不为null的属性）
+        /// </summary>
+        protected String getSetValueSql(T model, List<DbParameter> pars)
+        {
+            StringBuilder fs = new StringBuilder();//Update赋值相关部分
+            foreach (DataField field in EntityUtil.GetDataFields(model))//构造SQL参数集合
+            {
+                if (!field.IsIdentity)
+                {
+                    if (field.FieldValue == null || (field.FieldType == "datetime" && field.FieldValue.ToString().Contains("0001")))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        fs.Append(field.FieldName + "=@" + field.FieldName + ",");
+                        pars.Add(SQLFactory.CreateParameter(field.FieldName, field.FieldValue));
+                    }
+                }
+            }
+
+            return fs.ToString().TrimEnd(',');
+        }
+
+        /// <summary>
         /// 获取sql条件字符串
         /// </summary>
         /// <param name="items">sql语句项集合</param>
         /// <param name="pars">添加参数集合</param>
         /// <returns>sql字符串条件及排序部分</returns>
-        protected string getConditionSQL(List<Item> items, List<DbParameter> pars)
+        protected String getConditionSQL(List<Item> items, List<DbParameter> pars)
         {
             StringBuilder sb = new StringBuilder();
             List<Item> conditions = items != null ? items.FindAll(p => p.ItemType == ItemType.ConditionItem) : null;//条件项集合

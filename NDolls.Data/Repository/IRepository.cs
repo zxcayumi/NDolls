@@ -21,18 +21,25 @@ namespace NDolls.Data
         Paper<T> FindPager(int pageSize, int current, List<Item> items);
         T FindByPK(string keyValue);
         T FindByPK(string[] keyValues);
-        List<T> Find(String customCondition);
+        List<T> Find(String sqlCondition);
 
         int GetCount(List<Item> items);
         int GetCount(String customCondition);
         DataTable FindByCustom(String fields,List<Item> items);
-        DataTable FindByCustom(String fields, String custumCondition);
+        DataTable FindByCustom(String fields, String sqlCondition);
 
         String Validate(T entity);
 
         bool Add(T model);
         bool Update(T model);
         bool Update(T model, OptType type);
+        bool UpdateByCondition(T model, List<Item> items);
+        bool UpdateByCondition(T model, Item item);
+        bool UpdateByCondition(T model, String sqlCondition);
+        bool UpdateByCondition(Dictionary<String, Object> model, List<Item> items);
+        bool UpdateByCondition(Dictionary<String, Object> model, Item item);
+        bool UpdateByCondition(Dictionary<String, Object> model, String sqlCondition);
+
         bool AddOrUpdate(T model);
         bool Delete(string keyValue);
         bool Delete(string[] keyValues);

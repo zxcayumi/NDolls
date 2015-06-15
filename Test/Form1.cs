@@ -354,13 +354,13 @@ namespace Test
         private void btnTransaction_Click(object sender, EventArgs e)
         {
             Model.Test_Table m1 = new Model.Test_Table();
-            m1.key1 = "k001";
-            m1.key2 = "k002";
+            m1.key1 = "k0011";
+            m1.key2 = "k0021";
             m1.memo = "测试下";
 
             Model.Test_Table m2 = new Model.Test_Table();
-            m2.key1 = "k0011";
-            m2.key2 = "k0022";
+            m2.key1 = "k00111";
+            m2.key2 = "k00221";
             m2.memo = "测试下2";
 
             Model.Sys_User m3 = new Model.Sys_User();
@@ -368,7 +368,7 @@ namespace Test
             m3.Password = "123123";
             m3.Status = true;
             m3.UpdateTime = DateTime.Now;
-            m3.UserName = "test";// +DateTime.Now.Ticks.ToString();
+            m3.UserName = "testtest";// +DateTime.Now.Ticks.ToString();
             m3.UserRole = "testrole111";
 
             Model.ECom_Work work = new Model.ECom_Work();
@@ -411,15 +411,19 @@ namespace Test
 
             DBTransaction tran = new DBTransaction();
             tran.TransactionOpen();
+
             IRepository<Model.Test_Table> r = RepositoryFactory<Model.Test_Table>.CreateRepository(tran);
             IRepository<Model.Sys_User> r1 = RepositoryFactory<Model.Sys_User>.CreateRepository(tran);
+            
             try
             {
                 r.AddOrUpdate(m1);
                 r.AddOrUpdate(m2);
                 r1.AddOrUpdate(m3);
-                r1.Delete("test635568423735156250");
-                r1.Delete("test635568441993906250");
+                Model.Sys_User mu = new Model.Sys_User();
+                mu.UserRole = "rrole";
+                r1.UpdateByCondition(mu, new ConditionItem("UserName", "testtest", SearchType.Accurate));
+                r1.DeleteByCondition(new ConditionItem("UserName", "test", SearchType.RightFuzzy));
                 tran.TransactionCommit();
                 MessageBox.Show("处理成功");
             }
@@ -539,10 +543,29 @@ namespace Test
 
         private void button29_Click(object sender, EventArgs e)
         {
-            IRepository < Model.Sys_User > r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
             Paper<Model.Sys_User> p = r.FindPager(4, 1, null);
             dataGridView1.DataSource = p.Result;
             MessageBox.Show(p.PageCount.ToString());
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
+            //Model.Sys_User m = new Model.Sys_User();
+            //m.CreateTime = DateTime.Now;
+            //m.UserRole = "testRole";
+            Dictionary<String, Object> dic = new Dictionary<string, object>();
+            dic.Add("CreateTime", DateTime.Now.ToString());
+            dic.Add("UserRole", "ttRole");
+
+            List<Item> items = new List<Item>();
+            items.Add(new ConditionItem("UserName", "test", SearchType.RightFuzzy));
+
+            if (r.UpdateByCondition(dic, new ConditionItem("UserName", "test", SearchType.RightFuzzy)))
+            {
+                MessageBox.Show("更新成功");
+            }
         }
     }
 }
