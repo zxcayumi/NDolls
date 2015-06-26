@@ -602,7 +602,7 @@ namespace NDolls.Data
         public bool DeleteByCondition(List<Item> conditions)
         {
             if (conditions.Count <= 0) return false;
-            if (!conditions.Exists(p => p.ItemType != ItemType.ConditionItem)) return false;
+            if (!conditions.Exists(p => p.ItemType == ItemType.ConditionItem)) return false;
 
             List<DbParameter> pars = new List<DbParameter>();
             string conSql = getConditionSQL(conditions, pars);
