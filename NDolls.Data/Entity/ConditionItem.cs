@@ -60,12 +60,12 @@ namespace NDolls.Data.Entity
                     pars.Add(SQLFactory.CreateParameter(parameterName, "%" + FieldValue + "%"));
                     break;
                 case SearchType.LeftFuzzy:
-                    sb.Append(fieldName + " LIKE @" + parameterName);
-                    pars.Add(SQLFactory.CreateParameter(parameterName, "%" + FieldValue));
+                    sb.Append(fieldName + " LIKE '%'" + CommonVar.JoinTag + "@" + parameterName);
+                    pars.Add(SQLFactory.CreateParameter(parameterName, FieldValue));
                     break;
                 case SearchType.RightFuzzy:
-                    sb.Append(fieldName + " LIKE @" + parameterName);
-                    pars.Add(SQLFactory.CreateParameter(parameterName, FieldValue + "%"));
+                    sb.Append(fieldName + " LIKE @" + parameterName + CommonVar.JoinTag + "'%'");
+                    pars.Add(SQLFactory.CreateParameter(parameterName, FieldValue));
                     break;
                 case SearchType.Unequal:
                     if (FieldValue == null)

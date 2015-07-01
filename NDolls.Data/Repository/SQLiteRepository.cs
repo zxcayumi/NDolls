@@ -55,7 +55,7 @@ namespace NDolls.Data
             string sql;
             if (top > 0)
             {
-                conSql += " order by " + primaryKey + " limit 0," + top;
+                conSql += " ORDER BY " + primaryKey + " LIMIT 0," + top;
             }
 
             sql = String.Format(selectSQL, "*", tableName, conSql);
