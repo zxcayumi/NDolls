@@ -594,11 +594,50 @@ namespace NDolls.Data
             return false;
         }
 
+        /// <summary>
+        /// 用户自定义删除
+        /// </summary>
+        /// <param name="sqlCondition">自定义sql条件</param>
+        /// <returns>删除是否成功</returns>
+        public bool DeleteByCondition(String sqlCondition)
+        {
+            //禁止无条件删除
+            if (String.IsNullOrEmpty(sqlCondition)) return false;
+
+            string sql = String.Format(deleteSQL, tableName, sqlCondition);
+
+            try
+            {
+                if (DBTran == null)
+                {
+                    return DBHelper.ExecuteNonQuery(System.Data.CommandType.Text, sql, null) > 0;
+                }
+                else
+                {
+                    return DBHelper.ExecuteNonQuery(DBTran.Transaction, System.Data.CommandType.Text, sql, null) > 0;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 用户自定义删除
+        /// </summary>
+        /// <param name="condition">查询条件项</param>
+        /// <returns>删除是否成功</returns>
         public bool DeleteByCondition(Item condition)
         {
             return DeleteByCondition(new List<Item> { condition });
         }
 
+        /// <summary>
+        /// 用户自定义删除
+        /// </summary>
+        /// <param name="conditions">查询条件项集合</param>
+        /// <returns>删除是否成功</returns>
         public bool DeleteByCondition(List<Item> conditions)
         {
             if (conditions.Count <= 0) return false;

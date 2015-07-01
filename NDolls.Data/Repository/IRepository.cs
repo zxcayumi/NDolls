@@ -43,6 +43,7 @@ namespace NDolls.Data
         bool AddOrUpdate(T model);
         bool Delete(string keyValue);
         bool Delete(string[] keyValues);
+        bool DeleteByCondition(String sqlCondition);
         bool DeleteByCondition(Item item);
         bool DeleteByCondition(List<Item> items);
         bool Exist(T model);
