@@ -81,15 +81,24 @@ namespace NDolls.Data
         public List<T> FindByPage(int pageSize, int index, List<Item> items)
         {
             String sql = "SELECT * FROM " +
-                "(SELECT ROW_NUMBER() OVER (ORDER BY " + primaryKey + ") AS rownum ,* FROM " + tableName + " WHERE {0}) AS temp " +
+                "(SELECT ROW_NUMBER() OVER ({0}) AS rownum ,* FROM " + tableName + " WHERE {1}) AS temp " +
                 "WHERE temp.rownum BETWEEN " + ((index - 1) * pageSize + 1) + " AND " + pageSize * index;
 
             //构造查询条件
             List<DbParameter> pars = new List<DbParameter>();
             //生成查询语句
-            string conSql = getConditionSQL(items, pars);//sql条件部分
+            string searchSql = getSearchSQL(items, pars);//sql条件部分
+            string orderSql = getOrderSQL(items);
 
-            sql = String.Format(sql, conSql);
+            if (String.IsNullOrEmpty(orderSql))//默认按主键排序
+            {
+                sql = String.Format(sql, "ORDER BY " + primaryKey, searchSql);
+            }
+            else
+            {
+                sql = String.Format(sql, orderSql, searchSql);
+            }
+
             List<T> list = new List<T>();
             list = DataConvert<T>.ToEntities(DBHelper.Query(sql, pars));
 

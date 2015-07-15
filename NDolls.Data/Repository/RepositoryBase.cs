@@ -755,10 +755,23 @@ namespace NDolls.Data
         /// <returns>sql字符串条件及排序部分</returns>
         protected String getConditionSQL(List<Item> items, List<DbParameter> pars)
         {
+            String searchSql = getSearchSQL(items, pars);
+            String ordeSql = getOrderSQL(items);
+
+            return searchSql + " " + ordeSql;
+        }
+
+        /// <summary>
+        /// 获取查询语句
+        /// </summary>
+        /// <param name="items">查询条件项集合</param>
+        /// <param name="pars">参数化查询参数集合</param>
+        /// <returns>查询SQL语句</returns>
+        protected String getSearchSQL(List<Item> items, List<DbParameter> pars)
+        {
             StringBuilder sb = new StringBuilder();
             List<Item> conditions = items != null ? items.FindAll(p => p.ItemType == ItemType.ConditionItem) : null;//条件项集合
             List<Item> groups = items != null ? items.FindAll(p => p.ItemType == ItemType.ConditionGroup) : null;//条件组集合
-            List<Item> orders = items != null ? items.FindAll(p => p.ItemType == ItemType.OrderItem) : null;//排序项集合
 
             //条件项集合
             if (conditions != null)
@@ -783,18 +796,30 @@ namespace NDolls.Data
                 sb.Append("1=1");
             }
 
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 获取sql条件字符串
+        /// </summary>
+        /// <param name="items">sql语句项集合</param>
+        /// <returns>sql字符串条件及排序部分</returns>
+        protected String getOrderSQL(List<Item> items)
+        {
+            List<Item> orders = items != null ? items.FindAll(p => p.ItemType == ItemType.OrderItem) : null;//排序项集合
+
             //排序项集合
             StringBuilder osb = new StringBuilder();
             if (orders != null && orders.Count > 0)
             {
-                osb.Append(" ORDER BY ");
+                osb.Append("ORDER BY ");
                 foreach (OrderItem item in orders)
                 {
                     osb.Append(item.FieldName + " " + item.OrderType.ToString() + ",");
                 }
             }
 
-            return sb.ToString() + osb.ToString().TrimEnd(',');
+            return osb.ToString().TrimEnd(',');
         }
 
         /// <summary>

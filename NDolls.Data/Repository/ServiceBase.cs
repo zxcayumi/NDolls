@@ -154,5 +154,17 @@ namespace NDolls.Data
         {
             return r.FindByPK(pks);
         }
+
+        /// <summary>
+        /// 获取分页信息
+        /// </summary>
+        /// <param name="pageSize">分页大小</param>
+        /// <param name="pageIndex">查询页码</param>
+        /// <param name="items">查询条件集合</param>
+        /// <returns>分页数据</returns>
+        public Paper<T> GetPaper(int pageSize,int pageIndex,List<Item> items)
+        {
+            return r.FindPager(pageSize, pageIndex, items);
+        }
     }
 }
