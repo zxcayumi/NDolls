@@ -748,6 +748,26 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 添加model中配置的排序项
+        /// </summary>
+        /// <param name="items"></param>
+        private void addOrderItems(List<Item> items)
+        {
+            List<Item> orderItems = items != null ? items.FindAll(p => p.ItemType == ItemType.OrderItem) : null;//条件项集合
+
+            Fields fields = EntityUtil.GetFieldsByType(typeof(T));
+            Item item = null;
+            foreach (OrderAttribute oa in fields.OrderFields)
+            {
+                item = orderItems.Find(p => ((OrderItem)p).FieldName == oa.FieldName);
+                if (item == null)
+                {
+                    items.Add(new OrderItem(oa.FieldName, oa.OrderType));
+                }
+            }
+        }
+
+        /// <summary>
         /// 获取sql条件字符串
         /// </summary>
         /// <param name="items">sql语句项集合</param>
@@ -806,6 +826,8 @@ namespace NDolls.Data
         /// <returns>sql字符串条件及排序部分</returns>
         protected String getOrderSQL(List<Item> items)
         {
+            addOrderItems(items);
+
             List<Item> orders = items != null ? items.FindAll(p => p.ItemType == ItemType.OrderItem) : null;//排序项集合
 
             //排序项集合

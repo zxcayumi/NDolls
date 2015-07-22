@@ -57,6 +57,7 @@
     <Compile Include="Attribute\CustomAttribute.cs" />
     <Compile Include="Attribute\DataFieldAttribute.cs" />
     <Compile Include="Attribute\EntityAttribute.cs" />
+    <Compile Include="Attribute\OrderAttribute.cs" />
     <Compile Include="Attribute\ValidateAttribute.cs" />
     <Compile Include="CommonVar.cs" />
     <Compile Include="DataConfig.cs" />

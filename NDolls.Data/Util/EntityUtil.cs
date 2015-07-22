@@ -158,6 +158,17 @@ namespace NDolls.Data.Util
                         }
                     }
 
+                    //获取排序字段
+                    objs = info.GetCustomAttributes(typeof(OrderAttribute), false);
+                    if (objs != null && objs.Length > 0)
+                    {
+                        foreach (OrderAttribute obj in objs)
+                        {
+                            obj.FieldName = info.Name;//单独赋值(对应属性的变量名)
+                            fields.OrderFields.Add(obj);
+                        }
+                    }
+
                     //获取用户自定义字段
                     objs = info.GetCustomAttributes(typeof(CustomAttribute), false);
                     if (objs != null && objs.Length > 0)
