@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Data;
 using NDolls.Data.Attribute;
+using NDolls.Data.Entity;
 
 namespace Test.Model
 {
@@ -55,7 +56,7 @@ namespace Test.Model
         public DateTime UpdateTime
         { get; set; }
 
-        [Association("UserName","UserName", AssociationType.Aggregation, CascadeType.ALL)]
+        [Association("UserName", "UserName", 2, AssociationType.Aggregation, new String[]{"CreateTime:DESC"})]
         public List<ECom_Work> Works
         { get; set; }
     }

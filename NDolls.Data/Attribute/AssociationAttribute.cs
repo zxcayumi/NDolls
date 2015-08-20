@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NDolls.Data.Entity;
 
 namespace NDolls.Data.Attribute
 {
@@ -47,6 +48,24 @@ namespace NDolls.Data.Attribute
         }
 
         /// <summary>
+        /// 关联特性构造函数(默认为级联查询)
+        /// </summary>
+        /// <param name="curField">当前主对象字段名</param>
+        /// <param name="objField">关联对象字段名</param>
+        /// <param name="top">查询数量</param>
+        /// <param name="associationType">关联对象类别</param>
+        /// <param name="orders">排序条件</param>
+        public AssociationAttribute(string curField, string objField, int top, AssociationType associationType, String[] orders)
+        {
+            this.CurField = curField;
+            this.ObjField = objField;
+            this.Top = top;
+            this.AssType = associationType;
+            this.Orders = orders;
+            this.CasType = CascadeType.SELECT;
+        }
+
+        /// <summary>
         /// 关联特性构造函数
         /// </summary>
         /// <param name="curFieldName">当前类字段</param>
@@ -72,6 +91,11 @@ namespace NDolls.Data.Attribute
         public string CurField { get; set; }
 
         /// <summary>
+        /// 查询数量
+        /// </summary>
+        public int Top { get; set; }
+
+        /// <summary>
         /// 关联目标对象字段名
         /// </summary>
         public string ObjField { get; set; }
@@ -85,6 +109,11 @@ namespace NDolls.Data.Attribute
         /// 关联对象级联操作方式
         /// </summary>
         public CascadeType CasType { get; set; }
+
+        /// <summary>
+        /// 筛选条件
+        /// </summary>
+        public String[] Orders { get; set; }
 
     }
 }

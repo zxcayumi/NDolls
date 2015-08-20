@@ -270,15 +270,40 @@ namespace NDolls.Data.Util
                 }
 
                 dynamic repository = RepositoryFactory<EntityBase>.CreateRepository(refType);//此处泛型T无实际作用
+                String[] curFields = aField.CurField.Split(',');//主对象字段名集合
+                String[] vals = new String[curFields.Length];
+                for (int i = 0; i < curFields.Length; i++)
+                {
+                    vals[i] = type.GetProperty(curFields[i]).GetValue(model, null).ToString();
+                }
+
                 switch (aField.AssType)
                 {
-                    case AssociationType.Association://关联关系
-                        info.SetValue(model, repository.FindByPK(type.GetProperty(aField.CurField).GetValue(model, null).ToString()), null);
+                    case AssociationType.Association://关联关系(1vs1)
+                        info.SetValue(model, repository.FindByPK(vals), null);
                         break;
                     case AssociationType.Aggregation://聚合关系
                     case AssociationType.Composition://组合关系
-                        dynamic list =
-                            repository.FindByCondition(new List<Item> { new ConditionItem(aField.ObjField, GetValueByField((EntityBase)model, aField.CurField), SearchType.Accurate) });
+                        String[] objFields = aField.ObjField.Split(',');//目标对象字段名集合
+                        List<Item> conditions = new List<Item>();
+                        for (int i = 0; i < objFields.Length; i++)
+                        {
+                            conditions.Add(new ConditionItem(objFields[i], GetValueByField((EntityBase)model, curFields[i]), SearchType.Accurate));
+                        }
+
+                        //增加配置条件集合
+                        if (aField.Orders != null && aField.Orders.Length > 0)
+                        {
+                            String[] oitems = new String[2];
+                            foreach (String con in aField.Orders)
+                            {
+                                oitems = con.Split(':');
+                                conditions.Add(new OrderItem(oitems[0],(OrderType)Enum.Parse(typeof(OrderType),oitems[1])));
+                            }
+                        }
+
+                        dynamic list = aField.Top <= 0 ?
+                            repository.FindByCondition(conditions) : repository.FindByCondition(aField.Top, conditions);
                         info.SetValue(model, list, null);
                         break;
                     default:
