@@ -56,7 +56,8 @@ namespace Test.Model
         public DateTime UpdateTime
         { get; set; }
 
-        [Association("UserName", "UserName", 2, AssociationType.Aggregation, new String[]{"CreateTime:DESC"})]
+        [Association("UserName,RoleType", "UserName,Role", 2, AssociationType.Aggregation)]
+        [AssocOrder("Status", NDolls.Data.Entity.OrderType.DESC)]
         public List<ECom_Work> Works
         { get; set; }
     }

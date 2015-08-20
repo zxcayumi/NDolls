@@ -231,13 +231,32 @@ namespace NDolls.Data.Util
         /// <param name="entity">对象</param>
         /// <param name="fieldName">属性名</param>
         /// <returns>该对象属性对应的值</returns>
-        public static object GetValueByField(EntityBase entity, string fieldName)
+        public static object GetValueByField(EntityBase entity, String fieldName)
         {
             Type type = entity.GetType();
             PropertyInfo info = type.GetProperty(fieldName);
             if (info != null)
             {
                 return info.GetValue(entity, null);
+            }
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// 获取某字段所属的特性集合
+        /// </summary>
+        /// <typeparam name="T">特性类型</typeparam>
+        /// <param name="entity">实体对象</param>
+        /// <param name="fieldName">对象字段</param>
+        /// <returns>特性集合</returns>
+        public static object[] GetAttributesByField<T>(EntityBase entity, String fieldName)
+        {
+            Type type = entity.GetType();
+            PropertyInfo info = type.GetProperty(fieldName);
+            if (info != null)
+            {
+                return info.GetCustomAttributes(typeof(T), false);
             }
             else
                 return null;
@@ -291,14 +310,13 @@ namespace NDolls.Data.Util
                             conditions.Add(new ConditionItem(objFields[i], GetValueByField((EntityBase)model, curFields[i]), SearchType.Accurate));
                         }
 
-                        //增加配置条件集合
-                        if (aField.Orders != null && aField.Orders.Length > 0)
+                        //加载特殊条件项
+                        object[] objs = GetAttributesByField<AssocOrderAttribute>(model as EntityBase, aField.FieldName);
+                        if (objs != null && objs.Length > 0)
                         {
-                            String[] oitems = new String[2];
-                            foreach (String con in aField.Orders)
+                            foreach (AssocOrderAttribute obj in objs)
                             {
-                                oitems = con.Split(':');
-                                conditions.Add(new OrderItem(oitems[0],(OrderType)Enum.Parse(typeof(OrderType),oitems[1])));
+                                conditions.Add(new OrderItem(obj.FieldName, obj.OrderType));
                             }
                         }
 

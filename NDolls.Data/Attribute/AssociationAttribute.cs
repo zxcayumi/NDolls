@@ -54,14 +54,12 @@ namespace NDolls.Data.Attribute
         /// <param name="objField">关联对象字段名</param>
         /// <param name="top">查询数量</param>
         /// <param name="associationType">关联对象类别</param>
-        /// <param name="orders">排序条件</param>
-        public AssociationAttribute(string curField, string objField, int top, AssociationType associationType, String[] orders)
+        public AssociationAttribute(string curField, string objField, int top, AssociationType associationType)
         {
             this.CurField = curField;
             this.ObjField = objField;
             this.Top = top;
             this.AssType = associationType;
-            this.Orders = orders;
             this.CasType = CascadeType.SELECT;
         }
 
@@ -109,11 +107,6 @@ namespace NDolls.Data.Attribute
         /// 关联对象级联操作方式
         /// </summary>
         public CascadeType CasType { get; set; }
-
-        /// <summary>
-        /// 筛选条件
-        /// </summary>
-        public String[] Orders { get; set; }
 
     }
 }
