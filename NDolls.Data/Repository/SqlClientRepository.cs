@@ -123,7 +123,8 @@ namespace NDolls.Data
             //生成查询语句
             string conSql = getConditionSQL(items, pars);//sql条件部分
 
-            sql = String.Format(sql, conSql);
+            sql = String.Format(sql, conSql.Substring(0, conSql.IndexOf("ORDER")));
+            sql += " " + conSql.Substring(conSql.IndexOf("ORDER"));
             List<T> list = new List<T>();
             list = DataConvert<T>.ToEntities(DBHelper.Query(sql, pars));
             
@@ -132,7 +133,7 @@ namespace NDolls.Data
             {
                 paper = new Paper<T>();
                 paper.Current = index;
-                paper.Total = GetCount(items);
+                paper.Total = GetCount(items.FindAll(p => p.ItemType != ItemType.OrderItem));
                 paper.PageCount = (int)Math.Ceiling(paper.Total / (decimal)pageSize);
                 paper.Result = list;
             }
