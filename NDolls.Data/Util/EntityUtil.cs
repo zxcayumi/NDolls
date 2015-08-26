@@ -246,24 +246,37 @@ namespace NDolls.Data.Util
         /// <summary>
         /// 获取类静态属性值
         /// </summary>
+        /// <param name="assembleName">程序集名称</param>
         /// <param name="clsType">类名称</param>
         /// <param name="clsProperty">属性名称</param>
         /// <returns>静态属性值</returns>
-        public static object GetValueByType(String clsType,String clsProperty)
+        public static object GetValueByType(String assembleName, String clsType, String clsProperty)
         {
-            return Type.GetType(clsType).GetProperty(clsProperty).GetValue(null, null);
+            PropertyInfo pi;
+            if (!String.IsNullOrEmpty(assembleName))
+            {
+                Assembly a = Assembly.Load(assembleName);
+                pi = a.CreateInstance(clsType).GetType().GetProperty(clsProperty);
+            }
+            else
+            {
+                pi = Type.GetType(clsType).GetProperty(clsProperty);
+            }
+            
+            return pi.GetValue(null, null).ToString(); 
         }
 
         /// <summary>
         /// 获取类静态属性值
         /// </summary>
+        /// <param name="assembleName">程序集名称</param>
         /// <param name="fullPropertyName">包含类路径的属性名</param>
         /// <returns>静态属性值</returns>
-        public static object GetValueByType(String fullPropertyName)
+        public static object GetValueByType(String assembleName,String fullPropertyName)
         {
             String clsName = fullPropertyName.Substring(0, fullPropertyName.LastIndexOf('.'));
             String clsProperty = fullPropertyName.Substring(fullPropertyName.LastIndexOf('.') + 1);
-            return GetValueByType(clsName, clsProperty);
+            return GetValueByType(assembleName, clsName, clsProperty);
         }
 
         /// <summary>

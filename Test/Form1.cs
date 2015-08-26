@@ -570,7 +570,7 @@ namespace Test
 
         private void button31_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(NDolls.Data.Util.EntityUtil.GetValueByType("System.DateTime.Now").ToString());
+            MessageBox.Show(NDolls.Data.Util.EntityUtil.GetValueByType("","System.DateTime.Now").ToString());
         }
     }
 }

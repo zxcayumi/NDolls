@@ -10,6 +10,14 @@ namespace Test.Model
     [Entity("Sys_User","UserName")]
     public class Sys_User:NDolls.Data.Entity.EntityBase
     {
+        public static String StationID
+        {
+            get
+            {
+                return "sdfds";
+            }
+        }
+
         /// <summary>
         /// UserName
         /// </summary>
