@@ -244,6 +244,29 @@ namespace NDolls.Data.Util
         }
 
         /// <summary>
+        /// 获取类静态属性值
+        /// </summary>
+        /// <param name="clsType">类名称</param>
+        /// <param name="clsProperty">属性名称</param>
+        /// <returns>静态属性值</returns>
+        public static object GetValueByType(String clsType,String clsProperty)
+        {
+            return Type.GetType(clsType).GetProperty(clsProperty).GetValue(null, null);
+        }
+
+        /// <summary>
+        /// 获取类静态属性值
+        /// </summary>
+        /// <param name="fullPropertyName">包含类路径的属性名</param>
+        /// <returns>静态属性值</returns>
+        public static object GetValueByType(String fullPropertyName)
+        {
+            String clsName = fullPropertyName.Substring(0, fullPropertyName.LastIndexOf('.'));
+            String clsProperty = fullPropertyName.Substring(fullPropertyName.LastIndexOf('.') + 1);
+            return GetValueByType(clsName, clsProperty);
+        }
+
+        /// <summary>
         /// 获取某字段所属的特性集合
         /// </summary>
         /// <typeparam name="T">特性类型</typeparam>

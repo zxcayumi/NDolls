@@ -567,5 +567,10 @@ namespace Test
                 MessageBox.Show("更新成功");
             }
         }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(NDolls.Data.Util.EntityUtil.GetValueByType("System.DateTime.Now").ToString());
+        }
     }
 }
