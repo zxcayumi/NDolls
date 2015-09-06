@@ -253,6 +253,7 @@ namespace NDolls.Data
         public int GetCount(List<Item> items)
         {
             List<DbParameter> pars = new List<DbParameter>();//构造查询条件
+            items = items.FindAll(p => p.ItemType != ItemType.OrderItem);
             string conSql = getConditionSQL(items, pars);////生成查询语句,sql条件部分
             string sql = String.Format(selectSQL, "COUNT(*)", tableName, conSql);
 
