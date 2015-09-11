@@ -25,6 +25,11 @@ namespace NDolls.Core.Util
                 {
                     json.Append("\"" + key + "\":" + "\"" + EncodeData(dic[key].ToString()) + "\",");
                 }
+                else if (dic[key].GetType() == typeof(DateTime))
+                {
+                    json.Append("\"" + key + "\":" + ((DateTime)dic[key]).ToString("yyyy-MM-dd HH:mm:ss:ffff").
+                        Replace(" 00:00:00:0000", "").Replace(":0000", "") + ",");
+                }
                 else
                 {
                     json.Append("\"" + key + "\":" + js.Serialize(dic[key]) + ",");
