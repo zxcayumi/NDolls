@@ -346,8 +346,18 @@ namespace NDolls.Data.Util
                             conditions.Add(new ConditionItem(objFields[i], GetValueByField((EntityBase)model, curFields[i]), SearchType.Accurate));
                         }
 
-                        //加载特殊条件项
-                        object[] objs = GetAttributesByField<AssocOrderAttribute>(model as EntityBase, aField.FieldName);
+                        //加载特殊查询项（条件项）
+                        object[] objs = GetAttributesByField<AssocConditionAttribute>(model as EntityBase, aField.FieldName);
+                        if (objs != null && objs.Length > 0)
+                        {
+                            foreach (AssocConditionAttribute obj in objs)
+                            {
+                                conditions.Add(new ConditionItem(obj.FieldName, obj.FieldValue, obj.SearchType));
+                            }
+                        }
+
+                        //加载特殊查询项（排序项）
+                        objs = GetAttributesByField<AssocOrderAttribute>(model as EntityBase, aField.FieldName);
                         if (objs != null && objs.Length > 0)
                         {
                             foreach (AssocOrderAttribute obj in objs)
