@@ -64,7 +64,8 @@ namespace Test.Model
         public DateTime UpdateTime
         { get; set; }
 
-        [Association("UserName,RoleType", "UserName,Role", 2, AssociationType.Aggregation)]
+        [Association("UserName", "UserName", 2, AssociationType.Aggregation)]
+        [AssocCondition("status", true, NDolls.Data.Entity.SearchType.Accurate)]
         [AssocOrder("Status", NDolls.Data.Entity.OrderType.DESC)]
         public List<ECom_Work> Works
         { get; set; }
