@@ -34,7 +34,7 @@ namespace NDolls.Data.Entity
             //检测参数是否有重复项
             if (pars.Exists(p => p.ParameterName == parameterName))
             {
-                parameterName += this.GetHashCode();
+                parameterName += Guid.NewGuid().ToString("N");
             }
 
             if (sb.Length >3 && !sb.ToString().EndsWith("("))//避免一上来就是AND/OR连接符；避免左括号直接跟AND/OR连接符
