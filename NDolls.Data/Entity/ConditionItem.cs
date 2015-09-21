@@ -67,6 +67,10 @@ namespace NDolls.Data.Entity
                     sb.Append(fieldName + " LIKE @" + parameterName + CommonVar.JoinTag + "'%'");
                     pars.Add(SQLFactory.CreateParameter(parameterName, FieldValue));
                     break;
+                case SearchType.UnContains:
+                    sb.Append(fieldName + " NOT LIKE @" + parameterName);
+                    pars.Add(SQLFactory.CreateParameter(parameterName, "%" + FieldValue + "%"));
+                    break;
                 case SearchType.Unequal:
                     if (FieldValue == null)
                     {
@@ -170,6 +174,11 @@ namespace NDolls.Data.Entity
         /// 右侧模糊查询
         /// </summary>
         RightFuzzy,
+
+        /// <summary>
+        /// 不包含
+        /// </summary>
+        UnContains,
 
         /// <summary>
         /// 不等于
