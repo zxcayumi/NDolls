@@ -25,14 +25,9 @@ namespace NDolls.Core.Util
                 {
                     json.Append("\"" + key + "\":" + "\"" + EncodeData(dic[key].ToString()) + "\",");
                 }
-                else if (dic[key].GetType() == typeof(DateTime))
-                {
-                    json.Append("\"" + key + "\":" + ((DateTime)dic[key]).ToString("yyyy-MM-dd HH:mm:ss:ffff").
-                        Replace(" 00:00:00:0000", "").Replace(":0000", "") + ",");
-                }
                 else
                 {
-                    json.Append("\"" + key + "\":" + js.Serialize(dic[key]) + ",");
+                    json.Append("\"" + key + "\":" + TransDate(js.Serialize(dic[key])) + ",");
                 }
             }
 
@@ -93,7 +88,7 @@ namespace NDolls.Core.Util
         /// </summary>
         private static String TransDate(String str)
         {
-            str = Regex.Replace(str, @"\\/Date\((\d+)\)\\/", match =>
+            str = Regex.Replace(str, @"\\/Date\((-?\d+)\)\\/", match =>
             {
                 DateTime dt = new DateTime(1970, 1, 1);
                 dt = dt.AddMilliseconds(long.Parse(match.Groups[1].Value));
