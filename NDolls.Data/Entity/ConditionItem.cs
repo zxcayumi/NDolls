@@ -29,7 +29,9 @@ namespace NDolls.Data.Entity
         public override void LoadParameters(StringBuilder sb,List<DbParameter> pars,JoinType joinType)
         {
             String fieldName = FieldName;
-            String parameterName = FieldName.Replace("(","").Replace(")","");
+            String parameterName = FieldName.Replace("(", "").Replace(")", "").
+                Replace("&", "").Replace("|", "").Replace("+", "").
+                Replace("-", "").Replace("*", "").Replace("/", "");
 
             //检测参数是否有重复项
             if (pars.Exists(p => p.ParameterName == parameterName))
