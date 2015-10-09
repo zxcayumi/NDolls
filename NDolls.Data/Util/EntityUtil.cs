@@ -329,7 +329,11 @@ namespace NDolls.Data.Util
                 String[] vals = new String[curFields.Length];
                 for (int i = 0; i < curFields.Length; i++)
                 {
-                    vals[i] = type.GetProperty(curFields[i]).GetValue(model, null).ToString();
+                    try
+                    {
+                        vals[i] = type.GetProperty(curFields[i]).GetValue(model, null).ToString();
+                    }
+                    catch { }
                 }
 
                 switch (aField.AssType)
