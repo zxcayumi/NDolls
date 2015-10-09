@@ -61,6 +61,7 @@
     <Compile Include="Attribute\ValidateAttribute.cs" />
     <Compile Include="Attribute\AssocOrderAttribute.cs" />
     <Compile Include="Attribute\AssocConditionAttribute.cs" />
+    <Compile Include="Attribute\ConditionAttribute.cs" />
     <Compile Include="CommonVar.cs" />
     <Compile Include="DataConfig.cs" />
     <Compile Include="DBHelper\HelperBase.cs" />

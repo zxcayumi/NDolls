@@ -53,7 +53,7 @@ namespace NDolls.Data
         /// 根据查询条件获取对象集合（由于不同数据库的分页方式不同，将实现放到子类）
         /// </summary>
         /// <param name="top">查询数量(0:查询所有)</param>
-        /// <param name="conditions">查询（排序）项集合</param>
+        /// <param name="items">查询（排序）项集合</param>
         /// <returns>查询结果集合</returns>
         public virtual List<T> FindByCondition(int top, List<Item> items)
         {
@@ -72,7 +72,7 @@ namespace NDolls.Data
         /// <summary>
         /// 根据查询条件获取对象集合
         /// </summary>
-        /// <param name="condition">查询（排序）项</param>
+        /// <param name="item">查询（排序）项</param>
         /// <returns>查询结果集合</returns>
         public List<T> FindByCondition(Item item)
         {
@@ -82,7 +82,7 @@ namespace NDolls.Data
         /// <summary>
         /// 根据查询条件获取对象集合
         /// </summary>
-        /// <param name="conditions">查询（排序）项集合</param>
+        /// <param name="items">查询（排序）项集合</param>
         /// <returns>查询结果集合</returns>
         public List<T> FindByCondition(List<Item> items)
         {
@@ -673,6 +673,28 @@ namespace NDolls.Data
         #endregion
 
         #region 辅助对象及方法
+        
+        /// <summary>
+        /// 获取sql条件字符串
+        /// </summary>
+        /// <param name="items">sql语句项集合</param>
+        /// <param name="pars">添加参数集合</param>
+        /// <returns>sql字符串条件及排序部分</returns>
+        protected String getConditionSQL(List<Item> items, List<DbParameter> pars)
+        {
+            object[] infos = typeof(T).GetCustomAttributes(typeof(ConditionAttribute),false);
+            ConditionAttribute atr;
+            foreach (object obj in infos)
+            {
+                atr = obj as ConditionAttribute;
+                items.Add(new ConditionItem(atr.FieldName,atr.FieldValue,atr.SearchType));
+            }
+
+            String searchSql = getSearchSQL(items, pars);
+            String ordeSql = getOrderSQL(items);
+
+            return searchSql + " " + ordeSql;
+        }
 
         /// <summary>
         /// 数据库处理对象
@@ -766,20 +788,6 @@ namespace NDolls.Data
                     items.Add(new OrderItem(oa.FieldName, oa.OrderType));
                 }
             }
-        }
-
-        /// <summary>
-        /// 获取sql条件字符串
-        /// </summary>
-        /// <param name="items">sql语句项集合</param>
-        /// <param name="pars">添加参数集合</param>
-        /// <returns>sql字符串条件及排序部分</returns>
-        protected String getConditionSQL(List<Item> items, List<DbParameter> pars)
-        {
-            String searchSql = getSearchSQL(items, pars);
-            String ordeSql = getOrderSQL(items);
-
-            return searchSql + " " + ordeSql;
         }
 
         /// <summary>
@@ -909,7 +917,7 @@ namespace NDolls.Data
         /// 持久化主对象及其的关联对象信息
         /// </summary>
         /// <param name="model">操作主对象</param>
-        /// <param name="filedName">关联对象集合</param>
+        /// <param name="associations">关联对象集合</param>
         public bool Persist(OptEntity model, List<AssociationAttribute> associations)
         {
             OptType optType = OptType.Save;
