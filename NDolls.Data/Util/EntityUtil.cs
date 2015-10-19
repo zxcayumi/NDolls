@@ -347,7 +347,8 @@ namespace NDolls.Data.Util
                         List<Item> conditions = new List<Item>();
                         for (int i = 0; i < objFields.Length; i++)
                         {
-                            conditions.Add(new ConditionItem(objFields[i], GetValueByField((EntityBase)model, curFields[i]), SearchType.Accurate));
+                            //conditions.Add(new ConditionItem(objFields[i], GetValueByField((EntityBase)model, curFields[i]), SearchType.Accurate));
+                            conditions.Add(new ConditionItem(objFields[i], GetValueByField((EntityBase)model, curFields[i]), SearchType.Fuzzy));
                         }
 
                         //加载特殊查询项（条件项）
