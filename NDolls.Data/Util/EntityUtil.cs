@@ -6,6 +6,7 @@ using NDolls.Data.Attribute;
 using System.Reflection;
 using NDolls.Data.Entity;
 using NDolls.Core.Util;
+using System.Text.RegularExpressions;
 
 namespace NDolls.Data.Util
 {
@@ -357,6 +358,32 @@ namespace NDolls.Data.Util
                         {
                             foreach (AssocConditionAttribute obj in objs)
                             {
+                                //匹配变量替换
+                                String pattern = @"[\{（][\s\S]*[\}）]";
+                                List<string> mlist = Regex.Matches(obj.FieldName, pattern).Cast<Match>().Select(a => a.Value).ToList();
+                                foreach (String v in mlist)
+                                {
+                                    try
+                                    {
+                                        String[] pars = v.Trim(new char[] { '{', '}' }).Split(',');
+                                        obj.FieldName = obj.FieldName.Replace(v,
+                                            NDolls.Data.Util.EntityUtil.GetValueByType(pars[0], pars[1]).ToString());
+                                    }
+                                    catch { }
+                                }
+
+                                mlist = Regex.Matches(obj.FieldValue.ToString(), pattern).Cast<Match>().Select(a => a.Value).ToList();
+                                foreach (String v in mlist)
+                                {
+                                    try
+                                    {
+                                        String[] pars = v.Trim(new char[] { '{', '}' }).Split(',');
+                                        obj.FieldValue = obj.FieldValue.ToString().Replace(v,
+                                            NDolls.Data.Util.EntityUtil.GetValueByType(pars[0], pars[1]).ToString());
+                                    }
+                                    catch { }
+                                }
+
                                 conditions.Add(new ConditionItem(obj.FieldName, obj.FieldValue, obj.SearchType));
                             }
                         }
