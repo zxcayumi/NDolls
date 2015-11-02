@@ -114,19 +114,22 @@ namespace NDolls.Data
         /// <returns>分页数据信息</returns>
         public Paper<T> FindPager(int pageSize, int index, List<Item> items)
         {
-            String sql = "SELECT * FROM " +
-                "(SELECT ROW_NUMBER() OVER (ORDER BY " + primaryKey + ") AS rownum ,* FROM " + tableName + " WHERE {0}) AS temp " +
-                "WHERE temp.rownum BETWEEN " + ((index - 1) * pageSize + 1) + " AND " + pageSize * index;
+            //String sql = "SELECT * FROM " +
+            //    "(SELECT ROW_NUMBER() OVER (ORDER BY " + primaryKey + ") AS rownum ,* FROM " + tableName + " WHERE {0}) AS temp " +
+            //    "WHERE temp.rownum BETWEEN " + ((index - 1) * pageSize + 1) + " AND " + pageSize * index;
 
-            //构造查询条件
-            List<DbParameter> pars = new List<DbParameter>();
-            //生成查询语句
-            string conSql = getConditionSQL(items, pars);//sql条件部分
+            ////构造查询条件
+            //List<DbParameter> pars = new List<DbParameter>();
+            ////生成查询语句
+            //string conSql = getConditionSQL(items, pars);//sql条件部分
 
-            sql = String.Format(sql, conSql.Substring(0, conSql.IndexOf("ORDER")));
-            sql += " " + conSql.Substring(conSql.IndexOf("ORDER"));
-            List<T> list = new List<T>();
-            list = DataConvert<T>.ToEntities(DBHelper.Query(sql, pars));
+            //if (conSql.Contains("ORDER"))
+            //{
+            //    sql = String.Format(sql, conSql.Substring(0, conSql.IndexOf("ORDER")));
+            //    sql += " " + conSql.Substring(conSql.IndexOf("ORDER"));
+            //}
+            List<T> list = FindByPage(pageSize,index,items);//new List<T>();
+            //list = DataConvert<T>.ToEntities(DBHelper.Query(sql, pars));
             
             Paper<T> paper = null;
             if (list != null && list.Count > 0)
