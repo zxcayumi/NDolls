@@ -363,7 +363,6 @@ namespace NDolls.Data.Util
                                 //匹配变量替换
                                 String pattern = @"[\{（][\s\S]*[\}）]";
 
-                                //
                                 List<string> mlist = Regex.Matches(obj.FieldName, pattern).Cast<Match>().Select(a => a.Value).ToList();
                                 foreach (String v in mlist)
                                 {
@@ -384,24 +383,27 @@ namespace NDolls.Data.Util
                                     catch { }
                                 }
 
-                                mlist = Regex.Matches(obj.FieldValue.ToString(), pattern).Cast<Match>().Select(a => a.Value).ToList();
-                                foreach (String v in mlist)
+                                if (obj.FieldValue != null)
                                 {
-                                    try
+                                    mlist = Regex.Matches(obj.FieldValue.ToString(), pattern).Cast<Match>().Select(a => a.Value).ToList();
+                                    foreach (String v in mlist)
                                     {
-                                        String[] pars = v.Trim(new char[] { '{', '}' }).Split(',');
-                                        if (pars.Length == 1)//{FieldName}:当前主对象字段值替换
+                                        try
                                         {
-                                            obj.FieldName = obj.FieldName.Replace(v,
-                                                GetValueByField((EntityBase)model, pars[0]).ToString());
+                                            String[] pars = v.Trim(new char[] { '{', '}' }).Split(',');
+                                            if (pars.Length == 1)//{FieldName}:当前主对象字段值替换
+                                            {
+                                                obj.FieldName = obj.FieldName.Replace(v,
+                                                    GetValueByField((EntityBase)model, pars[0]).ToString());
+                                            }
+                                            else//{Assembly,Assembly.FieldName}:全局静态变量替换
+                                            {
+                                                obj.FieldName = obj.FieldName.Replace(v,
+                                                    NDolls.Data.Util.EntityUtil.GetValueByType(pars[0], pars[1]).ToString());
+                                            }
                                         }
-                                        else//{Assembly,Assembly.FieldName}:全局静态变量替换
-                                        {
-                                            obj.FieldName = obj.FieldName.Replace(v,
-                                                NDolls.Data.Util.EntityUtil.GetValueByType(pars[0], pars[1]).ToString());
-                                        }
+                                        catch { }
                                     }
-                                    catch { }
                                 }
 
                                 conditions.Add(new ConditionItem(obj.FieldName, obj.FieldValue, obj.SearchType));
