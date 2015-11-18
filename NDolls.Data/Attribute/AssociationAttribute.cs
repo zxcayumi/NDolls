@@ -36,7 +36,7 @@ namespace NDolls.Data.Attribute
         /// <summary>
         /// 关联特性构造函数(默认为级联查询)
         /// </summary>
-        /// <param name="refField">与关联对象关联的主对象字段名</param>
+        /// <param name="refField">当前主对象字段名</param>
         /// <param name="fieldName">关联对象字段名</param>
         /// <param name="associationType">关联对象类别</param>
         public AssociationAttribute(string refField, string fieldName, AssociationType associationType)

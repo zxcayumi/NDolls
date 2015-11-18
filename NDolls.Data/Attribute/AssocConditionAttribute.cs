@@ -7,7 +7,7 @@ using NDolls.Data.Entity;
 namespace NDolls.Data.Attribute
 {
     /// <summary>
-    /// 字段条件描述
+    /// 字段条件描述(对级联查询进一步细化筛选用)
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class AssocConditionAttribute : System.Attribute
@@ -17,8 +17,8 @@ namespace NDolls.Data.Attribute
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="fieldName">条件字段</param>
-        /// <param name="fieldValue">条件内容</param>
+        /// <param name="fieldName">被查询对象的条件字段</param>
+        /// <param name="fieldValue">被查询对象条件字段值</param>
         /// <param name="searchType">查询方式</param>
         public AssocConditionAttribute(String fieldName,Object fieldValue, SearchType searchType)
         {

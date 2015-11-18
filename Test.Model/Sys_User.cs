@@ -64,8 +64,8 @@ namespace Test.Model
         public DateTime UpdateTime
         { get; set; }
 
-        [Association("UserName", "UserName", 2, AssociationType.Aggregation)]
-        [AssocCondition("status", true, NDolls.Data.Entity.SearchType.Accurate)]
+        [Association("", "", 5, AssociationType.Aggregation)]
+        [AssocCondition("UserName", "zxcayumi", NDolls.Data.Entity.SearchType.Accurate)]//被查询表（ECom_Work）的Status为true
         [AssocOrder("Status", NDolls.Data.Entity.OrderType.DESC)]
         public List<ECom_Work> Works
         { get; set; }
