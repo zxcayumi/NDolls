@@ -65,6 +65,16 @@ namespace NDolls.Data
                 connctionString = value;
             }
         }
+
+        private static Boolean allowAssociation = true;
+        /// <summary>
+        /// 是否开启级联查询
+        /// </summary>
+        public static Boolean AllowAssociation
+        {
+            get { return DataConfig.allowAssociation; }
+            set { DataConfig.allowAssociation = value; }
+        }
     }
 
     public enum DBType

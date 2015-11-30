@@ -12,6 +12,15 @@ namespace NDolls.Data
             RepositoryFactory<T>.CreateRepository(typeof(T).ToString());
 
         /// <summary>
+        /// 设置是否开启级联查询
+        /// </summary>
+        /// <param name="isAllowed">是否开启</param>
+        public void SetAllowAssociation(Boolean isAllowed)
+        {
+            Data.DataConfig.AllowAssociation = isAllowed;
+        }
+
+        /// <summary>
         /// 添加对象
         /// </summary>
         public bool Add(T model)

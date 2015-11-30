@@ -305,6 +305,11 @@ namespace NDolls.Data.Util
         /// <param name="model">要赋值的主对象</param>
         public static void SetAssociation(Object model)
         {
+            if (!NDolls.Data.DataConfig.AllowAssociation)//若未开启级联查询，返回
+            {
+                return;
+            }
+
             Type type = model.GetType();
             Fields fields = GetFieldsByType(type);
 
