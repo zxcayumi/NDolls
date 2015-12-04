@@ -12,7 +12,7 @@ namespace NDolls.Data
             RepositoryFactory<T>.CreateRepository(typeof(T).ToString());
 
         /// <summary>
-        /// 设置是否开启级联查询
+        /// 设置是否开启级联查询（设置完全局有效）
         /// </summary>
         /// <param name="isAllowed">是否开启</param>
         public void SetAllowAssociation(Boolean isAllowed)
@@ -37,10 +37,27 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 修改对象
+        /// </summary>
+        public bool Update(T model, OptType type)
+        {
+            return r.Update(model, type);
+        }
+
+        /// <summary>
         /// 保存对象（系统自动判断增或改）
         /// </summary>
         public bool Save(T model)
         {
+            return r.AddOrUpdate(model);
+        }
+
+        /// <summary>
+        /// 保存对象（系统自动判断增或改）
+        /// </summary>
+        public bool Save(T model, OptType type)
+        {
+
             return r.AddOrUpdate(model);
         }
 

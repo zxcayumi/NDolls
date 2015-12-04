@@ -380,6 +380,7 @@ namespace NDolls.Data
         /// 修改实体
         /// </summary>
         /// <param name="model">实体对象</param>
+        /// <param name="type">更新策略</param>
         /// <returns>修改是否成功</returns>
         public bool Update(T model, OptType type)
         {
@@ -529,6 +530,24 @@ namespace NDolls.Data
             else
             {
                 return Update(model);
+            }
+        }
+
+        /// <summary>
+        /// 添加或修改（自动判断对象是否存在）
+        /// </summary>
+        /// <param name="model">实体对象</param>
+        /// <param name="type">更新策略</param>
+        /// <returns>执行是否成功</returns>
+        public bool AddOrUpdate(T model, OptType type)
+        {
+            if (!Exist(model))
+            {
+                return Add(model);
+            }
+            else
+            {
+                return Update(model, type);
             }
         }
 
