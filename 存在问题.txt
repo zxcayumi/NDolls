@@ -57,5 +57,5 @@ list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 2.Model查询出来的别名设置（有时候需要查询出来的信息列名不是数据库对应的列名）
 2.db.savechanges();
 
-
-1.查询时可设置是否级联查询关联表
+1.查询时可设置是否级联查询关联表(OK)
+2.自定义查询内容项
