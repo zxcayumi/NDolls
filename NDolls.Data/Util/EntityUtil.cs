@@ -227,6 +227,24 @@ namespace NDolls.Data.Util
         }
 
         /// <summary>
+        /// 获取程序集中静态属性值
+        /// </summary>
+        /// <param name="sysAssembley">系统程序集</param>
+        /// <param name="fieldName">静态变量名</param>
+        /// <returns>静态变量值</returns>
+        public static object GetValueByField(String sysAssembley, String fieldName)
+        {
+            Type type = Type.GetType(sysAssembley);
+            PropertyInfo info = type.GetProperty(fieldName);
+            if (info != null)
+            {
+                return info.GetValue(null, null);
+            }
+            else
+                return null;
+        }
+
+        /// <summary>
         /// 获取对象某属性的值
         /// </summary>
         /// <param name="entity">对象</param>
@@ -339,7 +357,8 @@ namespace NDolls.Data.Util
                     {
                         vals[i] = type.GetProperty(curFields[i]).GetValue(model, null).ToString();
                     }
-                    catch { }
+                    catch 
+                    {}
                 }
 
                 switch (aField.AssType)
@@ -371,21 +390,7 @@ namespace NDolls.Data.Util
                                 List<string> mlist = Regex.Matches(obj.FieldName, pattern).Cast<Match>().Select(a => a.Value).ToList();
                                 foreach (String v in mlist)
                                 {
-                                    try
-                                    {
-                                        String[] pars = v.Trim(new char[] { '{', '}' }).Split(',');
-                                        if (pars.Length == 1)//{FieldName}:当前主对象字段值替换
-                                        {
-                                            obj.FieldName = obj.FieldName.Replace(v, 
-                                                GetValueByField((EntityBase)model, pars[0]).ToString());
-                                        }
-                                        else//{Assembly,Assembly.FieldName}:全局静态变量替换
-                                        {
-                                            obj.FieldName = obj.FieldName.Replace(v,
-                                                NDolls.Data.Util.EntityUtil.GetValueByType(pars[0], pars[1]).ToString());
-                                        }
-                                    }
-                                    catch { }
+                                    LoadVars(obj, (EntityBase)model, v, true);
                                 }
 
                                 if (obj.FieldValue != null)
@@ -393,21 +398,7 @@ namespace NDolls.Data.Util
                                     mlist = Regex.Matches(obj.FieldValue.ToString(), pattern).Cast<Match>().Select(a => a.Value).ToList();
                                     foreach (String v in mlist)
                                     {
-                                        try
-                                        {
-                                            String[] pars = v.Trim(new char[] { '{', '}' }).Split(',');
-                                            if (pars.Length == 1)//{FieldName}:当前主对象字段值替换
-                                            {
-                                                obj.FieldName = obj.FieldName.Replace(v,
-                                                    GetValueByField((EntityBase)model, pars[0]).ToString());
-                                            }
-                                            else//{Assembly,Assembly.FieldName}:全局静态变量替换
-                                            {
-                                                obj.FieldName = obj.FieldName.Replace(v,
-                                                    NDolls.Data.Util.EntityUtil.GetValueByType(pars[0], pars[1]).ToString());
-                                            }
-                                        }
-                                        catch { }
+                                        LoadVars(obj, (EntityBase)model, v, false);
                                     }
                                 }
 
@@ -432,6 +423,39 @@ namespace NDolls.Data.Util
                     default:
                         break;
                 }
+            }
+        }
+
+        private static void LoadVars(AssocConditionAttribute obj, EntityBase model, String v,Boolean isFieldName)
+        {
+            String[] pars = v.Trim(new char[] { '{', '}' }).Split(',');
+            String vv = "";
+            if (pars.Length == 1)
+            {
+                if (pars[0].Contains("."))//系统全局静态变量，如{System.DateTime.Now}
+                {
+                    vv = GetValueByField(pars[0].Substring(0, pars[0].LastIndexOf('.')),
+                        pars[0].Substring(pars[0].LastIndexOf('.') + 1)).ToString();
+                }
+                else//{FieldName}:当前主对象字段值替换
+                {
+                    vv = obj.FieldName.Replace(v,
+                        GetValueByField((EntityBase)model, pars[0]).ToString());
+                }
+            }
+            else//{Assembly,Assembly.FieldName}:全局静态变量替换
+            {
+                vv = obj.FieldName.Replace(v,
+                    NDolls.Data.Util.EntityUtil.GetValueByType(pars[0], pars[1]).ToString());
+            }
+
+            if (isFieldName)
+            {
+                obj.FieldName = vv;
+            }
+            else
+            {
+                obj.FieldValue = vv;
             }
         }
 

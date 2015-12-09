@@ -65,7 +65,7 @@ namespace Test.Model
         { get; set; }
 
         [Association("", "", 5, AssociationType.Aggregation)]
-        [AssocCondition("Img1", null, NDolls.Data.Entity.SearchType.Accurate)]//被查询表（ECom_Work）的Status为true
+        [AssocCondition("CreateTime", "{System.DateTime.Now}", NDolls.Data.Entity.SearchType.Lower)]//被查询表（ECom_Work）的Status为true
         [AssocOrder("Status", NDolls.Data.Entity.OrderType.DESC)]
         public List<ECom_Work> Works
         { get; set; }

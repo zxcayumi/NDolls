@@ -14,6 +14,7 @@ using NDolls.Core.Util;
 using NDolls.Data.Attribute;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Reflection;
 
 namespace Test
 {
@@ -572,6 +573,15 @@ namespace Test
         private void button31_Click(object sender, EventArgs e)
         {
             MessageBox.Show(NDolls.Data.Util.EntityUtil.GetValueByType("","System.DateTime.Now").ToString());
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+            Type type = Type.GetType("System.DateTime");
+
+            Assembly ab = Assembly.GetAssembly(type);
+            PropertyInfo pi = type.GetProperty("Now");
+            MessageBox.Show(pi.GetValue(null,null).ToString());
         }
     }
 }
