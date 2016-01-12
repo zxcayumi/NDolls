@@ -91,7 +91,7 @@ namespace NDolls.Data.Util
         }
 
         /// <summary>
-        /// 将json转化为具体对象
+        /// 将对象转化为json
         /// </summary>
         /// <param name="json">json格式字符串对象</param>
         /// <returns>json对象</returns>
