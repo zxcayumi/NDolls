@@ -577,11 +577,14 @@ namespace Test
 
         private void button32_Click(object sender, EventArgs e)
         {
-            Type type = Type.GetType("System.DateTime");
+            //Type type = Type.GetType("System.DateTime");
 
-            Assembly ab = Assembly.GetAssembly(type);
-            PropertyInfo pi = type.GetProperty("Now");
-            MessageBox.Show(pi.GetValue(null,null).ToString());
+            //Assembly ab = Assembly.GetAssembly(type);
+            //PropertyInfo pi = type.GetProperty("Now");
+            //MessageBox.Show(pi.GetValue(null,null).ToString());
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
+            DataTable dt = r.FindByCustom("*", "UserName LIKE 'test%'");
+            MessageBox.Show(NDolls.Core.Util.JsonUtil.TableToJson(dt));
         }
     }
 }
