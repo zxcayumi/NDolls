@@ -292,18 +292,19 @@ namespace NDolls.Data
                 {
                     obj = RepositoryFactory<EntityBase>.CreateRepository(m, tran);
                     type = obj.GetType();
-                    type.GetMethod("AddOrUpdate").Invoke(obj, new object[] { m });
+                    type.GetMethod("AddOrUpdate",new Type[]{m.GetType()}).Invoke(obj, new object[] { m });
                 }
 
                 tran.TransactionCommit();
                 ClearCache(tran, entities);//事务结束清理Repository缓存
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
                 tran.TransactionRollback();
                 ClearCache(tran, entities);//事务结束清理Repository缓存
-                return false;
+                throw ex;
+                //return false;
             }
         }
 
