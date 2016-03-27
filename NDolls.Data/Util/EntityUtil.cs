@@ -263,6 +263,23 @@ namespace NDolls.Data.Util
         }
 
         /// <summary>
+        /// 设置对象某属性的值
+        /// </summary>
+        /// <param name="entity">对象</param>
+        /// <param name="fieldName">属性名</param>
+        /// <param name="fieldValue">属性需要设置的值</param>
+        /// <returns>该对象属性对应的值</returns>
+        public static void SetValueByField(EntityBase entity, String fieldName,String fieldValue)
+        {
+            Type type = entity.GetType();
+            PropertyInfo info = type.GetProperty(fieldName);
+            if (info != null)
+            {
+                info.SetValue(entity, fieldValue, null);
+            }
+        }
+
+        /// <summary>
         /// 获取类静态属性值
         /// </summary>
         /// <param name="assembleName">程序集名称</param>
