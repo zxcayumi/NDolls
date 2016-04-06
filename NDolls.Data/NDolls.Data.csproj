@@ -82,7 +82,7 @@
     <Compile Include="Entity\Paper.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\ServiceBase.cs" />
+    <Compile Include="Extend\ServiceBase.cs" />
     <Compile Include="Repository\SqlClientRepository.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Repository\RepositoryFactory.cs" />
