@@ -80,6 +80,7 @@
     <Compile Include="Entity\OptEntity.cs" />
     <Compile Include="Entity\OrderItem.cs" />
     <Compile Include="Entity\Paper.cs" />
+    <Compile Include="Extend\WebServiceBase.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extend\ServiceBase.cs" />

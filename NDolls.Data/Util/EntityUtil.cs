@@ -269,7 +269,7 @@ namespace NDolls.Data.Util
         /// <param name="fieldName">属性名</param>
         /// <param name="fieldValue">属性需要设置的值</param>
         /// <returns>该对象属性对应的值</returns>
-        public static void SetValueByField(EntityBase entity, String fieldName,String fieldValue)
+        public static void SetValueByField(EntityBase entity, String fieldName,Object fieldValue)
         {
             Type type = entity.GetType();
             PropertyInfo info = type.GetProperty(fieldName);
