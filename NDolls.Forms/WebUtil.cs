@@ -61,6 +61,11 @@ namespace NDolls.Forms
                         val = container[pi.Name];
                         pi.SetValue(model, Boolean.Parse(val), null);
                     }
+                    else if (pi.PropertyType.ToString().ToLower().Contains("guid"))
+                    {
+                        val = container[pi.Name];
+                        pi.SetValue(model, new Guid(val), null);
+                    }
                     else
                     {
                         val = container[pi.Name];
