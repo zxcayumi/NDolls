@@ -6,6 +6,10 @@ using NDolls.Data.Entity;
 
 namespace NDolls.Data
 {
+    /// <summary>
+    /// 数据服务基类
+    /// </summary>
+    /// <typeparam name="T">Model类型</typeparam>
     public class ServiceBase<T> where T : Entity.EntityBase
     {
         public static IRepository<T> r =

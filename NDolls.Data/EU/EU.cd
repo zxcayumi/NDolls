@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="NDolls.Data.EU.Invoker">
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AIAAAiAAAAIAAAACAAAABAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>EU\Invoker.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Command" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="NDolls.Data.EU.Command" Collapsed="true">
+    <Position X="5.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EU\Command.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NDolls.Data.EU.CommandUpdate&lt;T&gt;">
+    <Position X="4.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAQEAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>EU\CommandUpdate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NDolls.Data.EU.CommandAdd&lt;T&gt;">
+    <Position X="9.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>EU\CommandAdd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NDolls.Data.EU.CommandDelete&lt;T&gt;">
+    <Position X="2.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIEAQEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EU\CommandDelete.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NDolls.Data.EU.CommandSearch&lt;T&gt;">
+    <Position X="7" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIEAQEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EU\CommandSearch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="微软雅黑" Size="9" />
+</ClassDiagram>

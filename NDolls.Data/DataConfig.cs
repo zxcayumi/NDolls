@@ -23,6 +23,8 @@ namespace NDolls.Data
             }
         }
 
+        #region 数据库相关
+
         private static DBType databaseType = DBType.SqlClient;
         /// <summary>
         /// 数据库类别
@@ -75,6 +77,81 @@ namespace NDolls.Data
             get { return DataConfig.allowAssociation; }
             set { DataConfig.allowAssociation = value; }
         }
+
+        #endregion
+
+        #region 认证相关
+
+        private static String authAssembleName;
+        /// <summary>
+        /// 操作认证所在程序集名称
+        /// </summary>
+        public static String AuthAssembleName
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(authAssembleName) && authAssembleName != System.Configuration.ConfigurationManager.AppSettings["AuthAssembleName"])
+                {
+                    return authAssembleName;
+                }
+                else
+                {
+                    return System.Configuration.ConfigurationManager.AppSettings["AuthAssembleName"];
+                }
+            }
+            set
+            {
+                authAssembleName = value;
+            }
+        }
+
+        private static String authClassName;
+        /// <summary>
+        /// 操作认证所在类FullName
+        /// </summary>
+        public static String AuthClassName
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(authClassName) && authClassName != System.Configuration.ConfigurationManager.AppSettings["AuthClassName"])
+                {
+                    return authClassName;
+                }
+                else
+                {
+                    return System.Configuration.ConfigurationManager.AppSettings["AuthClassName"];
+                }
+            }
+            set
+            {
+                authClassName = value;
+            }
+        }
+
+        private static String authMethodName;
+        /// <summary>
+        /// 操作认证方法名
+        /// </summary>
+        public static String AuthMethodName
+        {
+            get
+            {
+                if (!String.IsNullOrEmpty(authMethodName) && authMethodName != System.Configuration.ConfigurationManager.AppSettings["AuthMethodName"])
+                {
+                    return authMethodName;
+                }
+                else
+                {
+                    return System.Configuration.ConfigurationManager.AppSettings["AuthMethodName"];
+                }
+            }
+            set
+            {
+                authMethodName = value;
+            }
+        }
+
+        #endregion
     }
 
     public enum DBType

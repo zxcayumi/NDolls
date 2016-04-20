@@ -283,23 +283,39 @@ namespace NDolls.Data.Util
         /// 获取类静态属性值
         /// </summary>
         /// <param name="assembleName">程序集名称</param>
-        /// <param name="clsType">类名称</param>
+        /// <param name="clsName">类FullName</param>
         /// <param name="clsProperty">属性名称</param>
         /// <returns>静态属性值</returns>
-        public static object GetValueByType(String assembleName, String clsType, String clsProperty)
+        public static object GetValueByType(String assembleName, String clsName, String clsProperty)
         {
             PropertyInfo pi;
             if (!String.IsNullOrEmpty(assembleName))
             {
                 Assembly a = Assembly.Load(assembleName);
-                pi = a.CreateInstance(clsType).GetType().GetProperty(clsProperty);
+                pi = a.CreateInstance(clsName).GetType().GetProperty(clsProperty);
             }
             else
             {
-                pi = Type.GetType(clsType).GetProperty(clsProperty);
+                pi = Type.GetType(clsName).GetProperty(clsProperty);
             }
             
             return pi.GetValue(null, null).ToString(); 
+        }
+
+        /// <summary>
+        /// 获取方法
+        /// </summary>
+        /// <param name="assembleName">程序集名称</param>
+        /// <param name="clsName">类FullName</param>
+        /// <param name="methodName">方法名称</param>
+        /// <returns>方法对象</returns>
+        public static MethodInfo GetMethod(String assembleName, String clsName, String methodName)
+        {
+            Assembly assembly = Assembly.Load(assembleName);
+            Type type = assembly.GetType(clsName);
+            MethodInfo method = type.GetMethod(methodName);
+
+            return method;
         }
 
         /// <summary>
