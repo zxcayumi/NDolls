@@ -15,7 +15,7 @@ namespace NDolls.Core.Util
         {
             page.Response.ContentType = "text/html";
             page.Response.Write(html);
-            page.Response.Flush();
+            //page.Response.Flush();
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace NDolls.Core.Util
 
             page.Response.ContentType = "application/json";
             page.Response.Write(msg);
-            page.Response.Flush();
+            //page.Response.Flush();
         }
     }
 }
