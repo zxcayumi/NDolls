@@ -193,7 +193,7 @@ namespace NDolls.Data.Util
         }
 
         /// <summary>
-        /// 将Model实体类对象转换为查询条件集合（）
+        /// 将Model实体类对象转换为查询条件集合
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="model"></param>
@@ -205,7 +205,8 @@ namespace NDolls.Data.Util
             List<DataField> fields = EntityUtil.GetDataFields(model);
             foreach (DataField field in fields)
             {
-                if (field.FieldValue == null || field.FieldValue.ToString() == "" || field.FieldType.ToLower().Contains("date"))
+                if (field.FieldValue == null || field.FieldValue.ToString() == ""
+                    || field.FieldType.ToLower().Contains("date") || field.FieldType.ToLower().Contains("uniqueidentifier"))
                     continue;
 
                 if (field.FieldType.ToLower().Contains("varchar"))
@@ -214,8 +215,9 @@ namespace NDolls.Data.Util
                 }
                 else if ("int,float,decimal,double,number".Contains(field.FieldType.ToLower()))
                 {
-                    if ((int)field.FieldValue > 0)
-                        conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Lower));
+                    continue;
+                    //if ((int)field.FieldValue > 0)
+                    //    conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Lower));
                 }
                 else
                 {
