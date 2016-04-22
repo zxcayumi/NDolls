@@ -193,6 +193,40 @@ namespace NDolls.Data.Util
         }
 
         /// <summary>
+        /// 将Model实体类对象转换为查询条件集合（）
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public static List<Item> ModelToCondition<T>(T model)
+        {
+            List<Item> conditions = new List<Item>();
+
+            List<DataField> fields = EntityUtil.GetDataFields(model);
+            foreach (DataField field in fields)
+            {
+                if (field.FieldValue == null || field.FieldValue.ToString() == "" || field.FieldType.ToLower().Contains("date"))
+                    continue;
+
+                if (field.FieldType.ToLower().Contains("varchar"))
+                {
+                    conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Fuzzy));
+                }
+                else if ("int,float,decimal,double,number".Contains(field.FieldType.ToLower()))
+                {
+                    if ((int)field.FieldValue > 0)
+                        conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Lower));
+                }
+                else
+                {
+                    conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Accurate));
+                }
+            }
+
+            return conditions;
+        }
+
+        /// <summary>
         /// 实体对象验证
         /// </summary>
         /// <param name="entity">实体对象</param>
