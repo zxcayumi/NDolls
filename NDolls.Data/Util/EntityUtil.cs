@@ -206,7 +206,7 @@ namespace NDolls.Data.Util
             foreach (DataField field in fields)
             {
                 if (field.FieldValue == null || field.FieldValue.ToString() == ""
-                    || field.FieldType.ToLower().Contains("date") || field.FieldType.ToLower().Contains("uniqueidentifier"))
+                    || field.FieldType.ToLower().Contains("date"))
                     continue;
 
                 if (field.FieldType.ToLower().Contains("varchar"))
@@ -218,6 +218,10 @@ namespace NDolls.Data.Util
                     continue;
                     //if ((int)field.FieldValue > 0)
                     //    conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Lower));
+                }
+                else if (field.FieldType.ToLower().Contains("uniqueidentifier") && !field.FieldValue.ToString().Contains("000"))
+                {
+                    conditions.Add(new ConditionItem(field.FieldName, field.FieldValue, SearchType.Accurate));
                 }
                 else
                 {
