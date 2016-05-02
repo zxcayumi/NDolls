@@ -207,7 +207,7 @@ namespace NDolls.Data.Util
             {
                 if (field.FieldValue == null || field.FieldValue.ToString() == ""
                     || field.FieldType.ToLower().Contains("date")
-                    || (field.FieldType.ToLower().Contains("uniqueidentifier") && field.FieldValue.ToString().Contains("000")))
+                    || (field.FieldType.ToLower().Contains("uniqueidentifier") && field.FieldValue.ToString() == "00000000-0000-0000-0000-000000000000"))
                     continue;
 
                 if (field.FieldType.ToLower().Contains("varchar"))
