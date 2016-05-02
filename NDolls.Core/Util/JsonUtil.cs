@@ -123,7 +123,14 @@ namespace NDolls.Core.Util
                 DateTime dt = new DateTime(1970, 1, 1);
                 dt = dt.AddMilliseconds(long.Parse(match.Groups[1].Value));
                 dt = dt.ToLocalTime();
-                return dt.ToString("yyyy-MM-dd HH:mm:ss");
+                if (!dt.ToString().Contains("0001"))
+                {
+                    return dt.ToString("yyyy-MM-dd HH:mm:ss");
+                }
+                else
+                {
+                    return "";
+                }
             });
 
             return str;
