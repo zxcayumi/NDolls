@@ -74,7 +74,7 @@ namespace NDolls.Data.EU
             {
                 MethodInfo mi = NDolls.Data.Util.EntityUtil.
                     GetMethod(DataConfig.AuthAssembleName, DataConfig.AuthClassName, DataConfig.AuthMethodName);
-                if (mi.Invoke(null, new object[] { form, opt }).ToString() == "true")
+                if (mi.Invoke(null, new object[] { form, opt }).ToString().ToLower() == "true")
                 {
                     return true;
                 }
