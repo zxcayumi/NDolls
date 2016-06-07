@@ -36,13 +36,13 @@ namespace NDolls.Data.Attribute
         /// <summary>
         /// 关联特性构造函数(默认为级联查询)
         /// </summary>
-        /// <param name="refField">当前主对象字段名</param>
-        /// <param name="fieldName">关联对象字段名</param>
+        /// <param name="curField">当前主对象字段名</param>
+        /// <param name="objField">关联对象字段名</param>
         /// <param name="associationType">关联对象类别</param>
-        public AssociationAttribute(string refField, string fieldName, AssociationType associationType)
+        public AssociationAttribute(string curField, string objField, AssociationType associationType)
         {
-            this.CurField = refField;
-            this.ObjField = fieldName;
+            this.CurField = curField;
+            this.ObjField = objField;
             this.AssType = associationType;
             this.CasType = CascadeType.SELECT;
         }
@@ -67,13 +67,13 @@ namespace NDolls.Data.Attribute
         /// 关联特性构造函数
         /// </summary>
         /// <param name="curFieldName">当前类字段</param>
-        /// <param name="refFieldName">关联类关联字段</param>
+        /// <param name="objField">关联类关联字段</param>
         /// <param name="associationType">关联对象类别</param>
         /// <param name="cascadeType">关联对象级联操作方式</param>
-        public AssociationAttribute(string curFieldName, string refFieldName, AssociationType associationType, CascadeType cascadeType)
+        public AssociationAttribute(string curFieldName, string objField, AssociationType associationType, CascadeType cascadeType)
         {
             this.CurField = curFieldName;
-            this.ObjField = refFieldName;
+            this.ObjField = objField;
             this.AssType = associationType;
             this.CasType = cascadeType;
         }

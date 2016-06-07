@@ -9,7 +9,7 @@ namespace NDolls.Data.Attribute
     /// <summary>
     /// 字段条件描述(对级联查询进一步细化筛选用)
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true, Inherited = true)]
     public class AssocConditionAttribute : System.Attribute
     {
         private SearchType searchType = SearchType.Accurate;

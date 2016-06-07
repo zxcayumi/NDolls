@@ -496,26 +496,35 @@ namespace NDolls.Data.Util
             }
         }
 
-        private static void LoadVars(AssocConditionAttribute obj, EntityBase model, String v,Boolean isFieldName)
+        private static void LoadVars(AssocConditionAttribute obj, EntityBase model, String val,Boolean isFieldName)
         {
-            String[] pars = v.Trim(new char[] { '{', '}' }).Split(',');
+            String[] pars = val.Trim(new char[] { '{', '}' }).Split(',');
             String vv = "";
+            if (isFieldName)
+            {
+                vv = obj.FieldName;
+            }
+            else
+            {
+                vv = obj.FieldValue.ToString();
+            }
+
             if (pars.Length == 1)
             {
                 if (pars[0].Contains("."))//系统全局静态变量，如{System.DateTime.Now}
                 {
-                    vv = GetValueByField(pars[0].Substring(0, pars[0].LastIndexOf('.')),
-                        pars[0].Substring(pars[0].LastIndexOf('.') + 1)).ToString();
+                    vv = vv.Replace(val, GetValueByField(pars[0].Substring(0, pars[0].LastIndexOf('.')),
+                        pars[0].Substring(pars[0].LastIndexOf('.') + 1)).ToString());
                 }
                 else//{FieldName}:当前主对象字段值替换
                 {
-                    vv = obj.FieldName.Replace(v,
+                    vv = vv.Replace(val,
                         GetValueByField((EntityBase)model, pars[0]).ToString());
                 }
             }
             else//{Assembly,Assembly.FieldName}:全局静态变量替换
             {
-                vv = obj.FieldName.Replace(v,
+                vv = vv.Replace(val,
                     NDolls.Data.Util.EntityUtil.GetValueByType(pars[0], pars[1]).ToString());
             }
 
