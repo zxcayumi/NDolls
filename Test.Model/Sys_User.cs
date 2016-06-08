@@ -64,7 +64,7 @@ namespace Test.Model
         public DateTime UpdateTime
         { get; set; }
 
-        [Association("", "", 5, AssociationType.Aggregation)]
+        [Association(5, AssociationType.Aggregation)]
         [AssocCondition("CreateTime", "{CreateTime}", NDolls.Data.Entity.SearchType.Lower)]
         [AssocOrder("Status", NDolls.Data.Entity.OrderType.DESC)]
         public List<ECom_Work> Works

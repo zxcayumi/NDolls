@@ -144,7 +144,7 @@ namespace NDolls.Data
         /// <summary>
         /// 根据主键查询(联合主键情况)
         /// </summary>
-        /// <param name="keyValue">主键对应的值</param>
+        /// <param name="keyValues">主键对应的值</param>
         /// <returns>实体对象</returns>
         public T FindByPK(string[] keyValues)
         {

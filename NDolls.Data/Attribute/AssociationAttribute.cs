@@ -50,6 +50,20 @@ namespace NDolls.Data.Attribute
         /// <summary>
         /// 关联特性构造函数(默认为级联查询)
         /// </summary>
+        /// <param name="top">查询数量</param>
+        /// <param name="associationType">关联对象类别</param>
+        public AssociationAttribute(int top, AssociationType associationType)
+        {
+            this.CurField = "";
+            this.ObjField = "";
+            this.Top = top;
+            this.AssType = associationType;
+            this.CasType = CascadeType.SELECT;
+        }
+
+        /// <summary>
+        /// 关联特性构造函数(默认为级联查询)
+        /// </summary>
         /// <param name="curField">当前主对象字段名</param>
         /// <param name="objField">关联对象字段名</param>
         /// <param name="top">查询数量</param>
