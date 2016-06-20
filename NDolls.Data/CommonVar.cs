@@ -31,5 +31,45 @@ namespace NDolls.Data
                 return tag;
             }
         }
+
+        private static NDolls.Core.Log nLog = null;
+        public static NDolls.Core.Log NLog
+        {
+            get
+            {
+                if (nLog == null)
+                {
+                    nLog = new Core.Log(".", Core.LogMod.Month);
+                }
+                return nLog;
+            }
+        }
+
+        private static String isDebug;
+        /// <summary>
+        /// 是否调试模式（可将sql打印日志）
+        /// </summary>
+        public static String IsDebug
+        {
+            get 
+            {
+                try
+                {
+                    isDebug = System.Configuration.ConfigurationManager.AppSettings["IsDebug"].ToLower();
+                }
+                catch
+                { }
+
+                return isDebug;
+            }
+        }
+
+        public static void WriteLog(String content) 
+        {
+            if (IsDebug == "true")
+            {
+                NLog.WriteLog(content);
+            }
+        }
     }
 }

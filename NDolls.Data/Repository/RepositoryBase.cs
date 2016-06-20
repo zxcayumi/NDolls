@@ -123,6 +123,7 @@ namespace NDolls.Data
         public T FindByPK(string keyValue)
         {
             string sql = String.Format(selectSQL, "*", tableName, primaryKey + "=@" + primaryKey);
+
             List<DbParameter> pars = new List<DbParameter>();
             pars.Add(SQLFactory.CreateParameter(primaryKey, keyValue));
 
@@ -159,7 +160,7 @@ namespace NDolls.Data
                 pars.Add(SQLFactory.CreateParameter(primaryKeys[i], keyValues[i]));
             }
             condition = condition.Substring(0, condition.LastIndexOf("AND"));
-            string sql = String.Format(selectSQL, "*", tableName, condition);
+            string sql = String.Format(selectSQL, "*", tableName, condition); 
 
             T model = default(T);
             try

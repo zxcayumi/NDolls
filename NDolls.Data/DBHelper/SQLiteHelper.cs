@@ -181,6 +181,8 @@ namespace NDolls.Data
         /// <param name="cmdParms">SqlParameters to use in the command</param>
         private static void PrepareCommand(DbCommand cmd, DbConnection conn, DbTransaction trans, CommandType cmdType, string cmdText, List<DbParameter> cmdParms)
         {
+            CommonVar.WriteLog(cmdText);
+
             if (conn.State != ConnectionState.Open)
                 conn.Open();
 

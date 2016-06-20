@@ -32,7 +32,7 @@ namespace NDolls.Core
         /// <param name="content">日志内容</param>
         public void WriteLog(string content)
         {
-            logs.Enqueue("Time: " + DateTime.Now.ToString("yyyy年MM月dd日 hh:mm:ss") + "\n" +content);
+            logs.Enqueue(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + ":" + content + "\n");
         }
 
         private void doWrite(object logPath)

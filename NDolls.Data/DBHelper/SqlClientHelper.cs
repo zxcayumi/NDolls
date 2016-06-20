@@ -151,7 +151,8 @@ namespace NDolls.Data
         /// <param name="cmdParms">SqlParameters to use in the command</param>
         private static void PrepareCommand(DbCommand cmd, DbConnection conn, DbTransaction trans, CommandType cmdType, string cmdText, List<DbParameter> cmdParms)
         {
-
+            CommonVar.WriteLog(cmdText);
+            
             if (conn.State != ConnectionState.Open)
                 conn.Open();
 
@@ -196,6 +197,8 @@ namespace NDolls.Data
         /// <returns>符合条件的数据集</returns>
         public DataTable Query(string sqlString, List<DbParameter> parameters)
         {
+            CommonVar.WriteLog(sqlString);
+
             SqlConnection thisconnection = new SqlConnection(ConnectionString);
             thisconnection.Open();
             SqlDataAdapter adapter = new SqlDataAdapter();
