@@ -16,7 +16,7 @@ namespace <#= host.NameSpace #>.Model<# if( host.Folder.Length > 0) {#>.<#= host
 	<# if( host.TableDescription.Length > 0) {#>
 //<#= host.TableDescription #>
 	<# } #>
-[Entity("<#=host.TableName#>","<#= CodeCommon.GetInParameter(host.Keys, false) #>")]
+[Entity("<#=host.TableName#>","<#=CodeCommon.GetInParameter(host.Keys, false).Substring(CodeCommon.GetInParameter(host.Keys, false).IndexOf(" ")+1)#>")]
 	public class <#= host.GetModelClass(host.TableName) #> : EntityBase
 	{   		     
       	<# foreach (ColumnInfo c in host.Fieldlist)
@@ -28,6 +28,9 @@ namespace <#= host.NameSpace #>.Model<# if( host.Folder.Length > 0) {#>.<#= host
         [DataField("<#= c.ColumnName #>", "<#=c.TypeName#>")]
         <# if (c.IsPrimaryKey) {#>
         [Validate("<#= c.Description #>")]
+        <#}#>
+       <# if (c.ColumnName != "Status" &&　c.ColumnName != "UpdateTime") {#>
+        [Custom("Col", "<#= c.ColumnName #>","<#= c.Description #>")] 
         <#}#>
     public <#= CodeCommon.DbTypeToCS(c.TypeName) #> <#= c.ColumnName #>{ get; set; }        
 		<# } #>
