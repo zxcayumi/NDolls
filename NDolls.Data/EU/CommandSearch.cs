@@ -72,6 +72,9 @@ namespace NDolls.Data.EU
             set { pageIndex = value; }
         }
 
+        /// <summary>
+        /// 命令执行
+        /// </summary>
         public override void Execute(DBTransaction tran)
         {
             IRepository<T> r = RepositoryFactory<T>.CreateRepository(tran);
