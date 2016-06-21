@@ -11,7 +11,8 @@ namespace NDolls.Data.EU
     {
         private List<Item> conditions;
         private String[] keys;
-        private String fields;
+        private String fields = "*";
+        private String conditionSql;
 
         /// <summary>
         /// 构造函数（返回List）
@@ -42,6 +43,15 @@ namespace NDolls.Data.EU
             this.keys = keys;
         }
 
+        /// <summary>
+        /// 构造函数（返回DataTable）
+        /// </summary>
+        /// <param name="conditionSql">自定义查询SQL条件</param>
+        public CommandSearch(String conditionSql)
+        {
+            this.conditionSql = conditionSql;
+        }
+
         private int pageSize = 0;
         /// <summary>
         /// 每页数据量
@@ -69,6 +79,10 @@ namespace NDolls.Data.EU
             if(keys != null && keys.Length > 0)//按主键
             {
                 Result = r.FindByPK(keys);
+            }
+            else if (!String.IsNullOrEmpty(conditionSql))
+            {
+                Result = r.FindByCustom(fields, conditionSql);
             }
             else
             {
