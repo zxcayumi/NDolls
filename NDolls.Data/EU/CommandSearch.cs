@@ -11,7 +11,7 @@ namespace NDolls.Data.EU
     {
         private List<Item> conditions;
         private String[] keys;
-        private String fields = "*";
+        private String fields = "";
         private String conditionSql;
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace NDolls.Data.EU
             }
             else if (!String.IsNullOrEmpty(conditionSql))
             {
-                Result = r.FindByCustom(fields, conditionSql);
+                Result = r.FindByCustom("*", conditionSql);
             }
             else
             {
