@@ -59,3 +59,5 @@ list.Add(new ConditionItem("CreateTime", "2011-09-30", SearchType.Lower));
 
 1.查询时可设置是否级联查询关联表(OK)
 2.自定义查询内容项
+
+科室类别ID本来只是一个关联，现在要加4个view，4个model，4个Service   是不是一个ndolls 需要优化的地方呢
