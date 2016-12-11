@@ -103,6 +103,7 @@
     <Compile Include="Storage.cs" />
     <Compile Include="Util\DataConvert.cs" />
     <Compile Include="Util\EntityUtil.cs" />
+    <Compile Include="Util\NetTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SQL.resx">
@@ -117,6 +118,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="EU\EU.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
