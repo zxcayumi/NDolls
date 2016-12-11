@@ -31,8 +31,6 @@ namespace NDolls.Data
         /// </summary>
         public RepositoryBase()
         {
-            Util.NetTest.TestConnection();
-
             tableName = EntityUtil.GetTableName(typeof(T));
             primaryKey = EntityUtil.GetPrimaryKey(tableName);
             primaryKeys = primaryKey.Split(',');
@@ -43,8 +41,6 @@ namespace NDolls.Data
         /// </summary>
         public RepositoryBase(Type type)
         {
-            Util.NetTest.TestConnection();
-
             tableName = EntityUtil.GetTableName(type);
             primaryKey = EntityUtil.GetPrimaryKey(tableName);
             primaryKeys = primaryKey.Split(',');
