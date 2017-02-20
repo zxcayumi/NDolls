@@ -40,6 +40,22 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 用户自定义查询
+        /// </summary>
+        /// <param name="top">查询数量</param>
+        /// <param name="customCondition">用户自定义条件</param>
+        /// <returns>查询的结果集</returns>
+        public List<T> Find(int top, String customCondition)
+        {
+            if (String.IsNullOrEmpty(customCondition))
+            {
+                customCondition = "1 = 1";
+            }
+            string sql = String.Format(selectSQL, "TOP " + top + " *", tableName, customCondition);
+            return DataConvert<T>.ToEntities(DBHelper.Query(sql, null));
+        }
+
+        /// <summary>
         /// 根据查询条件获取对象集合
         /// </summary>
         /// <param name="top">查询数量(0:查询所有)</param>
