@@ -116,6 +116,14 @@ namespace NDolls.Data
         /// <summary>
         /// 按条件查询对象集合
         /// </summary>
+        public List<T> GetModels(int top, String sqlCondition)
+        {
+            return r.Find(top, sqlCondition);
+        }
+
+        /// <summary>
+        /// 按条件查询对象集合
+        /// </summary>
         public List<T> GetModels(String sqlCondition)
         {
             return r.Find(sqlCondition);
