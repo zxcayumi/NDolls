@@ -33,7 +33,7 @@ namespace NDolls.Data
 
             SqlCommand cmd = new SqlCommand();
 
-            using (SqlConnection conn = new SqlConnection(ConnectionString)) 
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
                 int val = cmd.ExecuteNonQuery();
@@ -76,13 +76,15 @@ namespace NDolls.Data
             // we use a try/catch here because if the method throws an exception we want to 
             // close the connection throw code, because no datareader will exist, hence the 
             // commandBehaviour.CloseConnection will not work
-            try {
+            try
+            {
                 PrepareCommand(cmd, conn, null, cmdType, cmdText, commandParameters);
                 SqlDataReader rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
                 cmd.Parameters.Clear();
                 return rdr;
             }
-            catch {
+            catch
+            {
                 conn.Close();
                 throw;
             }
@@ -101,7 +103,8 @@ namespace NDolls.Data
         {
             SqlCommand cmd = new SqlCommand();
 
-            using (SqlConnection connection = new SqlConnection(ConnectionString)) {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
                 PrepareCommand(cmd, connection, null, cmdType, cmdText, commandParameters);
                 object val = cmd.ExecuteScalar();
                 cmd.Parameters.Clear();
@@ -125,7 +128,8 @@ namespace NDolls.Data
         /// </summary>
         /// <param name="cacheKey">key used to lookup parameters</param>
         /// <returns>Cached SqlParamters array</returns>
-        public static SqlParameter[] GetCachedParameters(string cacheKey) {
+        public static SqlParameter[] GetCachedParameters(string cacheKey)
+        {
             SqlParameter[] cachedParms = (SqlParameter[])parmCache[cacheKey];
 
             if (cachedParms == null)
@@ -152,7 +156,7 @@ namespace NDolls.Data
         private static void PrepareCommand(DbCommand cmd, DbConnection conn, DbTransaction trans, CommandType cmdType, string cmdText, List<DbParameter> cmdParms)
         {
             CommonVar.WriteLog(cmdText);
-            
+
             if (conn.State != ConnectionState.Open)
                 conn.Open();
 

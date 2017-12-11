@@ -935,10 +935,28 @@ namespace NDolls.Data
                 {
                     info = type.GetProperty(item.FieldName);
                     repository = null;
-                    if(DBTran == null)
-                        repository = RepositoryFactory<EntityBase>.CreateRepository(info.PropertyType.GetGenericArguments()[0]);//此处泛型T无实际作用
+                    if (DBTran == null)
+                    {
+                        try
+                        {
+                            repository = RepositoryFactory<EntityBase>.CreateRepository(info.PropertyType);//此处泛型T无实际作用
+                        }
+                        catch
+                        {
+                            repository = RepositoryFactory<EntityBase>.CreateRepository(info.PropertyType.GetGenericArguments()[0]);//此处泛型T无实际作用}
+                        }
+                    }
                     else
-                        repository = RepositoryFactory<EntityBase>.CreateRepository(info.PropertyType.GetGenericArguments()[0], DBTran);//此处泛型T无实际作用
+                    {
+                        try
+                        {
+                            repository = RepositoryFactory<EntityBase>.CreateRepository(info.PropertyType, DBTran);//此处泛型T无实际作用
+                        }
+                        catch
+                        {
+                            repository = RepositoryFactory<EntityBase>.CreateRepository(info.PropertyType.GetGenericArguments()[0], DBTran);//此处泛型T无实际作用
+                        }
+                    }
 
                     obj = info.GetValue(model.Entity, null);
                     if (obj == null)
