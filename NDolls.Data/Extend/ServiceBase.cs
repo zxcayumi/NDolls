@@ -49,6 +49,26 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 按条件修改信息
+        /// </summary>
+        /// <param name="model">修改的内容</param>
+        /// <param name="conditions">条件项集合</param>
+        public bool Update(Dictionary<String,Object> model,List<Item> conditions)
+        {
+            return r.UpdateByCondition(model, conditions);
+        }
+
+        /// <summary>
+        /// 按条件修改信息
+        /// </summary>
+        /// <param name="model">修改的内容</param>
+        /// <param name="condition">条件项</param>
+        public bool Update(Dictionary<String, Object> model, Item condition)
+        {
+            return r.UpdateByCondition(model, condition);
+        }
+
+        /// <summary>
         /// 保存对象（系统自动判断增或改）
         /// </summary>
         public bool Save(T model)
@@ -79,6 +99,24 @@ namespace NDolls.Data
         public bool Delete(String[] pks)
         {
             return r.Delete(pks);
+        }
+
+        /// <summary>
+        /// 按条件删除对象
+        /// </summary>
+        /// <param name="items">条件集合</param>
+        public bool DeleteByCondition(List<Item> items)
+        {
+            return r.DeleteByCondition(items);
+        }
+
+        /// <summary>
+        /// 按条件删除对象
+        /// </summary>
+        /// <param name="sqlConditions">sql条件语句</param>
+        public bool DeleteByCondition(String sqlConditions)
+        {
+            return r.DeleteByCondition(sqlConditions);
         }
 
         /// <summary>

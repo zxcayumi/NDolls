@@ -67,3 +67,17 @@ where 某字段 IN（select 某字段 where a=‘×××’）=======
 2.自定义查询内容项
 
 科室类别ID本来只是一个关联，现在要加4个view，4个model，4个Service   是不是一个ndolls 需要优化的地方呢>>>>>>> .r228
+
+
+1.不加特性ORM映射时按照字段名与数据一一对应；有特性时按照特性对应。
+
+model属性赋值监控与验证特性关联
+First
+关联配置时动态变量的使用，如$***代表当前model中的某个信息
+Session
+SaveChanges
+日期类型格式化输出配置
+
+1.Model的特性可不配置，默认按照属性名
+2.ADO.NET的依赖项
+3.GROUP BY的支持
