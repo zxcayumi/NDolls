@@ -116,6 +116,24 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 查询符合条件的第一个对象
+        /// </summary>
+        /// <param name="items">查询条件</param>
+        /// <returns>符合条件的对象</returns>
+        public T First(List<Item> items)
+        {
+            List<T> list = FindByCondition(1, items);
+            if (list.Count > 0)
+            {
+                return list[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// 根据主键查询
         /// </summary>
         /// <param name="keyValue">主键对应的值</param>

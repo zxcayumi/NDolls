@@ -23,6 +23,7 @@ namespace NDolls.Data
         T FindByPK(string[] keyValues);
         List<T> Find(String sqlCondition);
         List<T> Find(int top, String sqlCondition);
+        T First(List<Item> items);
 
         int GetCount(List<Item> items);
         int GetCount(String customCondition);
