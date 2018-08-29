@@ -922,10 +922,24 @@ namespace NDolls.Data
         /// 用户自定义sql语句查询
         /// </summary>
         /// <param name="sql">查询语句</param>
+        /// <param name="list">查询参数列表</param>
         /// <returns>查询结果集</returns>
-        public static DataTable Query(String sql)
+        public static DataTable Query(String sql, List<DbParameter> parms = null)
         {
-            return SQLFactory.CreateDBHelper().Query(sql, null);
+            return SQLFactory.CreateDBHelper().Query(sql, parms);
+        }
+
+        /// <summary>
+        /// 用户自定义sql语句查询
+        /// </summary>
+        /// <param name="sql">查询语句</param>
+        /// <param name="list">查询参数列表</param>
+        /// <returns>查询对象集合</returns>
+        public static List<T> QueryEx(String sql, List<DbParameter> parms = null)
+        {
+            DataTable dt = SQLFactory.CreateDBHelper().Query(sql, parms);
+            List<T> entities = NDolls.Data.Util.DataConvert<T>.ToEntities(dt);
+            return entities;
         }
         #endregion
 
