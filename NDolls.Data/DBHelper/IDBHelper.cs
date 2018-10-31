@@ -16,5 +16,6 @@ namespace NDolls.Data
         DbDataReader ExecuteReader(CommandType cmdType, string cmdText, List<DbParameter> commandParameters);
         object ExecuteScalar(CommandType cmdType, string cmdText, List<DbParameter> commandParameters);
         DataTable Query(string sqlString, List<DbParameter> parameters);
+        DataTable Query(CommandType cmdType, string cmdText, List<DbParameter> commandParameters);
     }
 }

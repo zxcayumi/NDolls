@@ -110,64 +110,34 @@ namespace NDolls.Data
             }
             return reader;
         }
-
-        /// <summary>
-        /// 执行数据库查询，返回DataSet对象
-        /// </summary>
-        /// <param name="connectionString">连接字符串</param>
-        /// <param name="cmdText">执行语句或存储过程名</param>
-        /// <param name="cmdType">执行类型</param>
-        /// <param name="cmdParms">SQL参数对象</param>
-        /// <returns>DataSet对象</returns>
-        public DataTable Query(string cmdText, List<DbParameter> cmdParms)
+        
+        public DataTable Query(CommandType cmdType, string cmdText, List<DbParameter> commandParameters)
         {
             if (ConnectionString == null || ConnectionString.Length == 0)
                 throw new ArgumentNullException("connectionString");
             if (cmdText == null || cmdText.Length == 0)
                 throw new ArgumentNullException("commandText");
 
-            SQLiteConnection thisconnection = new SQLiteConnection(ConnectionString);
-            thisconnection.Open();
-            SQLiteDataAdapter adapter = new SQLiteDataAdapter();
-            SQLiteCommand cmd = new SQLiteCommand(cmdText, thisconnection);
-            adapter.SelectCommand = cmd;
-            if (cmdParms != null)
-                foreach (SQLiteParameter param in cmdParms)
-                    cmd.Parameters.Add(param);
+            CommonVar.WriteLog(cmdText);
+
+            SQLiteCommand cmd = new SQLiteCommand();
             DataSet ds = new DataSet();
-            adapter.Fill(ds);
-            thisconnection.Close();
+            using (SQLiteConnection connection = new SQLiteConnection(ConnectionString))
+            {
+                PrepareCommand(cmd, connection, null, cmdType, cmdText, commandParameters);
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd);
+                adapter.Fill(ds);
+            }
             return ds.Tables[0];
         }
 
         /// <summary>
-        /// 通用分页查询方法
+        /// 执行数据库查询，返回DataSet对象
         /// </summary>
-        /// <param name="connString">连接字符串</param>
-        /// <param name="tableName">表名</param>
-        /// <param name="strColumns">查询字段名</param>
-        /// <param name="strWhere">where条件</param>
-        /// <param name="strOrder">排序条件</param>
-        /// <param name="pageSize">每页数据数量</param>
-        /// <param name="currentIndex">当前页数</param>
-        /// <param name="recordOut">数据总量</param>
-        /// <returns>DataTable数据表</returns>
-        //public static DataTable SelectPaging(string connString, string tableName, string strColumns, string strWhere, string strOrder, int pageSize, int currentIndex, out int recordOut)
-        //{
-        //    DataTable dt = new DataTable();
-        //    recordOut = Convert.ToInt32(ExecuteScalar(connString, "select count(*) from " + tableName, CommandType.Text));
-        //    string pagingTemplate = "select {0} from {1} where {2} order by {3} limit {4} offset {5} ";
-        //    int offsetCount = (currentIndex - 1) * pageSize;
-        //    string commandText = String.Format(pagingTemplate, strColumns, tableName, strWhere, strOrder, pageSize.ToString(), offsetCount.ToString());
-        //    using (DbDataReader reader = ExecuteReader(connString, commandText, CommandType.Text))
-        //    {
-        //        if (reader != null)
-        //        {
-        //            dt.Load(reader);
-        //        }
-        //    }
-        //    return dt;
-        //}
+        public DataTable Query(string cmdText, List<DbParameter> cmdParms)
+        {
+            return Query(CommandType.Text, cmdText, cmdParms);
+        }
 
         #region 命令预处理
         /// <summary>

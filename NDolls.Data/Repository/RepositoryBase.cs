@@ -134,6 +134,22 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 通过存储过程查询
+        /// </summary>
+        /// <param name="proName">存储过程名</param>
+        /// <param name="items">存储过程查询</param>
+        /// <returns></returns>
+        public List<T> FindByProcedure(String proName, List<Item> items)
+        {
+            //构造查询条件
+            List<DbParameter> pars = new List<DbParameter>();
+            List<T> list = new List<T>();
+            getConditionSQL(items, pars);
+            list = DataConvert<T>.ToEntities(DBHelper.Query(CommandType.StoredProcedure, proName, pars));
+            return list;
+        }
+
+        /// <summary>
         /// 根据主键查询
         /// </summary>
         /// <param name="keyValue">主键对应的值</param>
@@ -922,7 +938,7 @@ namespace NDolls.Data
         /// 用户自定义sql语句查询
         /// </summary>
         /// <param name="sql">查询语句</param>
-        /// <param name="list">查询参数列表</param>
+        /// <param name="parms">查询参数列表</param>
         /// <returns>查询结果集</returns>
         public static DataTable Query(String sql, List<DbParameter> parms = null)
         {
@@ -933,7 +949,7 @@ namespace NDolls.Data
         /// 用户自定义sql语句查询
         /// </summary>
         /// <param name="sql">查询语句</param>
-        /// <param name="list">查询参数列表</param>
+        /// <param name="parms">查询参数列表</param>
         /// <returns>查询对象集合</returns>
         public static List<T> QueryEx(String sql, List<DbParameter> parms = null)
         {

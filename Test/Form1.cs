@@ -586,5 +586,16 @@ namespace Test
             DataTable dt = r.FindByCustom("*", "UserName LIKE 'test%'");
             MessageBox.Show(NDolls.Core.Util.JsonUtil.TableToJson(dt));
         }
+
+        private void button33_Click(object sender, EventArgs e)
+        {
+            IRepository<Model.Sys_User> r = RepositoryFactory<Model.Sys_User>.CreateRepository("Model.Sys_User");
+
+            List<Item> conditions = new List<Item>();
+            conditions.Add(new ConditionItem("name", "z", SearchType.Fuzzy));
+
+            List<Model.Sys_User> list = r.FindByProcedure("Pro_Test", conditions);
+            dataGridView1.DataSource = list;
+        }
     }
 }

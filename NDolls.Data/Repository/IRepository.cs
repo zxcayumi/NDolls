@@ -24,6 +24,7 @@ namespace NDolls.Data
         List<T> Find(String sqlCondition);
         List<T> Find(int top, String sqlCondition);
         T First(List<Item> items);
+        List<T> FindByProcedure(String proName, List<Item> items);
 
         int GetCount(List<Item> items);
         int GetCount(String customCondition);

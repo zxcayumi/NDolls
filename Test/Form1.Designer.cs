@@ -65,14 +65,16 @@
             this.button30 = new System.Windows.Forms.Button();
             this.button31 = new System.Windows.Forms.Button();
             this.button32 = new System.Windows.Forms.Button();
+            this.button33 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
+            this.button1.Location = new System.Drawing.Point(18, 18);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(112, 34);
             this.button1.TabIndex = 0;
             this.button1.Text = "表名+主键";
             this.button1.UseVisualStyleBackColor = true;
@@ -80,9 +82,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 342);
+            this.button2.Location = new System.Drawing.Point(18, 513);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(112, 34);
             this.button2.TabIndex = 1;
             this.button2.Text = "Add测试";
             this.button2.UseVisualStyleBackColor = true;
@@ -90,9 +93,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(12, 41);
+            this.button3.Location = new System.Drawing.Point(18, 62);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(112, 34);
             this.button3.TabIndex = 2;
             this.button3.Text = "FindByPK";
             this.button3.UseVisualStyleBackColor = true;
@@ -100,9 +104,10 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(101, 41);
+            this.button4.Location = new System.Drawing.Point(152, 62);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(112, 34);
             this.button4.TabIndex = 3;
             this.button4.Text = "Find实验";
             this.button4.UseVisualStyleBackColor = true;
@@ -110,9 +115,10 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(101, 342);
+            this.button5.Location = new System.Drawing.Point(152, 513);
+            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.Size = new System.Drawing.Size(112, 34);
             this.button5.TabIndex = 4;
             this.button5.Text = "UPDATE测试";
             this.button5.UseVisualStyleBackColor = true;
@@ -120,9 +126,10 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(189, 342);
+            this.button6.Location = new System.Drawing.Point(284, 513);
+            this.button6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(79, 23);
+            this.button6.Size = new System.Drawing.Size(118, 34);
             this.button6.TabIndex = 5;
             this.button6.Text = "DELETE测试";
             this.button6.UseVisualStyleBackColor = true;
@@ -130,9 +137,10 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(101, 12);
+            this.button7.Location = new System.Drawing.Point(152, 18);
+            this.button7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.Size = new System.Drawing.Size(112, 34);
             this.button7.TabIndex = 6;
             this.button7.Text = "实体类信息";
             this.button7.UseVisualStyleBackColor = true;
@@ -140,9 +148,10 @@
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(189, 41);
+            this.button8.Location = new System.Drawing.Point(284, 62);
+            this.button8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(79, 23);
+            this.button8.Size = new System.Drawing.Size(118, 34);
             this.button8.TabIndex = 7;
             this.button8.Text = "FindByModel";
             this.button8.UseVisualStyleBackColor = true;
@@ -150,9 +159,10 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(101, 313);
+            this.button9.Location = new System.Drawing.Point(152, 470);
+            this.button9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.Size = new System.Drawing.Size(112, 34);
             this.button9.TabIndex = 8;
             this.button9.Text = "合法性验证";
             this.button9.UseVisualStyleBackColor = true;
@@ -160,9 +170,10 @@
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(12, 313);
+            this.button10.Location = new System.Drawing.Point(18, 470);
+            this.button10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(75, 23);
+            this.button10.Size = new System.Drawing.Size(112, 34);
             this.button10.TabIndex = 9;
             this.button10.Text = "正则测试";
             this.button10.UseVisualStyleBackColor = true;
@@ -170,9 +181,10 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(471, 70);
+            this.button11.Location = new System.Drawing.Point(706, 105);
+            this.button11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 23);
+            this.button11.Size = new System.Drawing.Size(112, 34);
             this.button11.TabIndex = 10;
             this.button11.Text = "分页查询";
             this.button11.UseVisualStyleBackColor = true;
@@ -181,17 +193,19 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 99);
+            this.dataGridView1.Location = new System.Drawing.Point(18, 148);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(445, 206);
+            this.dataGridView1.Size = new System.Drawing.Size(668, 309);
             this.dataGridView1.TabIndex = 11;
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(279, 41);
+            this.button12.Location = new System.Drawing.Point(418, 62);
+            this.button12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(97, 23);
+            this.button12.Size = new System.Drawing.Size(146, 34);
             this.button12.TabIndex = 12;
             this.button12.Text = "Find(ValuesIn)";
             this.button12.UseVisualStyleBackColor = true;
@@ -199,9 +213,10 @@
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(382, 70);
+            this.button13.Location = new System.Drawing.Point(573, 105);
+            this.button13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(83, 23);
+            this.button13.Size = new System.Drawing.Size(124, 34);
             this.button13.TabIndex = 13;
             this.button13.Text = "自定义查询";
             this.button13.UseVisualStyleBackColor = true;
@@ -209,9 +224,10 @@
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(12, 399);
+            this.button14.Location = new System.Drawing.Point(18, 598);
+            this.button14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(90, 23);
+            this.button14.Size = new System.Drawing.Size(135, 34);
             this.button14.TabIndex = 14;
             this.button14.Text = "联合主键Add";
             this.button14.UseVisualStyleBackColor = true;
@@ -219,9 +235,10 @@
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(120, 399);
+            this.button15.Location = new System.Drawing.Point(180, 598);
+            this.button15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(105, 23);
+            this.button15.Size = new System.Drawing.Size(158, 34);
             this.button15.TabIndex = 15;
             this.button15.Text = "联合主键Update";
             this.button15.UseVisualStyleBackColor = true;
@@ -229,9 +246,10 @@
             // 
             // button16
             // 
-            this.button16.Location = new System.Drawing.Point(243, 399);
+            this.button16.Location = new System.Drawing.Point(364, 598);
+            this.button16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(105, 23);
+            this.button16.Size = new System.Drawing.Size(158, 34);
             this.button16.TabIndex = 16;
             this.button16.Text = "联合主键Delete";
             this.button16.UseVisualStyleBackColor = true;
@@ -239,9 +257,10 @@
             // 
             // button17
             // 
-            this.button17.Location = new System.Drawing.Point(363, 399);
+            this.button17.Location = new System.Drawing.Point(544, 598);
+            this.button17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(118, 23);
+            this.button17.Size = new System.Drawing.Size(177, 34);
             this.button17.TabIndex = 17;
             this.button17.Text = "联合主键FindByPK";
             this.button17.UseVisualStyleBackColor = true;
@@ -249,9 +268,10 @@
             // 
             // button18
             // 
-            this.button18.Location = new System.Drawing.Point(12, 70);
+            this.button18.Location = new System.Drawing.Point(18, 105);
+            this.button18.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(75, 23);
+            this.button18.Size = new System.Drawing.Size(112, 34);
             this.button18.TabIndex = 18;
             this.button18.Text = "大于查询";
             this.button18.UseVisualStyleBackColor = true;
@@ -259,9 +279,10 @@
             // 
             // button19
             // 
-            this.button19.Location = new System.Drawing.Point(101, 70);
+            this.button19.Location = new System.Drawing.Point(152, 105);
+            this.button19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(75, 23);
+            this.button19.Size = new System.Drawing.Size(112, 34);
             this.button19.TabIndex = 19;
             this.button19.Text = "小于查询";
             this.button19.UseVisualStyleBackColor = true;
@@ -269,9 +290,10 @@
             // 
             // button20
             // 
-            this.button20.Location = new System.Drawing.Point(279, 342);
+            this.button20.Location = new System.Drawing.Point(418, 513);
+            this.button20.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(97, 23);
+            this.button20.Size = new System.Drawing.Size(146, 34);
             this.button20.TabIndex = 20;
             this.button20.Text = "DelByCondition";
             this.button20.UseVisualStyleBackColor = true;
@@ -279,9 +301,10 @@
             // 
             // button21
             // 
-            this.button21.Location = new System.Drawing.Point(189, 12);
+            this.button21.Location = new System.Drawing.Point(284, 18);
+            this.button21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(75, 23);
+            this.button21.Size = new System.Drawing.Size(112, 34);
             this.button21.TabIndex = 21;
             this.button21.Text = "FinyAll";
             this.button21.UseVisualStyleBackColor = true;
@@ -289,9 +312,10 @@
             // 
             // button22
             // 
-            this.button22.Location = new System.Drawing.Point(189, 70);
+            this.button22.Location = new System.Drawing.Point(284, 105);
+            this.button22.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(79, 23);
+            this.button22.Size = new System.Drawing.Size(118, 34);
             this.button22.TabIndex = 22;
             this.button22.Text = "区间查询";
             this.button22.UseVisualStyleBackColor = true;
@@ -299,9 +323,10 @@
             // 
             // button23
             // 
-            this.button23.Location = new System.Drawing.Point(279, 70);
+            this.button23.Location = new System.Drawing.Point(418, 105);
+            this.button23.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(97, 23);
+            this.button23.Size = new System.Drawing.Size(146, 34);
             this.button23.TabIndex = 23;
             this.button23.Text = "综合查询";
             this.button23.UseVisualStyleBackColor = true;
@@ -309,9 +334,10 @@
             // 
             // button24
             // 
-            this.button24.Location = new System.Drawing.Point(382, 41);
+            this.button24.Location = new System.Drawing.Point(573, 62);
+            this.button24.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(83, 23);
+            this.button24.Size = new System.Drawing.Size(124, 34);
             this.button24.TabIndex = 24;
             this.button24.Text = "Find(NotIn)";
             this.button24.UseVisualStyleBackColor = true;
@@ -319,9 +345,10 @@
             // 
             // button25
             // 
-            this.button25.Location = new System.Drawing.Point(471, 41);
+            this.button25.Location = new System.Drawing.Point(706, 62);
+            this.button25.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button25.Name = "button25";
-            this.button25.Size = new System.Drawing.Size(75, 23);
+            this.button25.Size = new System.Drawing.Size(112, 34);
             this.button25.TabIndex = 25;
             this.button25.Text = "是否存在";
             this.button25.UseVisualStyleBackColor = true;
@@ -329,9 +356,10 @@
             // 
             // button26
             // 
-            this.button26.Location = new System.Drawing.Point(471, 99);
+            this.button26.Location = new System.Drawing.Point(706, 148);
+            this.button26.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button26.Name = "button26";
-            this.button26.Size = new System.Drawing.Size(75, 23);
+            this.button26.Size = new System.Drawing.Size(112, 34);
             this.button26.TabIndex = 26;
             this.button26.Text = "排序测试";
             this.button26.UseVisualStyleBackColor = true;
@@ -339,9 +367,10 @@
             // 
             // btnCustom
             // 
-            this.btnCustom.Location = new System.Drawing.Point(12, 455);
+            this.btnCustom.Location = new System.Drawing.Point(18, 682);
+            this.btnCustom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCustom.Name = "btnCustom";
-            this.btnCustom.Size = new System.Drawing.Size(75, 23);
+            this.btnCustom.Size = new System.Drawing.Size(112, 34);
             this.btnCustom.TabIndex = 27;
             this.btnCustom.Text = "自定义特性";
             this.btnCustom.UseVisualStyleBackColor = true;
@@ -349,9 +378,10 @@
             // 
             // btnConn
             // 
-            this.btnConn.Location = new System.Drawing.Point(279, 12);
+            this.btnConn.Location = new System.Drawing.Point(418, 18);
+            this.btnConn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnConn.Name = "btnConn";
-            this.btnConn.Size = new System.Drawing.Size(75, 23);
+            this.btnConn.Size = new System.Drawing.Size(112, 34);
             this.btnConn.TabIndex = 28;
             this.btnConn.Text = "连接测试";
             this.btnConn.UseVisualStyleBackColor = true;
@@ -359,9 +389,10 @@
             // 
             // btnTransaction
             // 
-            this.btnTransaction.Location = new System.Drawing.Point(390, 342);
+            this.btnTransaction.Location = new System.Drawing.Point(585, 513);
+            this.btnTransaction.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnTransaction.Name = "btnTransaction";
-            this.btnTransaction.Size = new System.Drawing.Size(75, 23);
+            this.btnTransaction.Size = new System.Drawing.Size(112, 34);
             this.btnTransaction.TabIndex = 29;
             this.btnTransaction.Text = "事务处理";
             this.btnTransaction.UseVisualStyleBackColor = true;
@@ -369,9 +400,10 @@
             // 
             // button27
             // 
-            this.button27.Location = new System.Drawing.Point(471, 342);
+            this.button27.Location = new System.Drawing.Point(706, 513);
+            this.button27.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button27.Name = "button27";
-            this.button27.Size = new System.Drawing.Size(75, 23);
+            this.button27.Size = new System.Drawing.Size(112, 34);
             this.button27.TabIndex = 30;
             this.button27.Text = "事务保存";
             this.button27.UseVisualStyleBackColor = true;
@@ -379,9 +411,10 @@
             // 
             // btnAddOrUpdate
             // 
-            this.btnAddOrUpdate.Location = new System.Drawing.Point(189, 313);
+            this.btnAddOrUpdate.Location = new System.Drawing.Point(284, 470);
+            this.btnAddOrUpdate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAddOrUpdate.Name = "btnAddOrUpdate";
-            this.btnAddOrUpdate.Size = new System.Drawing.Size(79, 23);
+            this.btnAddOrUpdate.Size = new System.Drawing.Size(118, 34);
             this.btnAddOrUpdate.TabIndex = 31;
             this.btnAddOrUpdate.Text = "AddOrUpdate";
             this.btnAddOrUpdate.UseVisualStyleBackColor = true;
@@ -389,9 +422,10 @@
             // 
             // button28
             // 
-            this.button28.Location = new System.Drawing.Point(471, 128);
+            this.button28.Location = new System.Drawing.Point(706, 192);
+            this.button28.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button28.Name = "button28";
-            this.button28.Size = new System.Drawing.Size(75, 23);
+            this.button28.Size = new System.Drawing.Size(112, 34);
             this.button28.TabIndex = 32;
             this.button28.Text = "OR查询";
             this.button28.UseVisualStyleBackColor = true;
@@ -399,9 +433,10 @@
             // 
             // button29
             // 
-            this.button29.Location = new System.Drawing.Point(552, 70);
+            this.button29.Location = new System.Drawing.Point(828, 105);
+            this.button29.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button29.Name = "button29";
-            this.button29.Size = new System.Drawing.Size(75, 23);
+            this.button29.Size = new System.Drawing.Size(112, 34);
             this.button29.TabIndex = 33;
             this.button29.Text = "分页查询";
             this.button29.UseVisualStyleBackColor = true;
@@ -409,9 +444,10 @@
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(279, 313);
+            this.button30.Location = new System.Drawing.Point(418, 470);
+            this.button30.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button30.Name = "button30";
-            this.button30.Size = new System.Drawing.Size(116, 23);
+            this.button30.Size = new System.Drawing.Size(174, 34);
             this.button30.TabIndex = 20;
             this.button30.Text = "UpdateByCondition";
             this.button30.UseVisualStyleBackColor = true;
@@ -419,9 +455,10 @@
             // 
             // button31
             // 
-            this.button31.Location = new System.Drawing.Point(471, 167);
+            this.button31.Location = new System.Drawing.Point(706, 250);
+            this.button31.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button31.Name = "button31";
-            this.button31.Size = new System.Drawing.Size(75, 23);
+            this.button31.Size = new System.Drawing.Size(112, 34);
             this.button31.TabIndex = 34;
             this.button31.Text = "反射静态属性值";
             this.button31.UseVisualStyleBackColor = true;
@@ -429,19 +466,31 @@
             // 
             // button32
             // 
-            this.button32.Location = new System.Drawing.Point(430, 4);
+            this.button32.Location = new System.Drawing.Point(645, 6);
+            this.button32.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button32.Name = "button32";
-            this.button32.Size = new System.Drawing.Size(75, 23);
+            this.button32.Size = new System.Drawing.Size(112, 34);
             this.button32.TabIndex = 35;
             this.button32.Text = "button32";
             this.button32.UseVisualStyleBackColor = true;
             this.button32.Click += new System.EventHandler(this.button32_Click);
             // 
+            // button33
+            // 
+            this.button33.Location = new System.Drawing.Point(621, 470);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(142, 34);
+            this.button33.TabIndex = 36;
+            this.button33.Text = "存储过程查询";
+            this.button33.UseVisualStyleBackColor = true;
+            this.button33.Click += new System.EventHandler(this.button33_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(627, 526);
+            this.ClientSize = new System.Drawing.Size(940, 789);
+            this.Controls.Add(this.button33);
             this.Controls.Add(this.button32);
             this.Controls.Add(this.button31);
             this.Controls.Add(this.button29);
@@ -479,6 +528,7 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -525,6 +575,7 @@
         private System.Windows.Forms.Button button30;
         private System.Windows.Forms.Button button31;
         private System.Windows.Forms.Button button32;
+        private System.Windows.Forms.Button button33;
     }
 }
 

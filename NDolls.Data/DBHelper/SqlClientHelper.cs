@@ -19,8 +19,8 @@ namespace NDolls.Data
         /// Execute a SqlCommand (that returns no resultset) against the database specified in the connection string 
         /// using the provided parameters.
         /// </summary>
-        /// <param name="commandType">the CommandType (stored procedure, text, etc.)</param>
-        /// <param name="commandText">the stored procedure name or T-SQL command</param>
+        /// <param name="cmdType">the CommandType (stored procedure, text, etc.)</param>
+        /// <param name="cmdText">the stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">an array of SqlParamters used to execute the command</param>
         /// <returns>an int representing the number of rows affected by the command</returns>
         public int ExecuteNonQuery(CommandType cmdType, string cmdText, List<DbParameter> commandParameters)
@@ -47,8 +47,8 @@ namespace NDolls.Data
         /// using the provided parameters.
         /// </summary>
         /// <param name="trans">an existing sql transaction</param>
-        /// <param name="commandType">the CommandType (stored procedure, text, etc.)</param>
-        /// <param name="commandText">the stored procedure name or T-SQL command</param>
+        /// <param name="cmdType">the CommandType (stored procedure, text, etc.)</param>
+        /// <param name="cmdText">the stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">an array of SqlParamters used to execute the command</param>
         /// <returns>an int representing the number of rows affected by the command</returns>
         public int ExecuteNonQuery(DbTransaction trans, CommandType cmdType, string cmdText, List<DbParameter> commandParameters)
@@ -64,8 +64,8 @@ namespace NDolls.Data
         /// Execute a SqlCommand that returns a resultset against the database specified in the connection string 
         /// using the provided parameters.
         /// </summary>
-        /// <param name="commandType">the CommandType (stored procedure, text, etc.)</param>
-        /// <param name="commandText">the stored procedure name or T-SQL command</param>
+        /// <param name="cmdType">the CommandType (stored procedure, text, etc.)</param>
+        /// <param name="cmdText">the stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">an array of SqlParamters used to execute the command</param>
         /// <returns>A SqlDataReader containing the results</returns>
         public DbDataReader ExecuteReader(CommandType cmdType, string cmdText, List<DbParameter> commandParameters)
@@ -94,9 +94,8 @@ namespace NDolls.Data
         /// Execute a SqlCommand that returns the first column of the first record against the database specified in the connection string 
         /// using the provided parameters.
         /// </summary>
-        /// <param name="connectionString">a valid connection string for a SqlConnection</param>
-        /// <param name="commandType">the CommandType (stored procedure, text, etc.)</param>
-        /// <param name="commandText">the stored procedure name or T-SQL command</param>
+        /// <param name="cmdType">the CommandType (stored procedure, text, etc.)</param>
+        /// <param name="cmdText">the stored procedure name or T-SQL command</param>
         /// <param name="commandParameters">an array of SqlParamters used to execute the command</param>
         /// <returns>An object that should be converted to the expected type using Convert.To{Type}</returns>
         public object ExecuteScalar(CommandType cmdType, string cmdText, List<DbParameter> commandParameters)
@@ -118,9 +117,9 @@ namespace NDolls.Data
         /// </summary>
         /// <param name="cacheKey">Key to the parameter cache</param>
         /// <param name="cmdParms">an array of SqlParamters to be cached</param>
-        public static void CacheParameters(string cacheKey, List<DbParameter> commandParameters)
+        public static void CacheParameters(string cacheKey, List<DbParameter> cmdParms)
         {
-            parmCache[cacheKey] = commandParameters;
+            parmCache[cacheKey] = cmdParms;
         }
 
         /// <summary>
@@ -180,41 +179,26 @@ namespace NDolls.Data
         }
 
         /// <summary>
-        /// DataSet批量回写数据库
-        /// </summary>
-        /// <param name="thisDataset">要加入数据库的Dataset信息</param>
-        /// <param name="sql">查询语句</param>
-        /// <param name="TableName">表名称,只能对单个表进行操作,多表相联系的无法实现</param>
-        //public void DataSetUpdate(DataSet thisDataset, String sql,String TableName,DataColumn[] primaryKeys) {
-        //    SqlDataAdapter thisAdapter = new SqlDataAdapter(sql, connectionString);
-        //    thisDataset.Tables[0].PrimaryKey = primaryKeys;
-        //    SqlCommandBuilder thisBuilder = new SqlCommandBuilder(thisAdapter);
-        //    thisAdapter.Update(thisDataset, TableName);
-        //    thisDataset.AcceptChanges();
-        //}
-
-        /// <summary>
         /// 查询返回数据集
         /// </summary>
-        /// <param name="sqlString">查询语句</param>
-        /// <param name="parameters">数据参数</param>
-        /// <returns>符合条件的数据集</returns>
+        public DataTable Query(CommandType cmdType, string cmdText, List<DbParameter> commandParameters)
+        {
+            CommonVar.WriteLog(cmdText);
+
+            SqlCommand cmd = new SqlCommand();
+            DataSet ds = new DataSet();
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                PrepareCommand(cmd, connection, null, cmdType, cmdText, commandParameters);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(ds);
+            }
+            return ds.Tables[0];
+        }
+
         public DataTable Query(string sqlString, List<DbParameter> parameters)
         {
-            CommonVar.WriteLog(sqlString);
-
-            SqlConnection thisconnection = new SqlConnection(ConnectionString);
-            thisconnection.Open();
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            SqlCommand cmd = new SqlCommand(sqlString, thisconnection);
-            adapter.SelectCommand = cmd;
-            if (parameters != null)
-                foreach (SqlParameter param in parameters)
-                    cmd.Parameters.Add(param);
-            DataSet ds = new DataSet();
-            adapter.Fill(ds);
-            thisconnection.Close();
-            return ds.Tables[0];
+            return Query(CommandType.Text, sqlString, parameters);
         }
     }
 }
