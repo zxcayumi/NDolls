@@ -935,6 +935,16 @@ namespace NDolls.Data
         }
 
         /// <summary>
+        /// 用户自定义sql语句查询（返回一行一列）
+        /// </summary>
+        /// <param name="sql">查询sql语句</param>
+        /// <returns>查询结果</returns>
+        public static object Single(String sql, List<DbParameter> parms = null)
+        {
+            return SQLFactory.CreateDBHelper().ExecuteScalar(System.Data.CommandType.Text, sql, parms);
+        }
+
+        /// <summary>
         /// 用户自定义sql语句查询
         /// </summary>
         /// <param name="sql">查询语句</param>

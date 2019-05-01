@@ -6,6 +6,7 @@ using NDolls.Data.Attribute;
 
 namespace NDolls.Data.Entity
 {
+    [Serializable()]
     public class EntityBase
     {
 
