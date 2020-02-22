@@ -278,7 +278,10 @@ namespace NDolls.Data
                 }
             }
 
-            return String.Format(updateSQL, tableName, fs.ToString().Trim(','), condition.Substring(0, condition.LastIndexOf("AND")));//生成UPDATE语句
+            if (fs.ToString() == "") 
+                return "";
+            else
+                return String.Format(updateSQL, tableName, fs.ToString().Trim(','), condition.Substring(0, condition.LastIndexOf("AND")));//生成UPDATE语句
         }
 
         private string getDeleteSQL(EntityBase entity)
